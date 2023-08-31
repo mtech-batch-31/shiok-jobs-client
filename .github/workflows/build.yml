@@ -123,6 +123,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.update-task-def.outputs.task-definition }}
-          service: waste-recycler-v4
-          cluster: waste-recycler
+          service: shiok-jobs-service
+          cluster: shiok-jobs-cluster
           force-new-deployment: false
