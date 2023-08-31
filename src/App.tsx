@@ -14,7 +14,6 @@ import './App.css';
 
 const router = createBrowserRouter([
   {
-    // test commit
     path: "/", element: <Layout />,
     children: [
       { index: true, element: <Login />},
