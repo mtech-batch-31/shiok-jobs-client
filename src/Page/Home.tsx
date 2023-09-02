@@ -127,7 +127,7 @@ const Home: React.FC = () => {
       console.log("token not found from Cookie");
       navigate("/");
     }
-  }, [navigate, validateToken]);
+  }, []);
 
   const getUnitOfMeasurement = (category: string) => {
     console.log("getUnitOfMeasurement for category:", category);
