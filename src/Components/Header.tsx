@@ -1,14 +1,17 @@
-import Stack from 'react-bootstrap/Stack';
-import './Header.css'
-import { NavLink, useNavigate } from "react-router-dom"
+// import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 import { IoIosLogOut } from "react-icons/io"
-import logo from '../Assets/logo512.png';
+import { NavLink, useNavigate } from "react-router-dom"
+import React from "react";
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../utilities/constants'
-import React from "react";
+import logo from '../assets/word-logo.png';
+import './Header.css'
 
+function BasicExample() {
 
-const Header = () => {
     let hasTokenValue = Cookies.get(ACCESS_TOKEN) !== undefined;
     //console.log(hasTokenValue);
     const navigate = useNavigate();
@@ -18,32 +21,51 @@ const Header = () => {
         Cookies.remove(ACCESS_TOKEN);
         navigate('/');
     }
+  return (
+    <Navbar expand="md" className="bg-body-tertiary mx-4">
+      {/* <Container> */}
+        <Navbar.Brand href="/">
+            <img className="nav-logo" src={logo}></img>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-    return (
-    <Stack direction="horizontal" gap={0} className="header">
-            <div className="mx-2 logo">
-                <img src={logo}></img>
-            </div>
-            { hasTokenValue &&
-            <>
-                <div className="ms-4">
-                    <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/Home">Home</NavLink>
-                </div>
-
-                <div className="ms-4">
-                    <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/Price">Price Estimate</NavLink>
-                </div>
-            </>
-            }
-            <div className="ms-auto login">
-                <div className="px-5 login">
-                    {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Login</NavLink>}
-                    {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="register">/Register</NavLink>}
+        <Navbar.Collapse id="basic-navbar-nav custom-nav">
+          <Nav className="ms-auto  mx-3">
+            <Nav.Link className="ms-4">
+                    <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Search Job</NavLink>
+                </Nav.Link>
+            <Nav.Link className="ms-4">
+                <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Company Reviews</NavLink>
+            </Nav.Link>
+            <Nav.Link className="ms-4">
+                <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Career Guide</NavLink>
+            </Nav.Link>
+            <Nav.Link className="ms-4 ">
+                <NavLink  className={({isActive}) => isActive? 'nav-item-active gold' :'nav-item gold'} to="/">Employer</NavLink>
+            </Nav.Link>
+            <Nav.Link className="ms-4">
+ 
+                    {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} to="/login">Login</NavLink>}
+                    {/* {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="register">/Register</NavLink>} */}
                     { hasTokenValue && <IoIosLogOut aria-label='logout' className='user-icon' onClick={logout} />}
-                </div>
-            </div>
-    </Stack>
-    )
+
+            </Nav.Link>
+            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown> */}
+          </Nav>
+        </Navbar.Collapse>
+      {/* </Container> */}
+    </Navbar>
+  );
 }
 
-export default Header;
+export default BasicExample;

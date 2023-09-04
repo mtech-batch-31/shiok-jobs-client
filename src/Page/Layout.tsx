@@ -1,14 +1,14 @@
-import { Fragment } from 'react';
+// import { Fragment } from 'react';
 import {Outlet} from 'react-router-dom'
-import Header from '../Components/Header'
+import Header from '../components/Header'
 import React from "react"
 
 const Layout = () =>{
     return(
-    <Fragment>
+    <div id="layout">
         <Header />
         <Outlet />
-    </Fragment>)
+    </div>)
 }
 
 export default Layout;

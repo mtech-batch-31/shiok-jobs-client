@@ -1,22 +1,55 @@
-*{
+* {
   box-sizing: border-box;
 }
 
+
+
+body{
+  height: 100vh;
+}
+
+
+
+.container-main {
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%; /* Ensure it doesn't exceed 100% viewport width */
+  /* background-color: #3498db; Blue background color for demonstration */
+  height: calc(100vh - 50px);
+}
+
+.home{
+  background-image: url('../../assets/shiok_jobs_home_bg.jpg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-position: center; */
+  background-attachment: fixed;
+}
+  /* Photo by <a href="https://unsplash.com/@victorhwn725?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victor He</a> on <a href="https://unsplash.com/photos/w7_uM_DObGo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+   */
+.searchbox{
+  position: relative;
+  top: 30vh;
+  max-width: 800px;
+}
+
 h1, h2, h3 {
-  color: #0CA789;
+  color: #ffffff;
   /* font-weight: bold; */
 }
 
 .custom-color {
-  color: #0CA789;
+  color: #ffffff;
 }
 .btn-custom {
-  background-color: #0CA789;
+  background-color: #046380;
   color: #ffffff;
-  border: 3px solid #0CA789;
+  border: 3px solid #046380;
   border-radius: 10px;
   font-size: 16px;
-  font-weight: bold;
+  /* font-weight: bold; */
   width: 15vmin;
   min-width: 60px;
   padding: 4px;
@@ -30,7 +63,7 @@ h1, h2, h3 {
   border: 3px solid #ededed;
   border-radius: 10px;
   font-size: 16px;
-  font-weight: bold;
+  /* font-weight: bold; */
   width: 15vmin;
   min-width: 60px;
   padding: 4px;
@@ -48,7 +81,7 @@ h1, h2, h3 {
   border: 3px solid #0CA789;
   border-radius: 10px;
   font-size: 16px;
-  font-weight: bold;
+  /* font-weight: bold; */
   width: 15vmin;
   min-width: 77px;
   margin-top: 5px;
@@ -62,7 +95,7 @@ h1, h2, h3 {
   border: 3px solid #ededed;
   border-radius: 10px;
   font-size: 16px;
-  font-weight: bold;
+  /* font-weight: bold; */
   width: 15vmin;
   min-width: 80px;
   padding: 4px;
@@ -80,36 +113,7 @@ h1, h2, h3 {
   min-width: 90px;
   max-width: 170px;
 }
-.btn-warning {
-  height: 40px;
-  font-size: 16px;
-  font-weight: normal;
-  margin-top: 30px;
-  margin-right: 10px;
-}
-.btn-back {
-  background-color: #f10d0d;
-  color: #FFFFFF;
-  border: 3px solid  #f10d0d;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.btn-back:hover {
-  background-color: #f10d0d;
-  color: #FFFFFF;
-}
-.btn-submit {
-background-color: #0CA789;
-color: #FFFFFF;
-border: 3px solid  #0CA789;
-border-radius: 10px;
-font-size: 16px;
-font-weight: bold;
-cursor: pointer;
-}
-.btn-submit:hover {
-background-color: #0CA789;
-color: #FFFFFF;
+
+.field-label{
+ font-weight: 700;
 }

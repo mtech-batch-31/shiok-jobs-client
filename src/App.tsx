@@ -1,11 +1,11 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './Page/Layout';
-import Login from './Page/Login';
-import Price from './Page/Price'
-import Home from './Page/Home'
-import SubmitRequest  from './Page/SubmitRequest';
-import RegisterAccount from './Page/Register'
-import RegistrationConfirm from './Page/RegisterationConfirm'
+import Layout from './page/Layout';
+import Login from './page/Login';
+import Price from './page/Price'
+import Home from './page/Home'
+import SubmitRequest  from './page/SubmitRequest';
+import RegisterAccount from './page/Register'
+import RegistrationConfirm from './page/RegisterationConfirm'
 import { isLogin } from './utilities/auth'
 import React from "react"
 
@@ -16,9 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/", element: <Layout />,
     children: [
-      { index: true, element: <Login />},
+      { index: true, element: <Home />},
       { path: "/register", element: <RegisterAccount />},
-      { path: "/home", element: <Home />, loader: isLogin},
+      { path: "/home", element: <Home />},
+      { path: "/login", element: <Login />},
       { path: "/price", element: <Price />, loader: isLogin},
       { path: "/submitRequest", element: <SubmitRequest />, loader: isLogin},
       { path: "/registrationConfirm", element: <RegistrationConfirm />},

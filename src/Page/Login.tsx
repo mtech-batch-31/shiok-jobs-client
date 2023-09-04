@@ -3,7 +3,7 @@ import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import './Login.css';
+import './styles/Login.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { API_PATH } from '../utilities/constants';

@@ -3,7 +3,7 @@ import { Button, Form, Container, Row, Col, Table } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "./Price.css";
+import "./styles/Price.css";
 import axios from "axios";
 // import MockAdapter from 'axios-mock-adapter'; // import the mocking library
 import Cookies from "js-cookie";

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom"
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min"
+import "bootstrap/dist/js/bootstrap.bundle.min"
 import { Button, Form, Container, Row, Col, Alert} from 'react-bootstrap';
 import axios, { AxiosError } from 'axios';
-import "./Register.css";
+import "./styles/Register.css";
 import React from "react"
 
 interface RegisterAccountState

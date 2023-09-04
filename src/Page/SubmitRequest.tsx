@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { getToken } from "../utilities/auth";
-import "./SubmitRequest.css";
+import "./styles/SubmitRequest.css";
 import React from "react"
 interface RecycleRequestItem {
     category: string;
