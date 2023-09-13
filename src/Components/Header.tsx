@@ -2,25 +2,25 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
-import { IoIosLogOut } from "react-icons/io"
-import { NavLink, useNavigate } from "react-router-dom"
+// import { IoIosLogOut } from "react-icons/io"
+import { NavLink } from "react-router-dom"
 import React from "react";
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN } from '../utilities/constants'
+// import Cookies from 'js-cookie';
+// import { ACCESS_TOKEN } from '../utilities/constants'
 import logo from '../assets/word-logo.png';
 import './Header.css'
 
 function BasicExample() {
 
-    let hasTokenValue = Cookies.get(ACCESS_TOKEN) !== undefined;
+    // let hasTokenValue = Cookies.get(ACCESS_TOKEN) !== undefined;
     //console.log(hasTokenValue);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const logout = () =>
-    {
-        Cookies.remove(ACCESS_TOKEN);
-        navigate('/');
-    }
+    // const logout = () =>
+    // {
+    //     Cookies.remove(ACCESS_TOKEN);
+    //     navigate('/');
+    // }
   return (
     <Navbar expand="md" className="bg-body-tertiary mx-4">
       {/* <Container> */}
@@ -43,11 +43,16 @@ function BasicExample() {
             <Nav.Link className="ms-4 ">
                 <NavLink  className={({isActive}) => isActive? 'nav-item-active gold' :'nav-item gold'} to="/">Employer</NavLink>
             </Nav.Link>
-            <Nav.Link className="ms-4">
- 
-                    {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} to="/login">Login</NavLink>}
+            <Nav.Link className="ms-4 nav-item blue fw-bold" 
+            href="https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri=http://localhost:3000"
+            >
+              Login
+                    {/* <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} 
+                    to="https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fshiokjobs.com">
+                      Login</NavLink> */}
+                    {/* {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} to="/login">Login</NavLink>} */}
                     {/* {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="register">/Register</NavLink>} */}
-                    { hasTokenValue && <IoIosLogOut aria-label='logout' className='user-icon' onClick={logout} />}
+                    
 
             </Nav.Link>
             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

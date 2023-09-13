@@ -43,6 +43,11 @@ h1, h2, h3 {
 .custom-color {
   color: #ffffff;
 }
+
+.btn-search{
+  min-width: 110px;
+}
+
 .btn-custom {
   background-color: #046380;
   color: #ffffff;
