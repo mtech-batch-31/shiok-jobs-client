@@ -135,6 +135,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.update-task-def.outputs.task-definition }}
-          service: shiok-jobs-service
+          service: shiok-jobs-client-service
           cluster: shiok-jobs-cluster
           force-new-deployment: false
