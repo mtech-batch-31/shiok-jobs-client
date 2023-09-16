@@ -10,7 +10,7 @@ import React from "react";
 import logo from '../assets/word-logo.png';
 import './Header.css'
 
-function BasicExample() {
+function Header() {
 
     // let hasTokenValue = Cookies.get(ACCESS_TOKEN) !== undefined;
     //console.log(hasTokenValue);
@@ -25,7 +25,7 @@ function BasicExample() {
     <Navbar expand="md" className="bg-body-tertiary mx-4">
       {/* <Container> */}
         <Navbar.Brand href="/">
-            <img className="nav-logo" src={logo}></img>
+            <img className="nav-logo" src={logo} alt="logo"></img>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -73,4 +73,4 @@ function BasicExample() {
   );
 }
 
-export default BasicExample;
+export default Header;
