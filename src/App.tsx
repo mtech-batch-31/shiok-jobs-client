@@ -1,11 +1,11 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './page/Layout';
-import Login from './page/Login';
-import Price from './page/Price'
-import Home from './page/Home'
-import SubmitRequest  from './page/SubmitRequest';
-import RegisterAccount from './page/Register'
-import RegistrationConfirm from './page/RegisterationConfirm'
+import Layout from './Page/Layout';
+import Login from './Page/Login';
+import Price from './Page/Price'
+import Home from './Page/Home'
+import SubmitRequest  from './Page/SubmitRequest';
+import RegisterAccount from './Page/Register'
+import RegistrationConfirm from './Page/RegisterationConfirm'
 import { isLogin } from './utilities/auth'
 import React from "react"
 
