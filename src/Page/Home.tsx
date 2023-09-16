@@ -34,8 +34,7 @@ interface SearchFormState {
 
 const Home: React.FC = () => {
   const queryParameters = new URLSearchParams(window.location.search);
-  const authCode = queryParameters.get("code") as string;
-  // console.log(`authorization code=${authCode}`);
+
   const navigate = useNavigate();
 
   const initialFormData: SearchFormState = {
@@ -52,6 +51,9 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
+    const authCode = queryParameters.get("code") as string;
+    // console.log(`authorization code=${authCode}`);
+
     let request : AuthRequest = {
       code: authCode,
       grant_type: "authorization_code",
@@ -90,7 +92,7 @@ const Home: React.FC = () => {
         Cookies.remove(REFRESH_TOKEN);
       }
     } 
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="container-main home">

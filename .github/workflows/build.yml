@@ -27,6 +27,12 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo REACT_APP_COGNITO_AUTH_TOKEN_URL='test' >> .env
+          cat .env
+
       - name: Lint
         run: npm run lint
       - name: Test
