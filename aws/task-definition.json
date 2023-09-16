@@ -29,26 +29,6 @@
                     "awslogs-stream-prefix": "ecs"
                 }
             }
-        },
-        {
-            "name": "service",
-            "image": "845698241774.dkr.ecr.ap-southeast-1.amazonaws.com/recycler-service:latest",
-            "cpu": 0,
-            "portMappings": [],
-            "essential": false,
-            "environment": [],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/waste-recycler-v2",
-                    "awslogs-region": "ap-southeast-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            }
         }
     ],
     "taskRoleArn": "arn:aws:iam::845698241774:role/ecsTaskExecutionRole",
