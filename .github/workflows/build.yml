@@ -52,6 +52,10 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm run build
+        env:
+          REACT_APP_COGNITO_AUTH_TOKEN_URL: 'test'
+          REACT_APP_COGNITO_CLIENT_ID: 'test'
+          REACT_APP_COGNITO_CLIENT_SECRET: 'test'
         # env:
         #   REACT_APP_RECYCLE_API_URL: ${{ secrets.REACT_APP_RECYCLE_API_URL }}
 
