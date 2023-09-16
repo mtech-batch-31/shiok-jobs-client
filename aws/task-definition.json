@@ -1,5 +1,5 @@
 {
-    "family": "shiok-jobs",
+    "family": "shiok-jobs-client-service",
     "containerDefinitions": [
         {
             "name": "client",
