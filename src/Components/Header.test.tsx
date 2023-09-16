@@ -3,7 +3,8 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom'; // Import Router for NavLink
 import Header from './Header';
 
-jest.mock('../assets/word-logo.png');
+
+jest.mock('../assets/word-logo.png', () => '../assets/word-logo.png');
 
 describe('Header Component', () => {
   it('renders the component without errors', () => {

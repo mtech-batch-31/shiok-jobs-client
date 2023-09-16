@@ -31,19 +31,30 @@ function Header() {
 
         <Navbar.Collapse id="basic-navbar-nav custom-nav">
           <Nav className="ms-auto  mx-3">
-            <Nav.Link className="ms-4">
+            {/* <Nav.Link className="ms-4"> */}
+            <div className='nav-link ms-4'>
+
+            
                     <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Search Job</NavLink>
-                </Nav.Link>
-            <Nav.Link className="ms-4">
+                {/* </Nav.Link> */}
+            </div>
+            {/* <Nav.Link className="ms-4"> */}
+            <div className='nav-link ms-4'>
                 <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Company Reviews</NavLink>
-            </Nav.Link>
-            <Nav.Link className="ms-4">
-                <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="/">Career Guide</NavLink>
-            </Nav.Link>
-            <Nav.Link className="ms-4 ">
+            </div>
+            {/* </Nav.Link> */}
+            {/* <Nav.Link className="ms-4"> */}
+            <div className='nav-link ms-4'>
+                <NavLink  className={({isActive}) => isActive? 'nav-item-active ':'nav-item '} to="/">Career Guide</NavLink>
+            </div>
+            {/* </Nav.Link> */}
+            {/* <Nav.Link className="ms-4 "> */}
+            <div className='nav-link ms-4'>
                 <NavLink  className={({isActive}) => isActive? 'nav-item-active gold' :'nav-item gold'} to="/">Employer</NavLink>
-            </Nav.Link>
+            </div>
+            {/* </Nav.Link> */}
             <Nav.Link className="ms-4 nav-item blue fw-bold" 
+            
             href="https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri=http://localhost:3000"
             >
               Login
