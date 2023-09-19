@@ -12,7 +12,9 @@ export const TABLE_DATA = [
 
 ]
 
-export const ACCESS_TOKEN = "accessToken"
+export const ACCESS_TOKEN = "accessToken";
+export const ID_TOKEN = "idToken";
+export const REFRESH_TOKEN = "refreshToken";
 // export const CATEGORY_DATA = [
 //     {"category":"Plastic","units":"kg"},
 //     {"category":"Paper","units":"kg"},

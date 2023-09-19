@@ -1,5 +1,5 @@
 {
-    "family": "shiok-jobs",
+    "family": "shiok-jobs-client-service",
     "containerDefinitions": [
         {
             "name": "client",
@@ -25,26 +25,6 @@
                 "options": {
                     "awslogs-create-group": "true",
                     "awslogs-group": "/ecs/shiok-jobs",
-                    "awslogs-region": "ap-southeast-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            }
-        },
-        {
-            "name": "service",
-            "image": "845698241774.dkr.ecr.ap-southeast-1.amazonaws.com/recycler-service:latest",
-            "cpu": 0,
-            "portMappings": [],
-            "essential": false,
-            "environment": [],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/waste-recycler-v2",
                     "awslogs-region": "ap-southeast-1",
                     "awslogs-stream-prefix": "ecs"
                 }

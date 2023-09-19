@@ -37,7 +37,7 @@ const Job : React.FC<JobProps> = ({data, key, setKeywords}) => {
     };
 
     loadSvg();
-  }, [SvgComponent]);
+  }, [SvgComponent, logo]);
 
     return (
         <div
@@ -49,7 +49,6 @@ const Job : React.FC<JobProps> = ({data, key, setKeywords}) => {
                 <div className="company">
                     <span className="cname">{company}</span>
                     {data.new && <span className="new">new!</span>}
-                    {data.featured && <span className="featured">featured</span>}
                 </div>
 
                 <div className="position">{jobTitle}</div>

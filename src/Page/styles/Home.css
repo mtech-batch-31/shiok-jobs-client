@@ -6,6 +6,7 @@
 
 body{
   height: 100vh;
+  overflow: hidden;
 }
 
 
@@ -20,17 +21,16 @@ body{
   height: calc(100vh - 50px);
 }
 
-.home{ 
+.home{
   background-image: url('../../Assets/shiok_jobs_home_bg.jpg'); 
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   /* background-position: center; */
   background-attachment: fixed;
 }
   /* Photo by <a href="https://unsplash.com/@victorhwn725?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victor He</a> on <a href="https://unsplash.com/photos/w7_uM_DObGo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
    */
-.searchbox{
-  position: relative;
+.searchbox{  
   top: 30vh;
   max-width: 800px;
 }
@@ -43,6 +43,11 @@ h1, h2, h3 {
 .custom-color {
   color: #ffffff;
 }
+
+.btn-search{
+  min-width: 110px;
+}
+
 .btn-custom {
   background-color: #046380;
   color: #ffffff;
@@ -116,4 +121,13 @@ h1, h2, h3 {
 
 .field-label{
  font-weight: 700;
+}
+
+.jobs-wrapper {
+    max-height: 90%;
+    overflow: auto;
+}
+
+.jobs-wrapper::-webkit-scrollbar {
+    width: 0; /* Hide the scrollbar */
 }
