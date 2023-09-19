@@ -22,15 +22,15 @@ function Header() {
     //     navigate('/');
     // }
 
-  const loginBaseUrl = process.env.REACT_APP_COGNITO_LOGIN_URL as string; 
-  const loginRedirectUrl = process.env.REACT_APP_COGNITO_LOGIN_REDIRECT_URL as string; 
-  const loginUrl = loginBaseUrl + loginRedirectUrl;
+  let loginBaseUrl = "https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri="
+  let loginRedirectUrl = process.env.REACT_APP_COGNITO_LOGIN_REDIRECT_URL as string; 
+  let loginUrl = loginBaseUrl + loginRedirectUrl;
   return (
     <Navbar expand="md" className="bg-body-tertiary mx-4">
       {/* <Container> */}
         <Navbar.Brand className="" href="/">
             {/* <img className="nav-logo" src={logo} alt="logo"></img> */}
-            <div className="nav-logo fw-bold">shiok jobs test</div>
+            <div className="nav-logo fw-bold">shiok jobs</div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
