@@ -11,23 +11,20 @@ import axios, { AxiosResponse } from "axios";
 import Jobs from "../Components/Jobs";
 import data from "../jobs-mock.json";
 
-
-interface AuthResponse
-{
-    id_token: string;
-    access_token: string;
-    refresh_token: string;
-    expires_in: string;
-    token_type: string;
+interface AuthResponse {
+  id_token: string;
+  access_token: string;
+  refresh_token: string;
+  expires_in: string;
+  token_type: string;
 }
 
-interface AuthRequest
-{
-    code: string;
-    grant_type: string;
-    client_id: string;
-    client_secret: string;
-    redirect_uri: string;
+interface AuthRequest {
+  code: string;
+  grant_type: string;
+  client_id: string;
+  client_secret: string;
+  redirect_uri: string;
 }
 
 interface SearchFormState {
@@ -35,38 +32,34 @@ interface SearchFormState {
   salary: string;
 }
 
-
 interface IJob {
-    id: number;
-    company: string;
-    logo: string;
-    new: boolean;
-    jobTitle: string;
-    salaryRange: string;
-    level: string;
-    postedAt: string;
-    employeeType: string;
-    location: string;
-    skills: string[];
+  id: number;
+  company: string;
+  logo: string;
+  new: boolean;
+  jobTitle: string;
+  salaryRange: string;
+  level: string;
+  postedAt: string;
+  employeeType: string;
+  location: string;
+  skills: string[];
 }
 
 const Home: React.FC = () => {
-  
-    const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
-    let isMock : boolean = true;
-    let jobListing : IJob[] = [];
+  const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
+  let isMock: boolean = true;
+  let jobListing: IJob[] = [];
 
-    if (isMock)
-        jobListing = data as IJob[];
-     
+  if (isMock) jobListing = data as IJob[];
 
-        const queryParameters = new URLSearchParams(window.location.search);
+  const queryParameters = new URLSearchParams(window.location.search);
 
   const navigate = useNavigate();
 
   const initialFormData: SearchFormState = {
-    searchkey: '',
-    salary: '',
+    searchkey: "",
+    salary: "",
   };
   const [formData, setFormData] = useState<SearchFormState>(initialFormData);
 
@@ -74,14 +67,13 @@ const Home: React.FC = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     // console.log("formData ", formData.salary, formData.searchkey);
-  }
-
+  };
 
   useEffect(() => {
     const authCode = queryParameters.get("code") as string;
     // console.log(`authorization code=${authCode}`);
 
-    let request : AuthRequest = {
+    let request: AuthRequest = {
       code: authCode,
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_COGNITO_CLIENT_ID as string,
@@ -91,35 +83,35 @@ const Home: React.FC = () => {
 
     // const token = Cookies.get(ACCESS_TOKEN);
     // TO DO: discuss where to verify token
-    if (authCode){
+    if (authCode) {
       getAuthToken();
     }
 
-    async function getAuthToken(){
+    async function getAuthToken() {
       try {
         const response: AxiosResponse = await axios.post(
           process.env.REACT_APP_COGNITO_AUTH_TOKEN_URL as string,
           request,
           {
-            headers: { 
-              "Content-Type": "application/x-www-form-urlencoded"
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
             },
           }
         );
         navigate("/");
         const authResponse = response?.data as AuthResponse;
         // console.log("auth response", authResponse);
-        Cookies.set(ACCESS_TOKEN, authResponse.access_token, {path:'/'});
-        Cookies.set(ID_TOKEN, authResponse.id_token, {path:'/'});
-        Cookies.set(REFRESH_TOKEN, authResponse.refresh_token, {path:'/'});
+        Cookies.set(ACCESS_TOKEN, authResponse.access_token, { path: "/" });
+        Cookies.set(ID_TOKEN, authResponse.id_token, { path: "/" });
+        Cookies.set(REFRESH_TOKEN, authResponse.refresh_token, { path: "/" });
       } catch (error) {
         console.log("error in getting auth token: ", error);
         Cookies.remove(ACCESS_TOKEN);
         Cookies.remove(ID_TOKEN);
         Cookies.remove(REFRESH_TOKEN);
       }
-    } 
-  }, [navigate]);
+    }
+  }, [navigate, queryParameters]);
 
   const addFilterKeywords = (data: any) => {
     if (!filterKeywords.includes(data)) {
@@ -127,22 +119,19 @@ const Home: React.FC = () => {
     }
   };
 
-//   const deleteKeyword = (data: any) => {
-//     const newKeywords = filterKeywords.filter((key) => key !== data);
-//     setfilterKeywords(newKeywords);
-//   };
+  //   const deleteKeyword = (data: any) => {
+  //     const newKeywords = filterKeywords.filter((key) => key !== data);
+  //     setfilterKeywords(newKeywords);
+  //   };
 
-//   const clearAll = () => {
-//     setfilterKeywords([]);
-//   };
+  //   const clearAll = () => {
+  //     setfilterKeywords([]);
+  //   };
 
   return (
     <div className="container-main home">
       <Container className="searchbox vw-80 d-flex">
-        <Form
-          className="w-100"
-          onSubmit={(e) => console.log(e)}
-        >
+        <Form className="w-100" onSubmit={(e) => console.log(e)}>
           <Row className="">
             <Col sm={6} xs={12} className="py-2">
               <Form.Group controlId="searchkey">
@@ -172,19 +161,17 @@ const Home: React.FC = () => {
               </Button>
             </Col>
           </Row>
-        </Form>        
+        </Form>
       </Container>
       <Container className="jobs-wrapper">
         <Jobs
-                keywords={filterKeywords}
-                data={jobListing}
-                setKeywords={addFilterKeywords} />
+          keywords={filterKeywords}
+          data={jobListing}
+          setKeywords={addFilterKeywords}
+        />
       </Container>
-    </div> 
-    );
-
-  };
-
-
+    </div>
+  );
+};
 
 export default Home;
