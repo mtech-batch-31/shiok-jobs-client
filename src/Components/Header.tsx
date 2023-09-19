@@ -63,25 +63,7 @@ function Header() {
             href={loginUrl}
             >
               Login
-                    {/* <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} 
-                    to="https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fshiokjobs.com">
-                      Login</NavLink> */}
-                    {/* {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} to="/login">Login</NavLink>} */}
-                    {/* {!hasTokenValue && <NavLink  className={({isActive}) => isActive? 'nav-item-active':'nav-item'} to="register">/Register</NavLink>} */}
-                    
-
             </Nav.Link>
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       {/* </Container> */}
