@@ -21,6 +21,10 @@ function Header() {
     //     Cookies.remove(ACCESS_TOKEN);
     //     navigate('/');
     // }
+
+  const loginBaseUrl = process.env.REACT_APP_COGNITO_LOGIN_URL as string; 
+  const loginRedirectUrl = process.env.REACT_APP_COGNITO_LOGIN_REDIRECT_URL as string; 
+  const loginUrl = loginBaseUrl + loginRedirectUrl;
   return (
     <Navbar expand="md" className="bg-body-tertiary mx-4">
       {/* <Container> */}
@@ -55,8 +59,8 @@ function Header() {
             </div>
             {/* </Nav.Link> */}
             <Nav.Link className="ms-4 nav-item blue fw-bold" 
-            
-            href="https://shiokjobs.auth.ap-southeast-1.amazoncognito.com/login?client_id=1vae5aaf8bra5o00lqi56doioq&response_type=code&scope=email+openid+phone&redirect_uri=http://localhost:3000"
+          
+            href={loginUrl}
             >
               Login
                     {/* <NavLink  className={({isActive}) => isActive? 'nav-item-active blue':'nav-item blue'} 
