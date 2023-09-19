@@ -82,34 +82,6 @@ jobs:
       - run: npm run audit
         continue-on-error: true
 
-  build_and_push_image:
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME_LATEST: ${{ secrets.ECR_REPOSITORY_URL }}:latest
-    needs: build_and_test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: my-artifact
-          path: build
-
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build and push image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}
-            ${{ env.IMAGE_NAME_LATEST }}
-
   deploy_to_s3:
     runs-on: ubuntu-latest
 
