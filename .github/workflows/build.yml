@@ -109,6 +109,10 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Delete S3 contents before deploy
+        run: |
+          aws s3 rm s3://shiok-jobs-client-bucket --recursive  
+
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://shiok-jobs-client-bucket --delete

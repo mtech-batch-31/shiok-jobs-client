@@ -32,7 +32,7 @@ const Jobs : React.FC<JobsProps> = ({ data, setKeywords, keywords }) => {
 
     useEffect(() => {
         modifiedData();        
-    }, [keywords]);
+    }, [keywords, modifiedData]);
 
     return (
         <div className="jobs">
