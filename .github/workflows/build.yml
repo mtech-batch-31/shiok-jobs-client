@@ -35,6 +35,7 @@ jobs:
           echo REACT_APP_COGNITO_AUTH_TOKEN_URL=${{ secrets.COGNITO_AUTH_TOKEN_URL }} >> .env
           echo REACT_APP_COGNITO_CLIENT_ID=${{ secrets.COGNITO_CLIENT_ID }} >> .env
           echo REACT_APP_COGNITO_CLIENT_SECRET=${{ secrets.COGNITO_CLIENT_SECRET }} >> .env
+          cat .env
 
       - name: Lint
         run: npm run lint
