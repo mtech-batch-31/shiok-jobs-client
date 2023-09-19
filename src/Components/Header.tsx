@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom"
 import React from "react";
 // import Cookies from 'js-cookie';
 // import { ACCESS_TOKEN } from '../utilities/constants'
-// import logo from '../assets/word-logo.png';
+// import logo from '../Assets/word-logo.png';
 import './Header.css'
 
 function Header() {

@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
@@ -7,6 +8,8 @@ import "./styles/Home.css";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import axios, { AxiosResponse } from "axios";
+import Jobs from "../Components/Jobs";
+import data from "../jobs-mock.json";
 
 
 interface AuthResponse
@@ -32,8 +35,32 @@ interface SearchFormState {
   salary: string;
 }
 
+
+interface IJob {
+    id: number;
+    company: string;
+    logo: string;
+    new: boolean;
+    jobTitle: string;
+    salaryRange: string;
+    level: string;
+    postedAt: string;
+    employeeType: string;
+    location: string;
+    skills: string[];
+}
+
 const Home: React.FC = () => {
-  const queryParameters = new URLSearchParams(window.location.search);
+  
+    const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
+    let isMock : boolean = true;
+    let jobListing : IJob[] = [];
+
+    if (isMock)
+        jobListing = data as IJob[];
+     
+
+        const queryParameters = new URLSearchParams(window.location.search);
 
   const navigate = useNavigate();
 
@@ -94,6 +121,21 @@ const Home: React.FC = () => {
     } 
   }, [navigate]);
 
+  const addFilterKeywords = (data: any) => {
+    if (!filterKeywords.includes(data)) {
+      setfilterKeywords([...filterKeywords, data]);
+    }
+  };
+
+//   const deleteKeyword = (data: any) => {
+//     const newKeywords = filterKeywords.filter((key) => key !== data);
+//     setfilterKeywords(newKeywords);
+//   };
+
+//   const clearAll = () => {
+//     setfilterKeywords([]);
+//   };
+
   return (
     <div className="container-main home">
       <Container className="searchbox vw-80 d-flex">
@@ -130,10 +172,19 @@ const Home: React.FC = () => {
               </Button>
             </Col>
           </Row>
-        </Form>
+        </Form>        
       </Container>
-    </div>
-  );
-};
+      <Container className="jobs-wrapper">
+        <Jobs
+                keywords={filterKeywords}
+                data={jobListing}
+                setKeywords={addFilterKeywords} />
+      </Container>
+    </div> 
+    );
+
+  };
+
+
 
 export default Home;

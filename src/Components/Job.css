@@ -1,0 +1,112 @@
+.job-container {
+    width: 70vw;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-radius: 5px;
+    margin: 1.3rem 0;
+    position: relative;
+    box-shadow: 0px 4px 6px 4px rgba(91, 164, 164, 0.2);    
+}
+@media only screen and (max-width: 375px) {
+    .job-container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 80vw;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+   }
+}
+.job-container .logo {
+    display: flex;
+    align-items: center;
+    padding-right: 1.5rem;
+}
+@media only screen and (max-width: 375px) {
+    .job-container .logo {
+        position: absolute;
+        top: -2rem;
+   }
+    .job-container .logo img {
+        width: 4rem;
+        height: auto;
+   }
+}
+.job-container .part1 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+@media only screen and (max-width: 375px) {
+    .job-container .part1 {
+        flex-grow: 0;
+        padding: 1.3rem 0;
+   }
+}
+.job-container .part1 .company .cname {
+    font-weight: 700;
+    color: rgb(91, 164, 164);
+    margin-right: 0.8rem;
+}
+.job-container .part1 .company .new, .job-container .part1 .company .featured {
+    color: #fff;
+    background-color: rgb(91, 164, 164);
+    border-radius: 1rem;
+    padding: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 0.8rem;
+}
+.job-container .part1 .company .featured {
+    background-color: hsl(180, 8%, 52%);
+}
+.job-container .part1 .position {
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: inline-block;
+    padding: 0.7rem 0;
+    cursor: pointer;
+}
+.job-container .part1 .position:hover {
+    color: rgb(91, 164, 164);
+}
+.job-container .part1 .details {
+    color: hsl(180, 8%, 52%);
+}
+.job-container .part2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+@media only screen and (max-width: 375px) {
+    .job-container .part2 {
+        border-top: 1px solid hsl(180, 8%, 52%);
+        padding-top: 1rem;
+        justify-content: flex-start;
+   }
+}
+.job-container .part2 span {
+    background-color: hsl(180, 52%, 96%);
+    color: rgb(91, 164, 164);
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.job-container .part2 span:not(:last-child) {
+    margin-right: 1rem;
+}
+.job-container .part2 span:hover {
+    background-color: rgb(91, 164, 164);
+    color: #fff;
+}
+@media only screen and (max-width: 375px) {
+    .job-container .part2 span {
+        margin-bottom: 1rem;
+   }
+}
+.job-container--borderLeft {
+    border-left: 5px solid rgb(91, 164, 164);
+}
