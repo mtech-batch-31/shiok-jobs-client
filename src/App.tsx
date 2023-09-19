@@ -1,12 +1,10 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './page/Layout';
-import Login from './page/Login';
-import Price from './page/Price'
-import Home from './page/Home'
-import SubmitRequest  from './page/SubmitRequest';
-import RegisterAccount from './page/Register'
-import RegistrationConfirm from './page/RegisterationConfirm'
-import { isLogin } from './utilities/auth'
+import Layout from './Page/Layout';
+import Login from './Page/Login';
+import Home from './Page/Home'
+
+import RegisterAccount from './Page/Register'
+import RegistrationConfirm from './Page/RegisterationConfirm'
 import React from "react"
 
 
@@ -20,8 +18,6 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterAccount />},
       { path: "/home", element: <Home />},
       { path: "/login", element: <Login />},
-      { path: "/price", element: <Price />, loader: isLogin},
-      { path: "/submitRequest", element: <SubmitRequest />, loader: isLogin},
       { path: "/registrationConfirm", element: <RegistrationConfirm />},
     ],
   },

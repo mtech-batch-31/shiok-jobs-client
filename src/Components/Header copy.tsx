@@ -2,7 +2,7 @@ import Stack from 'react-bootstrap/Stack';
 import './Header.css'
 import { NavLink, useNavigate } from "react-router-dom"
 import { IoIosLogOut } from "react-icons/io"
-import logo from '../assets/word-logo.png';
+import logo from '../Assets/word-logo.png';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../utilities/constants'
 import React from "react";

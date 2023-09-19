@@ -86,7 +86,7 @@ const Login: React.FC = () => {
             <Row className="vh-100 justify-content-center align-items-center">
                 <div className="col-xl-5 col-lg-5 col-md-6 col-sm-7 col-xs-8 col-8">
                     <Form onSubmit={e => handleFormSubmit(e)}>
-                        <h1 className="custom-color">Login to Recycler</h1>
+                        <h1 className="custom-color">Login to Shiok Jobs</h1>
                         <Form.Group controlId="email">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
