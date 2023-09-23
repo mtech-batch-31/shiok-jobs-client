@@ -1,6 +1,6 @@
 export const API_PATH = {
-    LOGIN : "/api/v1/auth/login",
-    REGISTER : "/api/v1/user/register",
+    LOGIN : "/api/auth/login",
+    REGISTER : "/api/user/register",
     PRICE : "/api/v1/request/price",
     REG_CONFIRM: "/api/v1/user/registrationConfirm",
     RETRIEVE : "/api/v1/request/retrieve",
