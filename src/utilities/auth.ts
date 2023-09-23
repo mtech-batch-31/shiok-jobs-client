@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import {redirect} from 'react-router-dom'
-import {ACCESS_TOKEN} from '../utilities/constants.js'
+import {ACCESS_TOKEN} from './constants.js'
 
 export function isLogin()
 {
