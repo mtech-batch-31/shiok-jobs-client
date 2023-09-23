@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Login.css";
 import Cookies from "js-cookie";
@@ -30,7 +30,11 @@ const Login: React.FC = () => {
   const [responseData, setResponseData] = useState<ResponseData | null>(null); // eslint-disable-line no-unused-vars
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // eslint-disable-line no-unused-vars
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const redirectUrl = queryParams.get("redirect") || "/";
 
   useEffect(() => {
     if (Cookies.get(ACCESS_TOKEN)) {
@@ -71,7 +75,7 @@ const Login: React.FC = () => {
         Cookies.set(ID_TOKEN, response.data.idToken, { path: "/" });
         setResponseData(response.data);
         setIsLoggedIn(true);
-        navigate("/home");
+        navigate(redirectUrl);
       }
     } catch (error) {
       setErrorMessage("Couldn't find your account");
