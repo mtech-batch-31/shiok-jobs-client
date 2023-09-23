@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import "./styles/Home.css";
 import Cookies from "js-cookie";
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   // if (isMock) jobListing = data as IJob[];
 
-  const queryParameters = new URLSearchParams(window.location.search);
+  
 
   const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    const queryParameters = new URLSearchParams(window.location.search);
     const authCode = queryParameters.get("code") as string;
     // console.log(`authorization code=${authCode}`);
 
@@ -111,7 +112,7 @@ const Home: React.FC = () => {
         Cookies.remove(REFRESH_TOKEN);
       }
     }
-  }, [navigate, queryParameters]);
+  }, [navigate]);
 
   // const addFilterKeywords = (data: any) => {
   //   if (!filterKeywords.includes(data)) {
@@ -156,9 +157,12 @@ const Home: React.FC = () => {
               </Form.Group>
             </Col>
             <Col sm={2} xs={12} className="py-2">
+              <Link className="mx-2 button" to="/job" onClick={() => {console.log("search clicked")} }
+                  state={{searchKey: formData.searchkey, salary: formData.salary}}>
               <Button variant="primary" type="submit" className="btn-search">
                 Search
               </Button>
+                </Link>
             </Col>
           </Row>
         </Form>

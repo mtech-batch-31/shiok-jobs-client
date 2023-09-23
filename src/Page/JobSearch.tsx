@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   if (isMock) jobListing = data as IJob[];
 
-  const queryParameters = new URLSearchParams(window.location.search);
+
 
   const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    const queryParameters = new URLSearchParams(window.location.search);
     const authCode = queryParameters.get("code") as string;
     // console.log(`authorization code=${authCode}`);
 
@@ -111,7 +112,7 @@ const Home: React.FC = () => {
         Cookies.remove(REFRESH_TOKEN);
       }
     }
-  }, [navigate, queryParameters]);
+  }, [navigate]);
 
   const addFilterKeywords = (data: any) => {
     if (!filterKeywords.includes(data)) {
@@ -130,7 +131,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="container-main jobsearch">
-      <Container className="searchbox vw-80 d-flex">
+      <Container className="jobsearch-searchbox vw-80 d-flex pt-5">
         <Form className="w-100" onSubmit={(e) => console.log(e)}>
           <Row className="">
             <Col sm={6} xs={12} className="py-2">
