@@ -2,30 +2,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/JobSearch.css";
 
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState} from "react";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
-import Cookies from "js-cookie";
-import { ACCESS_TOKEN, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
-import axios, { AxiosResponse } from "axios";
 import Jobs from "../Components/Jobs";
 import data from "../jobs-mock.json";
 
-interface AuthResponse {
-  id_token: string;
-  access_token: string;
-  refresh_token: string;
-  expires_in: string;
-  token_type: string;
-}
-
-interface AuthRequest {
-  code: string;
-  grant_type: string;
-  client_id: string;
-  client_secret: string;
-  redirect_uri: string;
-}
 
 interface SearchFormState {
   searchkey: string;
@@ -53,10 +34,6 @@ const Home: React.FC = () => {
 
   if (isMock) jobListing = data as IJob[];
 
-
-
-  const navigate = useNavigate();
-
   const initialFormData: SearchFormState = {
     searchkey: "",
     salary: "",
@@ -68,51 +45,6 @@ const Home: React.FC = () => {
     setFormData({ ...formData, [name]: value });
     // console.log("formData ", formData.salary, formData.searchkey);
   };
-
-  useEffect(() => {
-    const queryParameters = new URLSearchParams(window.location.search);
-    const authCode = queryParameters.get("code") as string;
-    // console.log(`authorization code=${authCode}`);
-
-    let request: AuthRequest = {
-      code: authCode,
-      grant_type: "authorization_code",
-      client_id: process.env.REACT_APP_COGNITO_CLIENT_ID as string,
-      client_secret: process.env.REACT_APP_COGNITO_CLIENT_SECRET as string,
-      redirect_uri: "http://localhost:3000",
-    };
-
-    // const token = Cookies.get(ACCESS_TOKEN);
-    // TO DO: discuss where to verify token
-    if (authCode) {
-      getAuthToken();
-    }
-
-    async function getAuthToken() {
-      try {
-        const response: AxiosResponse = await axios.post(
-          process.env.REACT_APP_COGNITO_AUTH_TOKEN_URL as string,
-          request,
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        );
-        navigate("/");
-        const authResponse = response?.data as AuthResponse;
-        // console.log("auth response", authResponse);
-        Cookies.set(ACCESS_TOKEN, authResponse.access_token, { path: "/" });
-        Cookies.set(ID_TOKEN, authResponse.id_token, { path: "/" });
-        Cookies.set(REFRESH_TOKEN, authResponse.refresh_token, { path: "/" });
-      } catch (error) {
-        console.log("error in getting auth token: ", error);
-        Cookies.remove(ACCESS_TOKEN);
-        Cookies.remove(ID_TOKEN);
-        Cookies.remove(REFRESH_TOKEN);
-      }
-    }
-  }, [navigate]);
 
   const addFilterKeywords = (data: any) => {
     if (!filterKeywords.includes(data)) {

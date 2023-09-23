@@ -79,7 +79,7 @@ const Home: React.FC = () => {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_COGNITO_CLIENT_ID as string,
       client_secret: process.env.REACT_APP_COGNITO_CLIENT_SECRET as string,
-      redirect_uri: "http://localhost:3000",
+      redirect_uri: process.env.REACT_APP_COGNITO_LOGIN_REDIRECT_URL as string
     };
 
     // const token = Cookies.get(ACCESS_TOKEN);
@@ -99,8 +99,10 @@ const Home: React.FC = () => {
             },
           }
         );
+        console.log("successfully retrieved token");
         navigate("/");
         const authResponse = response?.data as AuthResponse;
+        
         // console.log("auth response", authResponse);
         Cookies.set(ACCESS_TOKEN, authResponse.access_token, { path: "/" });
         Cookies.set(ID_TOKEN, authResponse.id_token, { path: "/" });
