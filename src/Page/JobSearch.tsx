@@ -1,15 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "./styles/JobSearch.css";
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
-import "./styles/Home.css";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import axios, { AxiosResponse } from "axios";
-// import Jobs from "../Components/Jobs";
-// import data from "../jobs-mock.json";
+import Jobs from "../Components/Jobs";
+import data from "../jobs-mock.json";
 
 interface AuthResponse {
   id_token: string;
@@ -32,26 +32,26 @@ interface SearchFormState {
   salary: string;
 }
 
-// interface IJob {
-//   id: number;
-//   company: string;
-//   logo: string;
-//   new: boolean;
-//   jobTitle: string;
-//   salaryRange: string;
-//   level: string;
-//   postedAt: string;
-//   employeeType: string;
-//   location: string;
-//   skills: string[];
-// }
+interface IJob {
+  id: number;
+  company: string;
+  logo: string;
+  new: boolean;
+  jobTitle: string;
+  salaryRange: string;
+  level: string;
+  postedAt: string;
+  employeeType: string;
+  location: string;
+  skills: string[];
+}
 
 const Home: React.FC = () => {
-  // const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
-  // let isMock: boolean = true;
-  // let jobListing: IJob[] = [];
+  const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
+  let isMock: boolean = true;
+  let jobListing: IJob[] = [];
 
-  // if (isMock) jobListing = data as IJob[];
+  if (isMock) jobListing = data as IJob[];
 
   const queryParameters = new URLSearchParams(window.location.search);
 
@@ -113,11 +113,11 @@ const Home: React.FC = () => {
     }
   }, [navigate, queryParameters]);
 
-  // const addFilterKeywords = (data: any) => {
-  //   if (!filterKeywords.includes(data)) {
-  //     setfilterKeywords([...filterKeywords, data]);
-  //   }
-  // };
+  const addFilterKeywords = (data: any) => {
+    if (!filterKeywords.includes(data)) {
+      setfilterKeywords([...filterKeywords, data]);
+    }
+  };
 
   //   const deleteKeyword = (data: any) => {
   //     const newKeywords = filterKeywords.filter((key) => key !== data);
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
   //   };
 
   return (
-    <div className="container-main home">
+    <div className="container-main jobsearch">
       <Container className="searchbox vw-80 d-flex">
         <Form className="w-100" onSubmit={(e) => console.log(e)}>
           <Row className="">
@@ -163,13 +163,13 @@ const Home: React.FC = () => {
           </Row>
         </Form>
       </Container>
-      {/* <Container className="jobs-wrapper">
+      <Container className="jobs-wrapper">
         <Jobs
           keywords={filterKeywords}
           data={jobListing}
           setKeywords={addFilterKeywords}
         />
-      </Container> */}
+      </Container>
     </div>
   );
 };

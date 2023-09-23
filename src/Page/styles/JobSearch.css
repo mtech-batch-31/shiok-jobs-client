@@ -21,17 +21,14 @@ body{
   height: calc(100vh - 50px);
 }
 
-.home{
-  background-image: url('../../Assets/shiok_jobs_home_bg.jpg'); 
-  background-size: cover;
-  background-repeat: repeat;
-  /* background-position: center; */
-  background-attachment: fixed;
+.jobsearch{
+  background-color: #f6f6f6;
 }
+
   /* Photo by <a href="https://unsplash.com/@victorhwn725?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victor He</a> on <a href="https://unsplash.com/photos/w7_uM_DObGo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
    */
-.searchbox{  
-  /* position: relative; */
+.jobsearch.searchbox{  
+  position: relative;
   top: 30vh;
   max-width: 800px;
 }
