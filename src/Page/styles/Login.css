@@ -1,7 +1,12 @@
 .custom-color {
   color: #0CA789;
 }
+
 .btn-custom {
+  min-width: 110px;
+}
+
+/* .btn-custom {
   background-color: #0CA789;
   color: #ffffff;
   border: 3px solid #0CA789;
@@ -63,4 +68,4 @@
   background-color: #9bbdf6 !important;
   color: #ffffff !important;
   border: 3px solid #9bbdf6 !important;
-}
+} */

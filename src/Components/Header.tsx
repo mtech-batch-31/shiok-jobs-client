@@ -87,7 +87,7 @@ function Header() {
   }, [navigate]);
 
   return (
-    <Navbar expand="md" className="bg-body-tertiary px-4">
+    <Navbar expand="md" className="bg-body-tertiary px-4 shadow-sm">
       {/* <Container> */}
       <Navbar.Brand className="" href="/">
         {/* <img className="nav-logo" src={logo} alt="logo"></img> */}

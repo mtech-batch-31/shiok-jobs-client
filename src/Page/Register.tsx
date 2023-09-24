@@ -164,7 +164,7 @@ const RegisterAccount = () => {
     }
 
     return (
-    <Container>
+    <Container className="">
         <Row className="vh-100 justify-content-center align-items-center">
         <div className="col-8 mx-auto">
         <Form onSubmit={submitRegistration}>

@@ -84,11 +84,11 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container fluid>
-      <Row className="vh-100 justify-content-center align-items-center">
-        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-7 col-xs-8 col-8">
+    <Container fluid className="bgimage vh-100">
+      <Row className="d-flex justify-content-center">
+        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-light shadow-sm">
           <Form onSubmit={(e) => handleFormSubmit(e)}>
-            <h1 className="custom-color">Login to Shiok Jobs</h1>
+            {/* <h1 className="custom-color">Login to Shiok Jobs</h1> */}
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -100,7 +100,7 @@ const Login: React.FC = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" className="mt-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -120,7 +120,7 @@ const Login: React.FC = () => {
             <Row className="d-flex justify-content-between align-items-center">
               <Col>
                 <Link to="/register">
-                  <Button variant="primary" className="btn-custom-outline">
+                  <Button variant="secondary" className="btn-custom">
                     Register
                   </Button>
                 </Link>
