@@ -238,7 +238,7 @@ const RegisterAccount = () => {
             </Row>
             <Row className="d-flex align-items-center">
                 <Col>
-                    <Link to="/"><Button variant="primary" className="btn-custom-outline">Back to Login</Button></Link>
+                    <Link to="/"><Button variant="secondary" className="btn-custom">Back to Login</Button></Link>
                 </Col>
                 <Col className="d-flex justify-content-end">
                     <Button variant="primary" type="submit" className="btn-custom">Register</Button>
