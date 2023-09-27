@@ -8,31 +8,30 @@ interface JobsProps {
     keywords: any;
 }
 
-const Jobs : React.FC<JobsProps> = ({ data, setKeywords, keywords }) => {
+const Jobs: React.FC<JobsProps> = ({ data, setKeywords, keywords }) => {
     const [filteredData, setfilteredData] = useState<any[]>([]);
 
-
-    const modifiedData = () => {
-        if (keywords) {
-            const newData = data.filter((d: { role: any; level: any; languages: string | any[]; tools: string | any[]; id: any; }) => {
-                return keywords.every((key: any) => {
-                    return (
-                        d.role === key ||
-                        d.level === key ||
-                        d.languages.includes(key) ||
-                        d.tools.includes(key)
-                    );
-                });
-            });
-            setfilteredData(newData);
-        } else {
-            setfilteredData(data);
-        }
-    };
-
     useEffect(() => {
-        modifiedData();        
-    }, [keywords, modifiedData]);
+        const modifiedData = () => {
+            if (keywords) {
+                const newData = data.filter((d: { role: any; level: any; languages: string | any[]; tools: string | any[]; id: any; }) => {
+                    return keywords.every((key: any) => {
+                        return (
+                            d.role === key ||
+                            d.level === key ||
+                            d.languages.includes(key) ||
+                            d.tools.includes(key)
+                        );
+                    });
+                });
+                setfilteredData(newData);
+            } else {
+                setfilteredData(data);
+            }
+        };
+
+        modifiedData();
+    }, [keywords, data]);
 
     return (
         <div className="jobs">

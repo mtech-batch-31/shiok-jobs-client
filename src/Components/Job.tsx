@@ -7,37 +7,37 @@ interface JobProps {
     key: any;
 }
 
-const Job : React.FC<JobProps> = ({data, key, setKeywords}) => {
+const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
 
-    console.log(key);
 
     const {
         company,
-        employeeType,        
+        employeeType,
         skills,
         level,
         location,
         logo,
         jobTitle,
-        postedAt,                
+        postedAt,
     } = data;
 
     let keywords = [level, ...skills];
 
     const [SvgComponent, setSvgComponent] = useState<any>();
 
-  useEffect(() => {
-    const loadSvg = async () => {
-      try {
-        const { default: Svg } = await import(/* webpackChunkName: "svg" */ `${logo}`);
-        setSvgComponent(Svg);
-      } catch (error) {
-        console.error('Error loading SVG:', error);
-      }
-    };
+    useEffect(() => {
+        const loadSvg = async () => {
+            try {
+                const { default: Svg } = await import(/* webpackChunkName: "svg" */ `${logo}`);
+                setSvgComponent(Svg);
+            } catch (error) {
+                console.error('Error loading SVG:', error);
+            }
+        };
 
-    loadSvg();
-  }, [SvgComponent, logo]);
+        loadSvg();
+    }, [logo]);
+
 
     return (
         <div
@@ -65,8 +65,8 @@ const Job : React.FC<JobProps> = ({data, key, setKeywords}) => {
             <div className="part2">
                 {keywords.map((key, id) => (
                     <span onClick={() => setKeywords(key)} key={id}>
-            {key}
-          </span>
+                        {key}
+                    </span>
                 ))}
             </div>
         </div>
