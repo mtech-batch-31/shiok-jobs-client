@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import './Job.css'
 
 interface JobProps {
     data: any;
     setKeywords: any;
-    key: any;
+    key: number;
 }
 
-const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
+const Job: React.FC<JobProps> = ({ data, setKeywords , key}) => {
 
 
     const {
+        id,
         company,
         employeeType,
         skills,
@@ -38,10 +40,12 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
         loadSvg();
     }, [logo]);
 
-
+    console.log('key', key);
     return (
+      <Link to={`/job/${id}`} className="link-container">
         <div
-            className="job-container">
+            className="job-container" id="unique">
+            
             <div className="logo">
                 <img src={SvgComponent} alt="" />
             </div>
@@ -69,7 +73,9 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
                     </span>
                 ))}
             </div>
+            
         </div>
+        </Link>
     );
 };
 
