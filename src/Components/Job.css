@@ -1,5 +1,11 @@
 .link-container{
     width: 100%;
+    color: black;
+    text-decoration: none;
+}
+
+.link-container:hover{
+    color: black;
 }
 
 .job-container {

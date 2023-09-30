@@ -82,3 +82,30 @@ export const MOCK_PRICING_RESP = {
         }
     ]
 }
+
+export const MOCK_JOBDETAILS_RESP = {
+    "id": 1,
+    "companyId": 1,
+    "companyName": "NUS",
+    "jobTitle": "Lecturer",
+    "jobSummary": "The National University of Singapore (NUS) is seeking a dynamic and dedicated individual to join our esteemed academic community as a Lecturer. As a Lecturer at NUS, you will play a pivotal role in shaping the future of education and fostering intellectual growth within our diverse and vibrant student body.",
+    "jobCategory": "Education",
+    "level": "Mid-Level",
+    "skills": [
+        "Teaching",
+        "Research"
+    ],
+    "employmentType": "Full-Time",
+    "location": "New York",
+    "workHours": "40 hours per week",
+    "minSalary": 75000.00,
+    "maxSalary": 100000.00,
+    "postedDate": "2023-09-23T00:00:00.000+00:00",
+    "closingDate": "2023-10-23T00:00:00.000+00:00",
+    "version": 1,
+    "lastUpdatedBy": "Admin",
+    "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
+    "createdBy": "Admin",
+    "createdTime": "2023-09-23T12:00:00.000+00:00"
+}
+

@@ -8,7 +8,7 @@ interface JobProps {
     key: number;
 }
 
-const Job: React.FC<JobProps> = ({ data, setKeywords , key}) => {
+const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
 
 
     const {
@@ -40,11 +40,10 @@ const Job: React.FC<JobProps> = ({ data, setKeywords , key}) => {
         loadSvg();
     }, [logo]);
 
-    console.log('key', key);
     return (
       <Link to={`/job/${id}`} className="link-container">
         <div
-            className="job-container" id="unique">
+            className="job-container">
             
             <div className="logo">
                 <img src={SvgComponent} alt="" />
