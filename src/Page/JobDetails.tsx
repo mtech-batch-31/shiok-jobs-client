@@ -2,13 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/JobDetails.css";
 
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 // import Jobs from "../Components/Jobs";
 // import data from "../jobs-mock.json";
 import { Container, Button } from "react-bootstrap";
-
+import { useParams } from 'react-router-dom';
 import { MOCK_JOBDETAILS_RESP } from "../utilities/constants";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 // interface SearchFormState {
 //   searchkey: string;
@@ -16,33 +16,60 @@ import axios from "axios";
 // }
 
 // interface IJob {
-//   id: number;
-//   company: string;
-//   logo: string;
-//   new: boolean;
-//   jobTitle: string;
-//   salaryRange: string;
-//   level: string;
-//   postedAt: string;
-//   employeeType: string;
-//   location: string;
-//   skills: string[];
+//   "id": null,
+//   "companyId": 1,
+//   "companyName": "NUS",
+//   "jobTitle": "Lecturer",
+//   "jobSummary": "The National University of Singapore (NUS) is seeking a dynamic and dedicated individual to join our esteemed academic community as a Lecturer. As a Lecturer at NUS, you will play a pivotal role in shaping the future of education and fostering intellectual growth within our diverse and vibrant student body.",
+//   "jobCategory": "Education",
+//   "level": "Mid-Level",
+//   "skills": [
+//       "Teaching",
+//       "Research"
+//   ],
+//   "employmentType": "Full-Time",
+//   "location": "New York",
+//   "workHours": "40 hours per week",
+//   "minSalary": 75000.00,
+//   "maxSalary": 100000.00,
+//   "postedDate": "2023-09-23T00:00:00.000+00:00",
+//   "closingDate": "2023-10-23T00:00:00.000+00:00",
+//   "version": 1,
+//   "lastUpdatedBy": "Admin",
+//   "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
+//   "createdBy": "Admin",
+//   "createdTime": "2023-09-23T12:00:00.000+00:00"
 // }
 
 const Home: React.FC = () => {
-  let data = MOCK_JOBDETAILS_RESP;
-  // const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
-  // let isMock: boolean = true;
-  // let jobListing: IJob[] = [];
-
-  // if (isMock) jobListing = data as IJob[];
-
-  // const initialFormData: SearchFormState = {
-  //   searchkey: "",
-  //   salary: "",
-  // };
-  // const [formData, setFormData] = useState<SearchFormState>(initialFormData);
-
+  // const blankJob = {
+  //   "id": 0,
+  //   "companyId": 1,
+  //   "companyName": "NUS",
+  //   "jobTitle": "test",
+  //   "jobSummary": "The National University of Singapore (NUS) is seeking a dynamic and dedicated individual to join our esteemed academic community as a Lecturer. As a Lecturer at NUS, you will play a pivotal role in shaping the future of education and fostering intellectual growth within our diverse and vibrant student body.",
+  //   "jobCategory": "Education",
+  //   "level": "Mid-Level",
+  //   "skills": [
+  //       "Teaching",
+  //       "Research"
+  //   ],
+  //   "employmentType": "Full-Time",
+  //   "location": "New York",
+  //   "workHours": "40 hours per week",
+  //   "minSalary": 75000.00,
+  //   "maxSalary": 100000.00,
+  //   "postedDate": "2023-09-23T00:00:00.000+00:00",
+  //   "closingDate": "2023-10-23T00:00:00.000+00:00",
+  //   "version": 1,
+  //   "lastUpdatedBy": "Admin",
+  //   "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
+  //   "createdBy": "Admin",
+  //   "createdTime": "2023-09-23T12:00:00.000+00:00"
+  // }
+  const [data, setData] = useState(MOCK_JOBDETAILS_RESP);
+  const { jobId } = useParams();
+  console.log("jobId",jobId);
   // const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const { name, value } = event.target;
   //   setFormData({ ...formData, [name]: value });
@@ -68,7 +95,7 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
-      let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/api/v1/jobs/${data.id}`;
+      let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/api/v1/jobs/${jobId}`;
       console.log(`calling ${url}`);
       axios
         .get(
@@ -78,17 +105,23 @@ const Home: React.FC = () => {
           }
         )
         .then((res) => {
-          console.log("api response", res.data);
-          data = res.data;
+          console.log("api response ", res.data);
+          // data = res.data;
+          setData(res.data);
         })
         .catch((err) => {
-          console.error("error when calling API", err);
+
+          const error = err as AxiosError;
+          console.error("error when calling API", error);
+          // setData(MOCK_JOBDETAILS_RESP);
         });
 
-  }, []);
+  }, [jobId]);
 
   return (
+    
     <div className="container-main job-details pt-5">
+
       <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
         <div className="job-details-part1 d-flex p-3  pb-4">
           <div className="flex-grow-1 ">
@@ -101,7 +134,7 @@ const Home: React.FC = () => {
             </div>
             <div>Skills:</div>
             <div className="part2">
-              {data.skills.map((key, id) => (
+              {data && data.skills.map((key, id) => (
                 <span key={id}>{key}</span>
               ))}
             </div>
@@ -123,14 +156,8 @@ const Home: React.FC = () => {
           </Button>
         </div>
       </Container>
-      {/* <Container className="jobs-wrapper">
-        <Jobs
-          keywords={filterKeywords}
-          data={jobListing}
-          setKeywords={addFilterKeywords}
-        />
-      </Container> */}
     </div>
+    
   );
 };
 

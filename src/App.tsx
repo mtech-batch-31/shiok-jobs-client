@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "/home", element: <Home /> },
       { path: "/job", element: <JobSearch /> },
-      { path: "/job/:id", element: <JobDetails /> },
+      { path: "/job/:jobId", element: <JobDetails /> },
       { path: "/profile", element: <RequireAuth component={UserProfile} /> },
       { path: "/register", element: <RegisterAccount /> },
       { path: "/login", element: <Login /> },
