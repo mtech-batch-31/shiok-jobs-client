@@ -27,26 +27,17 @@ const Home: React.FC = () => {
   const {state}= useLocation();
   
   const initialFormData:SearchFormState  = {
-     searchkey: state.searchKey,
-     salary: state.salary,
+     searchkey: state?.searchKey ?? "",
+     salary: state?.salary ?? "",
    };
 
 const [formData, setFormData] = useState<SearchFormState>(initialFormData);
 const [joblist, setJobList] = useState<IJob[]>(jobListing);
 
-useEffect(()=>{
-  console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`);
-  axios
-    .get(`${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`)
-    .then((res) => {
-      console.log('response: ', res);
-      setJobList(res.data.data);
-    })
-    .catch((err)=> {
-      console.error("error when calling job api", err);
-    });
+  useEffect(()=>{
+    searchJob();
+  }, []);
 
-}, []);
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -59,19 +50,33 @@ useEffect(()=>{
     }
   };
 
-  //   const deleteKeyword = (data: any) => {
-  //     const newKeywords = filterKeywords.filter((key) => key !== data);
-  //     setfilterKeywords(newKeywords);
-  //   };
-
-  //   const clearAll = () => {
-  //     setfilterKeywords([]);
-  //   };
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    searchJob();
+  }
+  const searchJob = () => {
+    console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`);
+    let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`;
+    if(formData.searchkey.length > 0)
+      url = url + `?keywords=${formData.searchkey}`;
+    if(formData.salary.length > 0)
+      url = url + `?minimumSalary=${formData.salary}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log('response: ', res);
+        setJobList(res.data.data);
+      })
+      .catch((err)=> {
+        console.error("error when calling job api", err);
+      });
+  }
 
   return (
     <div className="container-main jobsearch">
       <Container className="jobsearch-searchbox vw-80 d-flex pt-5">
-        <Form className="w-100" onSubmit={(e) => console.log(e)}>
+        <Form className="w-100" onSubmit={handleFormSubmit}>
           <Row className="">
             <Col sm={6} xs={12} className="py-2">
               <Form.Group controlId="searchkey">
