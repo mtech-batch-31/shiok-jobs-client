@@ -2,29 +2,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/JobSearch.css";
 
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import Jobs from "../Components/Jobs";
 import data from "../jobs-mock.json";
-
+import { useLocation } from "react-router";
+import axios from "axios";
+import IJob from "../Model/Job";
 
 interface SearchFormState {
   searchkey: string;
   salary: string;
-}
-
-interface IJob {
-  id: number;
-  company: string;
-  logo: string;
-  new: boolean;
-  jobTitle: string;
-  salaryRange: string;
-  level: string;
-  postedAt: string;
-  employeeType: string;
-  location: string;
-  skills: string[];
 }
 
 const Home: React.FC = () => {
@@ -32,14 +20,33 @@ const Home: React.FC = () => {
   let isMock: boolean = true;
   let jobListing: IJob[] = [];
 
-  if (isMock) jobListing = data as IJob[];
+  if (isMock)
+  {
+     jobListing = data as IJob[];
+  }
+  const {state}= useLocation();
+  
+  const initialFormData:SearchFormState  = {
+     searchkey: state.searchKey,
+     salary: state.salary,
+   };
 
-  const initialFormData: SearchFormState = {
-    searchkey: "",
-    salary: "",
-  };
-  const [formData, setFormData] = useState<SearchFormState>(initialFormData);
+const [formData, setFormData] = useState<SearchFormState>(initialFormData);
+const [joblist, setJobList] = useState<IJob[]>(jobListing);
 
+useEffect(()=>{
+  console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`);
+  axios
+    .get(`${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`)
+    .then((res) => {
+      console.log('response: ', res);
+      setJobList(res.data.data);
+    })
+    .catch((err)=> {
+      console.error("error when calling job api", err);
+    });
+
+}, []);
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -98,8 +105,7 @@ const Home: React.FC = () => {
       </Container>
       <Container className="jobs-wrapper">
         <Jobs
-          keywords={filterKeywords}
-          data={jobListing}
+          data={joblist}
           setKeywords={addFilterKeywords}
         />
       </Container>
