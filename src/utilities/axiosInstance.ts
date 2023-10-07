@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_RECYCLE_API_URL, // 你的 API base URL
+    baseURL: process.env.REACT_APP_SHIOK_JOBS_BFF_URL, // 你的 API base URL
   });
 
   axiosInstance.interceptors.request.use((config) => {

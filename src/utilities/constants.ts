@@ -1,10 +1,8 @@
-export const API_PATH = {
-    LOGIN : "/api/auth/login",
-    REGISTER: "/api/auth/register",
-    REFRESH_TOKEN: "/api/auth/refresh",
-    PRICE : "/api/v1/request/price",
-    REG_CONFIRM: "/api/v1/user/registrationConfirm",
-    RETRIEVE : "/api/v1/request/retrieve",
+export const API_URL = {
+    LOGIN : `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/login`,
+    REGISTER: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/register`,
+    REFRESH_TOKEN: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/refresh`,
+    REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
 }
 
 export const TABLE_DATA = [
