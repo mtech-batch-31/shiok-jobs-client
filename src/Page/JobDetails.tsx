@@ -95,7 +95,7 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
-      let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/api/v1/jobs/${jobId}`;
+      let url = `${process.env.REACT_APP_SHIOK_JOBS_BFF_JOBMS_URL}/${jobId}`;
       console.log(`calling ${url}`);
       axios
         .get(
