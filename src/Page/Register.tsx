@@ -104,9 +104,9 @@ const RegisterAccount = () => {
             navigate("/home");
           }, 2000);
         }
-      } catch (error) {
-        const err = error as AxiosError;
-        const apiResponse = err.response?.data as APIResponse;
+      } catch (err) {
+        const error = err as AxiosError;
+        const apiResponse = error.response?.data as APIResponse;
         //console.log(err.response?.data);
         if (apiResponse?.message)
           setRegisterResult({ isSuccess: false, message: apiResponse.message });
@@ -117,6 +117,13 @@ const RegisterAccount = () => {
           });
         console.log("Error when calling API.");
         console.log(error);
+        
+        const errorResponse : any = error.response;
+        if(errorResponse !== null){
+          const data : any = errorResponse.data;
+          console.log("error response", data);
+        }
+  
       }
     } else {
       console.log("form is invalid");
@@ -127,11 +134,11 @@ const RegisterAccount = () => {
   return (
     <Container fluid className="bgimage vh-100">
       <Row className="d-flex justify-content-center">
-        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5  px-5 py-5 bg-light shadow-sm">
+        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5  px-5 py-5 bg-white rounded-edges shadow-sm">
           <Row className="justify-content-center align-items-center">
             <div className=" mx-auto">
               <Form onSubmit={submitRegistration}>
-                <h1 className="custom-color">Register Account</h1>
+                <h1 className="text-dark text-serif text-center pb-3">Join Us</h1>
                 <Row>
                   <Form.Group controlId="email">
                     <Form.Label>Email</Form.Label>

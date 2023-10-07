@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { API_PATH } from '../utilities/constants';
+import { API_URL } from '../utilities/constants';
 import React from "react"
 
 const RegistrationConfirm = () =>{
@@ -13,7 +13,7 @@ const RegistrationConfirm = () =>{
     useEffect(() => {
         //call API to verify token
         axios
-        .post(process.env.REACT_APP_RECYCLE_API_URL+API_PATH.REG_CONFIRM+"?token="+token)
+        .post(API_URL.REG_CONFIRM+"?token="+token)
         .then(() => setVerified(true))
         .catch((error) => console.log(error));
 

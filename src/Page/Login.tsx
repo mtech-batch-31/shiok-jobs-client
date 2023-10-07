@@ -4,9 +4,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Login.css";
 import Cookies from "js-cookie";
-import { API_PATH, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
+import { API_URL, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import { ACCESS_TOKEN } from "../utilities/constants";
 import axiosInstance from "../utilities/axiosInstance";
+import  { AxiosError } from "axios";
 
 interface LoginFormState {
   email: string;
@@ -56,16 +57,13 @@ const Login: React.FC = () => {
     setResponseData(null);
     setErrorMessage("");
     try {
-      const response = await axiosInstance.post(
-        process.env.REACT_APP_RECYCLE_API_URL + API_PATH.LOGIN,
+      const response = await axiosInstance.post(API_URL.LOGIN,
         {
           email: formData.email,
           password: formData.password,
-        },
-        {
-          withCredentials: true,
         }
       );
+      // console.log("api response: ", response.data); // uncommment to see logs!
       if (response.data.accessToken == null) {
         setErrorMessage("Wrong password. Try again or contact us to reset it.");
       } else {
@@ -73,12 +71,23 @@ const Login: React.FC = () => {
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
         Cookies.set(REFRESH_TOKEN, response.data.refreshToken, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.idToken, { path: "/" });
-        setResponseData(response.data);
+        // setResponseData(response.data); // uncommment to see logs!
         setIsLoggedIn(true);
         navigate(redirectUrl);
       }
-    } catch (error) {
-      setErrorMessage("Couldn't find your account");
+    } catch (err) {
+      let errorMessage = "Something went wrong";
+      const error = err as AxiosError;
+      console.log("api response error: ", error);
+      const errorResponse : any = error.response;
+      if(errorResponse){
+        const data : any = errorResponse.data;
+        console.log("error response", data);
+        if (data.message != null){
+          errorMessage = data.message;
+        }
+      }
+      setErrorMessage(errorMessage);
       removeToken();
     }
   };
@@ -86,9 +95,9 @@ const Login: React.FC = () => {
   return (
     <Container fluid className="bgimage vh-100">
       <Row className="d-flex justify-content-center">
-        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-light shadow-sm">
+        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-white rounded-edges shadow-sm">
           <Form onSubmit={(e) => handleFormSubmit(e)}>
-            {/* <h1 className="custom-color">Login to Shiok Jobs</h1> */}
+            <h1 className="text-dark text-serif text-center pb-3">Welcome back</h1>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -112,7 +121,7 @@ const Login: React.FC = () => {
               />
             </Form.Group>
             {errorMessage && (
-              <div className="text-danger mr-2 d-inline-block">
+              <div className="text-danger mr-2 d-inline-block py-3">
                 {errorMessage}
               </div>
             )}

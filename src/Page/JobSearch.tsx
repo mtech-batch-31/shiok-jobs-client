@@ -56,8 +56,8 @@ const [joblist, setJobList] = useState<IJob[]>(jobListing);
     searchJob();
   }
   const searchJob = () => {
-    console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}`);
-    let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}`;
+    //console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_BFF_JOBMS_URL}`);
+    let url = `${process.env.REACT_APP_SHIOK_JOBS_BFF_JOBMS_URL}`;
     if(formData.searchkey.length > 0)
       url = url + `?keywords=${formData.searchkey}`;
     if(formData.salary.length > 0)
@@ -65,7 +65,7 @@ const [joblist, setJobList] = useState<IJob[]>(jobListing);
     axios
       .get(url)
       .then((res) => {
-        console.log('response: ', res);
+        //console.log('response: ', res);
         setJobList(res.data.data);
       })
       .catch((err)=> {

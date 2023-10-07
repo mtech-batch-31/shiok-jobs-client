@@ -61,3 +61,19 @@
 .blue.nav-item, .blue.nav-item-active{
     color: #046380 !important;
 }
+
+.text-gold{
+    color: #8F7725 ;
+} 
+
+.text-blue{
+    color: #1f917c !important;
+}
+
+.text-serif{
+    font-family: "Times New Roman", Times, serif;
+}
+
+.rounded-edges{
+    border-radius: 3px;
+}
