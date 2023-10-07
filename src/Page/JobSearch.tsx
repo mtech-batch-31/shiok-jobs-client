@@ -2,29 +2,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/JobSearch.css";
 
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import Jobs from "../Components/Jobs";
 import data from "../jobs-mock.json";
-
+import { useLocation } from "react-router";
+import axios from "axios";
+import IJob from "../Model/Job";
 
 interface SearchFormState {
   searchkey: string;
   salary: string;
-}
-
-interface IJob {
-  id: number;
-  company: string;
-  logo: string;
-  new: boolean;
-  jobTitle: string;
-  salaryRange: string;
-  level: string;
-  postedAt: string;
-  employeeType: string;
-  location: string;
-  skills: string[];
 }
 
 const Home: React.FC = () => {
@@ -32,13 +20,23 @@ const Home: React.FC = () => {
   let isMock: boolean = true;
   let jobListing: IJob[] = [];
 
-  if (isMock) jobListing = data as IJob[];
+  if (isMock)
+  {
+     jobListing = data as IJob[];
+  }
+  const {state}= useLocation();
+  
+  const initialFormData:SearchFormState  = {
+     searchkey: state?.searchKey ?? "",
+     salary: state?.salary ?? "",
+   };
 
-  const initialFormData: SearchFormState = {
-    searchkey: "",
-    salary: "",
-  };
-  const [formData, setFormData] = useState<SearchFormState>(initialFormData);
+const [formData, setFormData] = useState<SearchFormState>(initialFormData);
+const [joblist, setJobList] = useState<IJob[]>(jobListing);
+
+  useEffect(()=>{
+    searchJob();
+  }, []);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,19 +50,33 @@ const Home: React.FC = () => {
     }
   };
 
-  //   const deleteKeyword = (data: any) => {
-  //     const newKeywords = filterKeywords.filter((key) => key !== data);
-  //     setfilterKeywords(newKeywords);
-  //   };
-
-  //   const clearAll = () => {
-  //     setfilterKeywords([]);
-  //   };
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    searchJob();
+  }
+  const searchJob = () => {
+    console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`);
+    let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`;
+    if(formData.searchkey.length > 0)
+      url = url + `?keywords=${formData.searchkey}`;
+    if(formData.salary.length > 0)
+      url = url + `?minimumSalary=${formData.salary}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log('response: ', res);
+        setJobList(res.data.data);
+      })
+      .catch((err)=> {
+        console.error("error when calling job api", err);
+      });
+  }
 
   return (
     <div className="container-main jobsearch">
       <Container className="jobsearch-searchbox vw-80 d-flex pt-5">
-        <Form className="w-100" onSubmit={(e) => console.log(e)}>
+        <Form className="w-100" onSubmit={handleFormSubmit}>
           <Row className="">
             <Col sm={6} xs={12} className="py-2">
               <Form.Group controlId="searchkey">
@@ -98,8 +110,7 @@ const Home: React.FC = () => {
       </Container>
       <Container className="jobs-wrapper">
         <Jobs
-          keywords={filterKeywords}
-          data={jobListing}
+          data={joblist}
           setKeywords={addFilterKeywords}
         />
       </Container>

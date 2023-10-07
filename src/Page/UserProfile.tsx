@@ -98,7 +98,6 @@ const Home: React.FC = () => {
       </Container>
       <Container className="jobs-wrapper">
         <Jobs
-          keywords={filterKeywords}
           data={jobListing}
           setKeywords={addFilterKeywords}
         />
