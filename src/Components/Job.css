@@ -37,11 +37,11 @@
     .job-container .logo {
         position: absolute;
         top: -2rem;
-   }
+    }
     .job-container .logo img {
         width: 4rem;
         height: auto;
-   }
+    }
 }
 .job-container .part1 {
     display: flex;

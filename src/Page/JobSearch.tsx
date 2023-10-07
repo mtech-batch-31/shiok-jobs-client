@@ -17,7 +17,7 @@ interface SearchFormState {
 
 const Home: React.FC = () => {
   const [filterKeywords, setfilterKeywords] = useState<any[]>([]);
-  let isMock: boolean = true;
+  let isMock: boolean = false;
   let jobListing: IJob[] = [];
 
   if (isMock)
@@ -56,8 +56,8 @@ const [joblist, setJobList] = useState<IJob[]>(jobListing);
     searchJob();
   }
   const searchJob = () => {
-    console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`);
-    let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}/v1/jobs`;
+    console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}`);
+    let url = `${process.env.REACT_APP_SHIOK_JOBS_MS_JOBS_URL}`;
     if(formData.searchkey.length > 0)
       url = url + `?keywords=${formData.searchkey}`;
     if(formData.salary.length > 0)

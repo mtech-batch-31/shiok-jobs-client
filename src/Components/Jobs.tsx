@@ -9,7 +9,7 @@ interface JobsProps {
 }
 
 const Jobs: React.FC<JobsProps> = ({ data, setKeywords }) => {
-    console.log('props data:',data);
+    //console.log('props data:',data);
    // const [filteredData, setfilteredData] = useState<any[]>(data);
 
     // useEffect(() => {

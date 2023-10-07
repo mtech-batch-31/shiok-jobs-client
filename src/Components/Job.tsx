@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import './Job.css'
 
@@ -25,20 +25,20 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
 
     let keywords = [level, ...skills];
 
-    const [SvgComponent, setSvgComponent] = useState<any>();
+    //const [SvgComponent, setSvgComponent] = useState<any>();
 
-    useEffect(() => {
-        const loadSvg = async () => {
-            try {
-                const { default: Svg } = await import(/* webpackChunkName: "svg" */ `${logo}`);
-                setSvgComponent(Svg);
-            } catch (error) {
-                console.error('Error loading SVG:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const loadSvg = async () => {
+    //         try {
+    //             const { default: Svg } = await import(/* webpackChunkName: "svg" */ `${logo}`);
+    //             setSvgComponent(Svg);
+    //         } catch (error) {
+    //             console.error('Error loading SVG:', error);
+    //         }
+    //     };
 
-        loadSvg();
-    }, [logo]);
+    //     loadSvg();
+    // }, [logo]);
 
     return (
       <Link to={`/job/${id}`} className="link-container">
@@ -46,7 +46,7 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
             className="job-container">
             
             <div className="logo">
-                <img src={SvgComponent} alt="" />
+                <img src={logo} alt="" width="70px" />
             </div>
             <div className="part1">
                 <div className="company">
