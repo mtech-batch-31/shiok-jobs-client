@@ -139,9 +139,9 @@ function Header() {
               className={({ isActive }) =>
                 isActive ? "nav-item-active gold" : "nav-item gold"
               }
-              to="/"
+              to="/profile"
             >
-              Employer
+              Job Seeker
             </NavLink>
           </div>
           {/* </Nav.Link> */}

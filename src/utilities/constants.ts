@@ -107,3 +107,11 @@ export const MOCK_JOBDETAILS_RESP = {
     "createdTime": "2023-09-23T12:00:00.000+00:00"
 }
 
+export const MOCK_USERDETAILS_RESP = {
+    "id": 1,
+    "name": "Andrew Tan",
+    "seeking": "Open to jobs",
+    "jobTitle": "Assistant Engineer",
+    "image": "url",
+    "about": "Job seeker with 10 years experience in programming"
+}
