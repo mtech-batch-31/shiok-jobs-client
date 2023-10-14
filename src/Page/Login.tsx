@@ -71,7 +71,7 @@ const Login: React.FC = () => {
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
         Cookies.set(REFRESH_TOKEN, response.data.refreshToken, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.idToken, { path: "/" });
-        // setResponseData(response.data); // uncommment to see logs!
+        setResponseData(response.data); 
         setIsLoggedIn(true);
         navigate(redirectUrl);
       }
