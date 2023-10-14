@@ -3,6 +3,7 @@ export const API_URL = {
     REGISTER: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/register`,
     REFRESH_TOKEN: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/refresh`,
     REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
+    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/api/v1/user/me`
 }
 
 export const TABLE_DATA = [
@@ -107,11 +108,62 @@ export const MOCK_JOBDETAILS_RESP = {
     "createdTime": "2023-09-23T12:00:00.000+00:00"
 }
 
-export const MOCK_USERDETAILS_RESP = {
+export const MOCK_USERDETAILS_RESP = 
+{
     "id": 1,
+    "accountUuid": "06396421-0159-42cf-a6a6-64aac15cc4b1",
     "name": "Andrew Tan",
-    "seeking": "Open to jobs",
-    "jobTitle": "Assistant Engineer",
+    "seeking": "true",
+    "jobTitle": "Production Support Engineer",
     "image": "url",
-    "about": "Job seeker with 10 years experience in programming"
+    "about": "Reduced the number of customer support tickets by 15% by developing a new knowledge base.",
+    "workingExperience": [
+        {
+            "id": 1,
+            "company": "SPTel",
+            "yearStart": "2012",
+            "yearEnd": "2015",
+            "jobTitle": "Engineer",
+            "experience": "Performed production support duties in multiple Greenfield Telco projects"
+        },
+        {
+            "id": 2,
+            "company": "Singtel",
+            "yearStart": "2013",
+            "yearEnd": "2015",
+            "jobTitle": "Engineer",
+            "experience": "Performed software development duties in multiple Telco projects"
+        },
+        {
+            "id": 3,
+            "company": "StarHub",
+            "yearStart": "2014",
+            "yearEnd": "2015",
+            "jobTitle": "Engineer",
+            "experience": "Performed software architecture duties in multiple Telco projects"
+        }
+    ],
+    "educationalExperience": [
+        {
+            "id": 1,
+            "school": "Hwa Chong Institution",
+            "yearStart": "2000",
+            "yearEnd": "2008",
+            "description": "Integrated Programme"
+        },
+        {
+            "id": 2,
+            "school": "National University Singapore",
+            "yearStart": "2001",
+            "yearEnd": "2009",
+            "description": "Bachelors"
+        },
+        {
+            "id": 3,
+            "school": "Singapore Institute Management",
+            "yearStart": "2002",
+            "yearEnd": "2010",
+            "description": "Masters of Technology"
+        }
+    ]
 }
