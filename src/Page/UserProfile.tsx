@@ -50,12 +50,12 @@ const Home: React.FC = () => {
             <div key={experience.id}>
               <div className="job-details-part1 d-flex p-3  pb-4"></div><br/>
             <h3>{experience.company}</h3>
-            <div className="d-flex p-3  pb-4">
+            <div className="d-flex pb-4">
               <div className="flex-grow-1 ">
                   <div className="">{experience.jobTitle}</div>
               </div>
               <div className="salary text-end p-2">
-                  <div className="">{experience.yearStart} - {experience.yearEnd}</div>
+                  <div className=" fw-bold">{experience.yearStart} - {experience.yearEnd}</div>
               </div>
               </div>
               <p>{experience.experience}</p>
@@ -74,9 +74,13 @@ const Home: React.FC = () => {
           {educationalExperience.map((experience) => (
             <div key={experience.id}>
               <div className="job-details-part1 d-flex p-3  pb-4"></div><br/>
-              <h3>{experience.school}</h3>
+              <div className="d-flex pb-4">
+              <div className="flex-grow-1 ">
+                  <div className=""><h4>{experience.school}</h4></div>
+              </div>
               <div className="salary text-end p-2">
-                <p>{experience.yearStart} - {experience.yearEnd}</p>
+                  <div className=" fw-bold">{experience.yearStart} - {experience.yearEnd}</div>
+              </div>
               </div>
               <p>{experience.description}</p>
              </div>
