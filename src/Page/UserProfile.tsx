@@ -105,12 +105,6 @@ const Home: React.FC = () => {
               <div className="part2 mx-2">
                 <span>Switch job seeking status</span>
               </div>
-              <div className="part2 mx-2">
-                <span>Job Experience</span>
-              </div>
-              <div className="part2 mx-2">
-                <span>Education</span>
-              </div>
             </p>
           </p>
         </p>
