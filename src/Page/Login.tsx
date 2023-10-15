@@ -1,36 +1,37 @@
+import "./styles/Login.css";
+
 import React, { useState, useEffect } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/Login.css";
 import Cookies from "js-cookie";
 import { API_URL, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import { ACCESS_TOKEN } from "../utilities/constants";
 import axiosInstance from "../utilities/axiosInstance";
 import  { AxiosError } from "axios";
+import { useAuth } from '../Auth/AuthContext';
 
 interface LoginFormState {
   email: string;
   password: string;
 }
 
-interface ResponseData {
-  message: string;
-  accessToken: string;
-  refreshToken: string;
-  idToken: string;
-}
+// interface ResponseData {
+//   message: string;
+//   accessToken: string;
+//   refreshToken: string;
+//   idToken: string;
+// }
 
-const Login: React.FC = () => {
+const Login = () => {
+  const { login } = useAuth();
   const initialFormData: LoginFormState = {
     email: "",
     password: "",
   };
 
   const [formData, setFormData] = useState<LoginFormState>(initialFormData);
-  const [responseData, setResponseData] = useState<ResponseData | null>(null); // eslint-disable-line no-unused-vars
+  // const [responseData, setResponseData] = useState<ResponseData | null>(null); // eslint-disable-line no-unused-vars
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // eslint-disable-line no-unused-vars
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (Cookies.get(ACCESS_TOKEN)) {
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
     }
   }, []);
 
@@ -54,7 +55,7 @@ const Login: React.FC = () => {
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setResponseData(null);
+    // setResponseData(null);
     setErrorMessage("");
     try {
       const response = await axiosInstance.post(API_URL.LOGIN,
@@ -63,7 +64,7 @@ const Login: React.FC = () => {
           password: formData.password,
         }
       );
-      // console.log("api response: ", response.data); // uncommment to see logs!
+      console.log("api response: ", response.data); // uncommment to see logs!
       if (response.data.accessToken == null) {
         setErrorMessage("Wrong password. Try again or contact us to reset it.");
       } else {
@@ -71,8 +72,10 @@ const Login: React.FC = () => {
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
         Cookies.set(REFRESH_TOKEN, response.data.refreshToken, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.idToken, { path: "/" });
-        setResponseData(response.data); 
-        setIsLoggedIn(true);
+        // setResponseData(response.data); 
+
+        console.log("redirect to: ", redirectUrl); // uncommment to see logs!
+        login();
         navigate(redirectUrl);
       }
     } catch (err) {

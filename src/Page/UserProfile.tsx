@@ -6,8 +6,8 @@ import React, {useEffect, useState} from "react";
 import { Container, Button } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
 import { API_URL, MOCK_USERDETAILS_RESP } from "../utilities/constants";
-import axios, { AxiosError } from "axios";
-
+import { AxiosError } from "axios";
+import axiosInstance from "../utilities/axiosInstance";
 
 const Home: React.FC = () => {
   const [data, setData] = useState(MOCK_USERDETAILS_RESP);
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   useEffect(() => {
       let url = API_URL.USER_PROFILE
       console.log(`calling ${url}`);
-      axios
+      axiosInstance
         .get(
           url,
           {

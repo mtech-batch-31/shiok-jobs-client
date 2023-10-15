@@ -3,84 +3,15 @@ export const API_URL = {
     REGISTER: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/register`,
     REFRESH_TOKEN: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/refresh`,
     REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
-    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/api/v1/user/me`
+    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/api/v1/user/me`,
+    JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`,
 }
 
-export const TABLE_DATA = [
-    {"category":"plastic","quantity":1,"units":"kg"},
-    {"category":"plastic","quantity":1,"units":"kg"},
-
-]
 
 export const ACCESS_TOKEN = "accessToken";
 export const ID_TOKEN = "idToken";
 export const REFRESH_TOKEN = "refreshToken";
-// export const CATEGORY_DATA = [
-//     {"category":"Plastic","units":"kg"},
-//     {"category":"Paper","units":"kg"},
-//     {"category":"Metal","units":"kg"},
-//     {"category":"Textile","units":"kg"}
-// ]
 
-export const CATEGORY_DATA = [
-    {
-        "category": "Glass",
-        "price": 200,
-        "quantity": 0.0,
-        "unitOfMeasurement": "ton"
-    },
-    {
-        "category": "Electronics",
-        "price": 700,
-        "quantity": 0.0,
-        "unitOfMeasurement": "item"
-    },
-    {
-        "category": "Plastic",
-        "price": 100,
-        "quantity": 0.0,
-        "unitOfMeasurement": "g"
-    },
-    {
-        "category": "Paper",
-        "price": 50,
-        "quantity": 0.0,
-        "unitOfMeasurement": "ton"
-    },
-    {
-        "category": "Battery",
-        "price": 500,
-        "quantity": 0.0,
-        "unitOfMeasurement": "kg"
-    },
-    {
-        "category": "Clothes",
-        "price": 300,
-        "quantity": 0.0,
-        "unitOfMeasurement": "g"
-    }
-];
-
-
-export const MOCK_PRICING_RESP = {
-    "returnCode": "00",
-    "message": "The request has been successfully processed",
-    "totalPrice": 800,
-    "items": [
-        {
-            "name": "Plastic",
-            "quantity": 1,
-            "price": 100,
-            "totalPrice": 100
-        },
-        {
-            "name": "Electronics",
-            "quantity": 1,
-            "price": 700,
-            "totalPrice": 700
-        }
-    ]
-}
 
 export const MOCK_JOBDETAILS_RESP = {
     "id": 1,

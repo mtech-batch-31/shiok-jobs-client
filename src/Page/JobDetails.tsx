@@ -1,103 +1,23 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/JobDetails.css";
 
 import React, {useEffect, useState} from "react";
-// import Jobs from "../Components/Jobs";
-// import data from "../jobs-mock.json";
 import { Container, Button } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
-import { MOCK_JOBDETAILS_RESP } from "../utilities/constants";
-import axios, { AxiosError } from "axios";
-
-// interface SearchFormState {
-//   searchkey: string;
-//   salary: string;
-// }
-
-// interface IJob {
-//   "id": null,
-//   "companyId": 1,
-//   "companyName": "NUS",
-//   "jobTitle": "Lecturer",
-//   "jobSummary": "The National University of Singapore (NUS) is seeking a dynamic and dedicated individual to join our esteemed academic community as a Lecturer. As a Lecturer at NUS, you will play a pivotal role in shaping the future of education and fostering intellectual growth within our diverse and vibrant student body.",
-//   "jobCategory": "Education",
-//   "level": "Mid-Level",
-//   "skills": [
-//       "Teaching",
-//       "Research"
-//   ],
-//   "employmentType": "Full-Time",
-//   "location": "New York",
-//   "workHours": "40 hours per week",
-//   "minSalary": 75000.00,
-//   "maxSalary": 100000.00,
-//   "postedDate": "2023-09-23T00:00:00.000+00:00",
-//   "closingDate": "2023-10-23T00:00:00.000+00:00",
-//   "version": 1,
-//   "lastUpdatedBy": "Admin",
-//   "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
-//   "createdBy": "Admin",
-//   "createdTime": "2023-09-23T12:00:00.000+00:00"
-// }
+import { API_URL, MOCK_JOBDETAILS_RESP } from "../utilities/constants";
+import { AxiosError } from "axios";
+import axiosInstance from "../utilities/axiosInstance";
 
 const Home: React.FC = () => {
-  // const blankJob = {
-  //   "id": 0,
-  //   "companyId": 1,
-  //   "companyName": "NUS",
-  //   "jobTitle": "test",
-  //   "jobSummary": "The National University of Singapore (NUS) is seeking a dynamic and dedicated individual to join our esteemed academic community as a Lecturer. As a Lecturer at NUS, you will play a pivotal role in shaping the future of education and fostering intellectual growth within our diverse and vibrant student body.",
-  //   "jobCategory": "Education",
-  //   "level": "Mid-Level",
-  //   "skills": [
-  //       "Teaching",
-  //       "Research"
-  //   ],
-  //   "employmentType": "Full-Time",
-  //   "location": "New York",
-  //   "workHours": "40 hours per week",
-  //   "minSalary": 75000.00,
-  //   "maxSalary": 100000.00,
-  //   "postedDate": "2023-09-23T00:00:00.000+00:00",
-  //   "closingDate": "2023-10-23T00:00:00.000+00:00",
-  //   "version": 1,
-  //   "lastUpdatedBy": "Admin",
-  //   "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
-  //   "createdBy": "Admin",
-  //   "createdTime": "2023-09-23T12:00:00.000+00:00"
-  // }
   const [data, setData] = useState(MOCK_JOBDETAILS_RESP);
   const { jobId } = useParams();
   console.log("jobId",jobId);
-  // const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = event.target;
-  //   setFormData({ ...formData, [name]: value });
-  //   // console.log("formData ", formData.salary, formData.searchkey);
-  // };
 
-  // const addFilterKeywords = (data: any) => {
-  //   if (!filterKeywords.includes(data)) {
-  //     setfilterKeywords([...filterKeywords, data]);
-  //   }
-  // };
-
-  //   const deleteKeyword = (data: any) => {
-  //     const newKeywords = filterKeywords.filter((key) => key !== data);
-  //     setfilterKeywords(newKeywords);
-  //   };
-
-  //   const clearAll = () => {
-  //     setfilterKeywords([]);
-  //   };
-
-  // let date : Date
 
 
   useEffect(() => {
-      let url = `${process.env.REACT_APP_SHIOK_JOBS_BFF_JOBMS_URL}/${jobId}`;
+      let url = `${API_URL.JOBS}/${jobId}`;
       console.log(`calling ${url}`);
-      axios
+      axiosInstance
         .get(
           url,
           {

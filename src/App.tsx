@@ -8,7 +8,7 @@ import UserProfile from "./Page/UserProfile";
 import RegisterAccount from "./Page/Register";
 import RegistrationConfirm from "./Page/RegistrationConfirm";
 import React from "react";
-
+import { AuthProvider } from './Auth/AuthContext';
 import "./App.css";
 import RequireAuth from "./Components/RequireAuth";
 
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { path: "/home", element: <Home /> },
       { path: "/job", element: <JobSearch /> },
       { path: "/job/:jobId", element: <JobDetails /> },
-      { path: "/profile", element: <UserProfile /> },
+      // { path: "/profile", element: <UserProfile /> },
       { path: "/profile", element: <RequireAuth component={UserProfile} /> },
       { path: "/register", element: <RegisterAccount /> },
       { path: "/login", element: <Login /> },
@@ -31,7 +31,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (<AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
+  )
 }
 
 export default App;

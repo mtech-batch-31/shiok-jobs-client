@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import {redirect} from 'react-router-dom'
-import {ACCESS_TOKEN} from './constants.js'
+import { ACCESS_TOKEN } from './constants'
 
 export function isLogin()
 {
@@ -14,12 +14,13 @@ export function isLogin()
 export function getToken()
 {
     let token = Cookies.get(ACCESS_TOKEN) ;
+    return token;
     //console.log('getToken: '+token);
-    if (token){
-        return token;
-    } else {
-        return redirect('/');
-    }
+    // if (token){
+    //     return token;
+    // } else {
+    //     return redirect('/');
+    // }
 }
 
 
