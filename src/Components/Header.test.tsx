@@ -2,21 +2,26 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom'; 
 import Header from './Header'; 
+import { AuthProvider } from '../Auth/AuthContext';
 
 describe('Header Component', () => {
   it('renders the component without errors', () => {
     render(
-      <Router>
-        <Header />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Header />
+        </Router>
+      </AuthProvider>
     );
   });
 
   it('displays navigation links', () => {
     const { getByText } = render(
-      <Router>
-        <Header />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Header />
+        </Router>
+      </AuthProvider>
     );
     
     // Replace these with your actual link texts

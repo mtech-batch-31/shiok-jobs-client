@@ -78,7 +78,7 @@ function Header() {
     }
 
   
-  }, [navigate]);
+  }, [navigate, login, logout]);
 
   const onLogout = () => {
       removeToken();
