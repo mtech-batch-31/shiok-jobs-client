@@ -30,11 +30,6 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo REACT_APP_COGNITO_LOGIN_URL=${{ secrets.COGNITO_LOGIN_URL }} >> .env
-          echo REACT_APP_COGNITO_LOGIN_REDIRECT_URL=${{ secrets.COGNITO_LOGIN_REDIRECT_URL }} >> .env
-          echo REACT_APP_COGNITO_AUTH_TOKEN_URL=${{ secrets.COGNITO_AUTH_TOKEN_URL }} >> .env
-          echo REACT_APP_COGNITO_CLIENT_ID=${{ secrets.COGNITO_CLIENT_ID }} >> .env
-          echo REACT_APP_COGNITO_CLIENT_SECRET=${{ secrets.COGNITO_CLIENT_SECRET }} >> .env
           echo REACT_APP_SHIOK_JOBS_BFF_URL=${{ secrets.SHIOK_JOBS_BFF_URL }} >> .env
           cat .env
 
@@ -56,9 +51,7 @@ jobs:
           cache: 'npm'
       - run: npm run build
         env:
-          REACT_APP_COGNITO_AUTH_TOKEN_URL: 'test'
-          REACT_APP_COGNITO_CLIENT_ID: 'test'
-          REACT_APP_COGNITO_CLIENT_SECRET: 'test'
+          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -96,22 +89,13 @@ jobs:
         with:
           node-version: 14
 
-      - name: Create env file
-        run: |
-          touch .env
-          echo REACT_APP_COGNITO_LOGIN_URL=${{ secrets.COGNITO_LOGIN_URL }} >> .env
-          echo REACT_APP_COGNITO_LOGIN_REDIRECT_URL=${{ secrets.COGNITO_LOGIN_REDIRECT_URL }} >> .env
-          echo REACT_APP_COGNITO_AUTH_TOKEN_URL=${{ secrets.COGNITO_AUTH_TOKEN_URL }} >> .env
-          echo REACT_APP_COGNITO_CLIENT_ID=${{ secrets.COGNITO_CLIENT_ID }} >> .env
-          echo REACT_APP_COGNITO_CLIENT_SECRET=${{ secrets.COGNITO_CLIENT_SECRET }} >> .env
-          echo REACT_APP_SHIOK_JOBS_BFF_URL=${{ secrets.SHIOK_JOBS_BFF_URL }} >> .env
-          cat .env
-
       - name: Install dependencies
         run: npm install
 
       - name: Build React app
         run: npm run build
+        env:
+          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
 
       - name: Delete S3 contents
         run: |
