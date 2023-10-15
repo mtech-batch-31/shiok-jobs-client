@@ -81,7 +81,7 @@ const Login = () => {
     } catch (err) {
       let errorMessage = "Something went wrong";
       const error = err as AxiosError;
-      console.log("api response error: ", error);
+      console.log(`error when calling : ${API_URL.LOGIN}, error: `, error);
       const errorResponse : any = error.response;
       if(errorResponse){
         const data : any = errorResponse.data;
