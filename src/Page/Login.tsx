@@ -6,8 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API_URL, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import { ACCESS_TOKEN } from "../utilities/constants";
-import axiosInstance from "../utilities/axiosInstance";
-import  { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { useAuth } from '../Auth/AuthContext';
 
 interface LoginFormState {
@@ -58,7 +57,7 @@ const Login = () => {
     // setResponseData(null);
     setErrorMessage("");
     try {
-      const response = await axiosInstance.post(API_URL.LOGIN,
+      const response = await axios.post(API_URL.LOGIN,
         {
           email: formData.email,
           password: formData.password,

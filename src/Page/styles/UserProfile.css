@@ -90,13 +90,13 @@ body{
       justify-content: flex-start;
  }
 }
-.user-details .part2 span {
+.container-main .part2 span {
   background-color: hsl(180, 52%, 96%);
   color: rgb(91, 164, 164);
   font-weight: 700;
   padding: 0.5rem;
   border-radius: 5px;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 .user-details .part2 span:not(:last-child) {
   margin-right: 1rem;
@@ -109,4 +109,20 @@ body{
   .user-details .part2 span {
       margin-bottom: 1rem;
  }
+}
+
+@media only screen and (max-width: 375px) {
+  .job-container {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 80vw;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      
+ }
+}
+.job-container .logo {
+  display: flex;
+  align-items: center;
+  padding-right: 1.5rem;
 }
