@@ -35,7 +35,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
-  const redirectUrl = queryParams.get("redirect") || "/";
+  const redirectUrl = queryParams.get("redirect") || "/profile";
 
   useEffect(() => {
     if (Cookies.get(ACCESS_TOKEN)) {
