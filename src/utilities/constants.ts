@@ -2,9 +2,8 @@ export const API_URL = {
     LOGIN : `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/login`,
     REGISTER: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/register`,
     REFRESH_TOKEN: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/refresh`,
-    REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
-    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/api/v1/user/me`,
-    UPDATE_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_USERMS_URL}/api/v1/user`,
+    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user/me`,
+    UPDATE_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user`,
     JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`
 }
 
