@@ -37,7 +37,9 @@ body{
 }
 
 .job-details .salary {
-  color: rgb(41, 164, 164);;
+  /* color: rgb(41, 164, 164); */
+  /* color: #198754; */
+  color: #046380;
 }
 
 

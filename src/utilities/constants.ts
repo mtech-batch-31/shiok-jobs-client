@@ -5,7 +5,8 @@ export const API_URL = {
     REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
     USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user/me`,
     UPDATE_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user`,
-    JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`
+    JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`,
+    JOBS_AUTH: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs/auth`
 }
 
 export const AUTH = {
@@ -41,7 +42,35 @@ export const MOCK_JOBDETAILS_RESP = {
     "lastUpdatedBy": "Admin",
     "lastUpdatedTime": "2023-09-23T12:00:00.000+00:00",
     "createdBy": "Admin",
-    "createdTime": "2023-09-23T12:00:00.000+00:00"
+    "createdTime": "2023-09-23T12:00:00.000+00:00",
+    "applied": null
+}
+
+
+export const PLACEHOLDER_JOBDETAILS_RESP = {
+    "id": 1,
+    "companyId": 1,
+    "companyName": "Company",
+    "jobTitle": "Title",
+    "jobSummary": "Description",
+    "jobCategory": "Industry",
+    "level": "Level",
+    "skills": [
+        "Skills"
+    ],
+    "employmentType": "Employment Type",
+    "location": "Location",
+    "workHours": "Work hours",
+    "minSalary": 0.00,
+    "maxSalary": 0.00,
+    "postedDate": "2023-01-01T00:00:00.000+00:00",
+    "closingDate": "2023-01-01T00:00:00.000+00:00",
+    "version": 1,
+    "lastUpdatedBy": "Admin",
+    "lastUpdatedTime": "2023-01-01T00:00:00.000+00:00",
+    "createdBy": "Admin",
+    "createdTime": "2023-01-01T00:00:00.000+00:00",
+    "applied": null
 }
 
 export const MOCK_USERDETAILS_RESP = 

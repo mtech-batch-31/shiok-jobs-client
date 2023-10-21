@@ -49,6 +49,10 @@ h1, h2, h3 {
   min-width: 110px;
 }
 
+.btn-width{
+  min-width: 110px;
+}
+
 .field-label{
  font-weight: 700;
 }
@@ -60,4 +64,8 @@ h1, h2, h3 {
 
 .jobs-wrapper::-webkit-scrollbar {
     width: 0; /* Hide the scrollbar */
+}
+
+.unclickable{
+  cursor: auto !important;
 }
