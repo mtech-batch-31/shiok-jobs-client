@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 import {redirect} from 'react-router-dom'
-import { ACCESS_TOKEN } from './constants'
+import { AUTH } from './constants'
 
 export function isLogin()
 {
-    let token = Cookies.get(ACCESS_TOKEN) ;
+    let token = Cookies.get(AUTH.ACCESS_TOKEN) ;
     //console.log('Route protection: '+token);
     if(!token)
         return redirect('/');
@@ -13,7 +13,7 @@ export function isLogin()
 
 export function getToken()
 {
-    let token = Cookies.get(ACCESS_TOKEN) ;
+    let token = Cookies.get(AUTH.ACCESS_TOKEN) ;
     return token;
     //console.log('getToken: '+token);
     // if (token){
@@ -26,5 +26,7 @@ export function getToken()
 
 export function removeToken()
 {
-    Cookies.remove(ACCESS_TOKEN)
+    Cookies.remove(AUTH.ACCESS_TOKEN);
+    Cookies.remove(AUTH.ID_TOKEN);
+    Cookies.remove(AUTH.REFRESH_TOKEN);
 }

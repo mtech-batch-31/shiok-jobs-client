@@ -6,13 +6,47 @@ import { useParams } from 'react-router-dom';
 import { API_URL, MOCK_JOBDETAILS_RESP } from "../utilities/constants";
 import { AxiosError } from "axios";
 import axiosInstance from "../utilities/axiosInstance";
+import { useAuth } from '../Auth/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const [data, setData] = useState(MOCK_JOBDETAILS_RESP);
   const { jobId } = useParams();
-  console.log("jobId",jobId);
+  console.log("jobId:",jobId);
+  const navigate = useNavigate();
 
+  const { isLoggedIn } = useAuth();
+  const location = useLocation();
+  const onApply = () => {
+    if (!isLoggedIn){
+      const redirectUrl = `/login?redirect=${location.pathname}`;
+      console.log("redirect to:",redirectUrl)
+      navigate(redirectUrl);
+      return;
+    }
+    console.log(`applying for job, jobId: ${jobId}`);
+    let url = `${API_URL.JOBS}/apply`;
+    console.log(`calling ${url}`);
+    axiosInstance
+      .post(
+        url,
+        jobId,
+        {
+          headers: {
+            'Content-Type': 'text/plain',
+        }}
+      )
+      .then((res) => {
+        console.log("api response ", res.data);
+        // data = res.data;
+        // setData(res.data);
+      })
+      .catch((err) => {
 
+        const error = err as AxiosError;
+        console.error("error when calling API", error);
+      });
+  }
 
   useEffect(() => {
       let url = `${API_URL.JOBS}/${jobId}`;
@@ -71,7 +105,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className="d-flex justify-content-end align-items-end mt-4 px-3">
-          <Button variant="primary" type="submit" className="btn-search">
+          <Button variant="primary" type="submit" className="btn-search" onClick={onApply}>
             Apply
           </Button>
         </div>

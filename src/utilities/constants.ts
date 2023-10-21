@@ -8,7 +8,11 @@ export const API_URL = {
     JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`
 }
 
-
+export const AUTH = {
+    ACCESS_TOKEN: "accessToken",
+    ID_TOKEN: "idToken",
+    REFRESH_TOKEN: "refreshToken"
+}
 export const ACCESS_TOKEN = "accessToken";
 export const ID_TOKEN = "idToken";
 export const REFRESH_TOKEN = "refreshToken";

@@ -7,7 +7,7 @@ import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import Jobs from "../Components/Jobs";
 import data from "../jobs-mock.json";
 import { useLocation } from "react-router";
-import axiosInstance from "../utilities/axiosInstance";
+import axios from "axios";
 import IJob from "../Model/Job";
 import { API_URL } from "../utilities/constants";
 
@@ -63,10 +63,10 @@ const [joblist, setJobList] = useState<IJob[]>(jobListing);
       url = url + `?keywords=${formData.searchkey}`;
     if(formData.salary.length > 0)
       url = url + `?minimumSalary=${formData.salary}`;
-      axiosInstance
+      axios
       .get(url)
       .then((res) => {
-        //console.log('response: ', res);
+        // console.log('response: ', res);
         setJobList(res.data.data);
       })
       .catch((err)=> {

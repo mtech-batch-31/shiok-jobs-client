@@ -12,8 +12,9 @@ import React, { useEffect } from "react";
 import { getToken, removeToken } from "../utilities/auth";
 import "./Header.css";
 import { useAuth } from '../Auth/AuthContext';
-import { API_URL } from "../utilities/constants";
-import  { AxiosError } from "axios";
+
+// import { API_URL } from "../utilities/constants";
+// import  { AxiosError } from "axios";
 import axiosInstance from "../utilities/axiosInstance";
 // interface AuthResponse {
 //   id_token: string;
@@ -61,20 +62,21 @@ function Header() {
     const token = getToken();
     console.log("token from cookies: " + token + " " + new Date());
     if (token) {
-      // TODO: call secured url, if success, login
+
+      // call secured url, if success, login
       axiosInstance
-      .get(API_URL.USER_PROFILE)
-      .then((res) => {
-        console.log("api response ", res.data);
-        login();
-      })
-      .catch((err) => {
-        const error = err as AxiosError;
-        console.error("error when calling API", error);
-        logout();
-        // setData(MOCK_JOBDETAILS_RESP);
-      });
-      // login();
+      // .get(API_URL.USER_PROFILE)
+      // .then((res) => {
+      //   console.log("api response ", res.data);
+      //   login();
+      // })
+      // .catch((err) => {
+      //   const error = err as AxiosError;
+      //   console.error("error when calling API", error);
+      //   logout();
+      //   // setData(MOCK_JOBDETAILS_RESP);
+      // });
+      login();
     }
 
   
