@@ -14,7 +14,7 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
     const {
         id,
         company,
-        employeeType,
+        employmentType,
         skills,
         level,
         location,
@@ -59,7 +59,7 @@ const Job: React.FC<JobProps> = ({ data, setKeywords }) => {
                 <div className="details">
                     <span>{postedAt}</span>
                     <span>&nbsp;•&nbsp;</span>
-                    <span>{employeeType}</span>
+                    <span>{employmentType}</span>
                     <span>&nbsp;•&nbsp;</span>
                     <span>{location}</span>
                 </div>
