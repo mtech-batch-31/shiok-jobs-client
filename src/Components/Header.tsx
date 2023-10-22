@@ -15,7 +15,7 @@ import { useAuth } from '../Auth/AuthContext';
 
 // import { API_URL } from "../utilities/constants";
 // import  { AxiosError } from "axios";
-import axiosInstance from "../utilities/axiosInstance";
+// import axiosInstance from "../utilities/axiosInstance";
 // interface AuthResponse {
 //   id_token: string;
 //   access_token: string;
@@ -64,7 +64,7 @@ function Header() {
     if (token) {
 
       // call secured url, if success, login
-      axiosInstance
+      // axiosInstance
       // .get(API_URL.USER_PROFILE)
       // .then((res) => {
       //   console.log("api response ", res.data);
