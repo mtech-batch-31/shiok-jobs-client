@@ -27,12 +27,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
-      - name: Create env file
-        run: |
-          touch .env
-          echo REACT_APP_SHIOK_JOBS_BFF_URL=${{ secrets.SHIOK_JOBS_BFF_URL }} >> .env
-          cat .env
-
       - name: Lint
         run: npm run lint
       - name: Test
