@@ -57,16 +57,16 @@ const [joblist, setJobList] = useState<IJob[]>(jobListing);
     searchJob();
   }
   const searchJob = () => {
-    //console.log('Calling Api:', `${process.env.REACT_APP_SHIOK_JOBS_BFF_JOBMS_URL}`);
     let url = API_URL.JOBS;
     if(formData.searchkey.length > 0)
       url = url + `?keywords=${formData.searchkey}`;
     if(formData.salary.length > 0)
       url = url + `?minimumSalary=${formData.salary}`;
+      console.log('calling api: ', url);
       axios
       .get(url)
       .then((res) => {
-        // console.log('response: ', res);
+        console.log('api response: ', res);
         setJobList(res.data.data);
       })
       .catch((err)=> {
