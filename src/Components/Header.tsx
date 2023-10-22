@@ -106,7 +106,7 @@ function Header() {
               }
               to="/job"
             >
-              Search Job
+              Search Jobb
             </NavLink>
             {/* </Nav.Link> */}
           </div>
@@ -174,7 +174,7 @@ function Header() {
           ) : (
             <div className="nav-link ms-4">
               <NavLink className="nav-item blue fw-bold" to="/login">
-                Loginn
+                Login
               </NavLink>
             </div>
           )}
