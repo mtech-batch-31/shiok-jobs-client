@@ -13,52 +13,11 @@ import { getToken, removeToken } from "../utilities/auth";
 import "./Header.css";
 import { useAuth } from '../Auth/AuthContext';
 
-// import { API_URL } from "../utilities/constants";
-// import  { AxiosError } from "axios";
-// import axiosInstance from "../utilities/axiosInstance";
-// interface AuthResponse {
-//   id_token: string;
-//   access_token: string;
-//   refresh_token: string;
-//   expires_in: string;
-//   token_type: string;
-// }
-
-// interface AuthRequest {
-//   code: string;
-//   grant_type: string;
-//   client_id: string;
-//   client_secret: string;
-//   redirect_uri: string;
-// }
-
 function Header() {
   const navigate = useNavigate();
   const { isLoggedIn, login, logout } = useAuth();
-  // let hasTokenValue = Cookies.get(ACCESS_TOKEN) !== undefined;
-  //console.log(hasTokenValue);
-  // const navigate = useNavigate();
-
-  // const logout = () =>
-  // {
-  //     Cookies.remove(ACCESS_TOKEN);
-  //     navigate('/');
-  // }
-  // const [isLogin, setIslogin] = useState<boolean>(false);
 
   useEffect(() => {
-    // const queryParameters = new URLSearchParams(window.location.search);
-    // const authCode = queryParameters.get("code") as string;
-    // console.log(`authorization code=${authCode}`);
-
-    // let request: AuthRequest = {
-    //   code: authCode,
-    //   grant_type: "authorization_code",
-    //   client_id: process.env.REACT_APP_COGNITO_CLIENT_ID as string,
-    //   client_secret: process.env.REACT_APP_COGNITO_CLIENT_SECRET as string,
-    //   redirect_uri: process.env.REACT_APP_COGNITO_LOGIN_REDIRECT_URL as string,
-    // };
-
     const token = getToken();
     console.log("token from cookies: " + token + " " + new Date());
     if (token) {
@@ -92,7 +51,7 @@ function Header() {
       {/* <Container> */}
       <Navbar.Brand className="" href="/">
         {/* <img className="nav-logo" src={logo} alt="logo"></img> */}
-        <div className="nav-logo fw-bold">shiok jobs</div>
+        <div className="nav-logo fw-bold">shiok shiok jobs</div>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
