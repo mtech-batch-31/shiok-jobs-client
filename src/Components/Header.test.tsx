@@ -25,7 +25,7 @@ describe('Header Component', () => {
     );
     
     // Replace these with your actual link texts
-    const linkTexts = ['Search Job', 'Company Reviews', 'Career Guide', 'Employer', 'Login'];
+    const linkTexts = ['shiok shiok jobs','Search Job', 'Company Reviews', 'Career Guide', 'Employer', 'Login'];
     
     linkTexts.forEach((text) => {
       const link = getByText(text);
