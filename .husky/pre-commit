@@ -1,14 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Running tests..."
-if [ $? -eq 0 ]; then
-    # If tests pass, allow the commit
-    exit 0
-else
-    # If tests fail, prevent the commit
-    echo "Tests failed. Commit aborted."
-    exit 1
-fi
-
 npx lint-staged
