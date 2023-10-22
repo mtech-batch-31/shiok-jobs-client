@@ -106,7 +106,7 @@ function Header() {
               }
               to="/job"
             >
-              Search Job
+              Search Jobb
             </NavLink>
             {/* </Nav.Link> */}
           </div>
