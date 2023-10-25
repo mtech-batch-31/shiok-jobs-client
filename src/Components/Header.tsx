@@ -51,7 +51,7 @@ function Header() {
       {/* <Container> */}
       <Navbar.Brand className="" href="/">
         {/* <img className="nav-logo" src={logo} alt="logo"></img> */}
-        <div className="nav-logo fw-bold">shiok shiok jobs</div>
+        <div className="nav-logo fw-bold">shiok jobs</div>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
