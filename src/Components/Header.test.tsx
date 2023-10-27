@@ -24,7 +24,6 @@ describe('Header Component', () => {
       </AuthProvider>
     );
     
-    // Replace these with your actual link texts
     const linkTexts = ['shiok jobs','Search Job', 'Company Reviews', 'Career Guide', 'Employer', 'Login'];
     
     linkTexts.forEach((text) => {
