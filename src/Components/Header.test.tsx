@@ -24,7 +24,7 @@ describe('Header Component', () => {
       </AuthProvider>
     );
     
-    const linkTexts = ['shiok jobs','Search Job', 'Company Reviews', 'Career Guide', 'Employer', 'Login'];
+    const linkTexts = ['shiok jobs - test pipeline','Search Job', 'Company Reviews', 'Career Guide', 'Employer', 'Login'];
     
     linkTexts.forEach((text) => {
       const link = getByText(text);
