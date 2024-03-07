@@ -1,12 +1,12 @@
 export const API_URL = {
-    LOGIN : `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/login`,
-    REGISTER: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/register`,
-    REFRESH_TOKEN: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/auth/refresh`,
-    REG_CONFIRM: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/v1/user/registrationConfirm`,
-    USER_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user/me`,
-    UPDATE_PROFILE: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/user/v1/user`,
-    JOBS: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs`,
-    JOBS_AUTH: `${process.env.REACT_APP_SHIOK_JOBS_BFF_URL}/api/job/v1/jobs/auth`
+    LOGIN : `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/login`,
+    REGISTER: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/signup`,
+    REFRESH_TOKEN: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/refresh`,
+    REG_CONFIRM: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/v1/user/registrationConfirm`,
+    USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user/me`,
+    UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
+    JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs`,
+    JOBS_AUTH: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs/auth`
 }
 
 export const AUTH = {
