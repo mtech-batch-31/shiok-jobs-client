@@ -91,6 +91,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
+          REACT_APP_GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
 
       - name: Delete S3 contents
         run: |

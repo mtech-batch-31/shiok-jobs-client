@@ -6,6 +6,7 @@ import { Button, Form, Container, Row, Col, Alert } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import "./styles/Register.css";
 import React from "react";
+import { API_URL } from "../utilities/constants";
 
 interface RegisterAccountState {
   email: string;
@@ -78,15 +79,16 @@ const RegisterAccount = () => {
     //is form is valid
     if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew) {
       try {
-        const registerUrl =
-          process.env.REACT_APP_SHIOK_JOBS_BFF_URL + "/api/auth/register";
+        const registerUrl = API_URL.REGISTER;
         console.log(
           "calling register API (" + process.env.NODE_ENV + ") " + registerUrl
         );
-        const response = await axios.post(registerUrl, {
+        let requestBody = {
           email: formData.email,
           password: formData.password,
-        });
+        }
+        // console.log("requestBody ", requestBody);
+        const response = await axios.post(registerUrl, requestBody);
         console.log(response);
         if (response.status !== 200) {
           //register unsuccess
