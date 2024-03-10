@@ -64,13 +64,13 @@ const Login = () => {
         }
       );
       console.log("api response: ", response.data); // uncommment to see logs!
-      if (response.data.accessToken == null) {
+      if (response.data.authenticationResult.accessToken == null) {
         setErrorMessage("Wrong password. Try again or contact us to reset it.");
       } else {
-        const token = response.data.accessToken;
+        const token = response.data.authenticationResult.accessToken;
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
-        Cookies.set(REFRESH_TOKEN, response.data.refreshToken, { path: "/" });
-        Cookies.set(ID_TOKEN, response.data.idToken, { path: "/" });
+        Cookies.set(REFRESH_TOKEN, response.data.authenticationResult.refreshToken, { path: "/" });
+        Cookies.set(ID_TOKEN, response.data.authenticationResult.idToken, { path: "/" });
         // setResponseData(response.data); 
 
         console.log("redirect to: ", redirectUrl); // uncommment to see logs!
