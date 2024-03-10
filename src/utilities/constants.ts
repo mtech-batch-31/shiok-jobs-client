@@ -82,7 +82,7 @@ export const MOCK_USERDETAILS_RESP =
     "jobTitle": "Job Title",
     "image": "https://shiok-jobs-profile-images.s3.ap-southeast-1.amazonaws.com/images/generic.jpeg",
     "about": "About",
-    "workingExperience": [
+    "workExperience": [
         {
             "id": 1,
             "company": "Company",
@@ -93,7 +93,7 @@ export const MOCK_USERDETAILS_RESP =
             "experience": "Experience"
         }
     ],
-    "educationalExperience": [
+    "education": [
         {
             "id": 1,
             "school": "School",

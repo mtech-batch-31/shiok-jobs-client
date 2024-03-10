@@ -10,8 +10,8 @@ import axiosInstance from "../utilities/axiosInstance";
 
 const Home: React.FC = () => {
   const [data, setData] = useState(MOCK_USERDETAILS_RESP);
-  const [workingExperience, setWork] = useState(MOCK_USERDETAILS_RESP.workingExperience);
-  const [educationalExperience, setEducation] = useState(MOCK_USERDETAILS_RESP.educationalExperience);
+  const [workExperience, setWork] = useState(MOCK_USERDETAILS_RESP.workExperience);
+  const [education, setEducation] = useState(MOCK_USERDETAILS_RESP.education);
   useEffect(() => {
 
     let url = API_URL.USER_PROFILE
@@ -27,8 +27,8 @@ const Home: React.FC = () => {
         console.log("api response ", res.data);
         // data = res.data;
         setData(res.data);
-        setWork(res.data.workingExperience);
-        setEducation(res.data.educationalExperience);
+        setWork(res.data.workExperience);
+        setEducation(res.data.education);
       })
       .catch((err) => {
 
@@ -39,11 +39,11 @@ const Home: React.FC = () => {
 
   }, []);
 
-  const WorkingExperience = () => {
+  const WorkExperience = () => {
     return (
       <div>
         <h2>Working Experience</h2>
-        {workingExperience.map((experience) => (
+        {workExperience.map((experience) => (
           <div key={experience.id}>
             <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
             <Row className="">
@@ -69,12 +69,12 @@ const Home: React.FC = () => {
     );
   };
 
-  const EducationalExperience = () => {
+  const Education = () => {
     return (
       <div>
         <h2>Educational Experience</h2>
         {/* <ul> */}
-        {educationalExperience.map((experience) => (
+        {education.map((experience) => (
           <div key={experience.id}>
             <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
             <Row className="">
@@ -159,12 +159,12 @@ const Home: React.FC = () => {
       </Container><br />
       <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
         <div>
-          <WorkingExperience />
+          <WorkExperience />
         </div>
       </Container><br />
       <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
         <div>
-          <EducationalExperience />
+          <Education />
         </div>
       </Container><br />
 
