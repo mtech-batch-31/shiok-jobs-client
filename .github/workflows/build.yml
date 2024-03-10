@@ -91,10 +91,6 @@ jobs:
         env:
           REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
 
-      - name: Delete S3 contents
-        run: |
-          aws s3 rm s3://shiok-jobs-client-bucket --recursive  
-
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://shiok-jobs-client-bucket --delete
