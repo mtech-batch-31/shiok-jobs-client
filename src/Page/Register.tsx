@@ -7,7 +7,11 @@ import axios, { AxiosError } from "axios";
 import "./styles/Register.css";
 import { API_URL } from '../utilities/constants';
 import React from "react";
+<<<<<<< HEAD
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
+=======
+import { API_URL } from "../utilities/constants";
+>>>>>>> 4a35bc77a07d94224aad6bbd2a822e9238ed29d5
 
 interface RegisterAccountState {
   email: string;
@@ -94,10 +98,12 @@ const RegisterAccount = () => {
         console.log(
           "calling register API (" + process.env.NODE_ENV + ") " + registerUrl
         );
-        const response = await axios.post(registerUrl, {
+        let requestBody = {
           email: formData.email,
           password: formData.password,
-        });
+        }
+        // console.log("requestBody ", requestBody);
+        const response = await axios.post(registerUrl, requestBody);
         console.log(response);
         if (response.status !== 200) {
           //register unsuccess
