@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <RequireAuth component={UserProfile} /> },
       { path: "/register", element: <RegisterAccount /> },
       { path: "/login", element: <Login /> },
-      { path: "/registrationConfirm", element: <RegistrationConfirm /> },
+      //{ path: "/registrationConfirm", element: <RegistrationConfirm /> },
     ],
   },
 ]);

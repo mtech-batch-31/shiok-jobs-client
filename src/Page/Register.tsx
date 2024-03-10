@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { Button, Form, Container, Row, Col, Alert, useAccordionButton } from "react-bootstrap";
+import { Button, Form, Container, Row, Col, Alert } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import "./styles/Register.css";
 import { API_URL } from '../utilities/constants';
@@ -178,6 +178,8 @@ const RegisterAccount = () => {
         }
       }catch( err){
         const error = err as AxiosError;
+        if(process.env.NODE_ENV != 'production')
+          console.log(error)
         setRegisterResult({
           isSuccess: false,
           message: "Error when registering. Please try again.",
