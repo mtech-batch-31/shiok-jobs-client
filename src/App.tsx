@@ -6,7 +6,6 @@ import JobSearch from "./Page/JobSearch";
 import JobDetails from "./Page/JobDetails";
 import UserProfile from "./Page/UserProfile";
 import RegisterAccount from "./Page/Register";
-import RegistrationConfirm from "./Page/RegistrationConfirm";
 import React from "react";
 import { AuthProvider } from './Auth/AuthContext';
 import "./App.css";
