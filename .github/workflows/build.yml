@@ -45,7 +45,7 @@ jobs:
           cache: 'npm'
       - run: npm run build
         env:
-          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
+          REACT_APP_GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -89,11 +89,21 @@ jobs:
       - name: Build React app
         run: npm run build
         env:
-          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
+          REACT_APP_GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
 
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://shiok-jobs-security --delete
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Invalidate Cloudfront (this action)
+      - name: invalidate
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          PATHS: '/*'
+          AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
