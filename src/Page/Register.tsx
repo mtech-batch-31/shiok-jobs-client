@@ -5,13 +5,14 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Button, Form, Container, Row, Col, Alert } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import "./styles/Register.css";
+import { API_URL } from '../utilities/constants';
 import React from "react";
-import { API_URL } from "../utilities/constants";
 
 interface RegisterAccountState {
   email: string;
   password: string;
   confirmPassword: string;
+  confirmCode : string;
 }
 interface RegisterResult {
   isSuccess: boolean;
@@ -25,17 +26,21 @@ const RegisterAccount = () => {
   const initFormState: RegisterAccountState = {
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    confirmCode: ""
   };
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterAccountState>(initFormState);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
+  const [isConfirmCodeValid, setIsConfirmCodeValid] = useState(true);
   const [registerResult, setRegisterResult] = useState<RegisterResult>({
     isSuccess: false,
     message: "",
   });
+
+  const [isConfirmsignUp, setIsConfirmSignUp] = useState(false);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -49,18 +54,23 @@ const RegisterAccount = () => {
         );
         break;
       case "password":
-        setIsPasswordValid(
+        setIsPasswordValid(isConfirmsignUp || 
           /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/.test(
             formData.password
           )
         );
         break;
       case "confirmPassword":
-        setIsConfirmPasswordValid(
+        setIsConfirmPasswordValid(isConfirmsignUp ||
           formData.password === formData.confirmPassword
         );
         break;
-    }
+      case "confirmCode":
+          setIsConfirmCodeValid(!isConfirmsignUp ||
+            formData.confirmCode.length > 0
+          );
+          break;
+      }
   };
   const submitRegistration = async (
     event: React.FormEvent<HTMLFormElement>
@@ -79,7 +89,7 @@ const RegisterAccount = () => {
     //is form is valid
     if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew) {
       try {
-        const registerUrl = API_URL.REGISTER;
+        const registerUrl =API_URL.REGISTER;
         console.log(
           "calling register API (" + process.env.NODE_ENV + ") " + registerUrl
         );
@@ -100,11 +110,9 @@ const RegisterAccount = () => {
         } else {
           setRegisterResult({
             isSuccess: true,
-            message: "Your account has been successfully registered.",
+            message: "Please enter confirm code sent to your email.",
           });
-          setTimeout(function () {
-            navigate("/home");
-          }, 2000);
+          setIsConfirmSignUp(true);
         }
       } catch (err) {
         const error = err as AxiosError;
@@ -132,7 +140,53 @@ const RegisterAccount = () => {
       setRegisterResult({ isSuccess: false, message: "" });
     }
   };
+  const confirmSignupOnClickHandler = async() => {
+    if(!isConfirmsignUp) setIsConfirmSignUp(true);
+    else{
+      //validate input
+      var valid = true;
+      if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)){
+        setIsEmailValid(false);
+        valid = false;
+      }
+      else
+        setIsEmailValid(true);
+      if(formData.confirmCode.length <= 0){
+        setIsConfirmCodeValid(false);
+        valid = false;
+      }
+      else setIsConfirmCodeValid(true);
+      if(!valid)
+        return;
 
+      try{
+        const response = await axios.post(API_URL.REG_CONFIRM, 
+        {
+          email: formData.email,
+          code: formData.confirmCode,
+        });
+        console.log(response);
+        if (response.status == 200) {
+          setRegisterResult({
+            isSuccess: true,
+            message: "Welcome, you have successfully joined shiok jobs.",
+          });
+          setTimeout(function () {
+            navigate("/login");
+          }, 2000);
+
+        }
+      }catch( err){
+        const error = err as AxiosError;
+        if(process.env.NODE_ENV != 'production')
+          console.log(error)
+        setRegisterResult({
+          isSuccess: false,
+          message: "Error when registering. Please try again.",
+        });
+      }
+    }
+  }
   return (
     <Container fluid className="bgimage vh-100">
       <Row className="d-flex justify-content-center">
@@ -157,6 +211,7 @@ const RegisterAccount = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
+                {!isConfirmsignUp && 
                 <Row>
                   <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
@@ -173,6 +228,8 @@ const RegisterAccount = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
+                }
+                {!isConfirmsignUp && 
                 <Row>
                   <Form.Group controlId="confirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
@@ -188,6 +245,23 @@ const RegisterAccount = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
+                }
+                {isConfirmsignUp && 
+                <Row>
+                  <Form.Group controlId="confirmCode">
+                    <Form.Label>Code</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={formData.confirmCode}
+                      onChange={onChangeHandler}
+                      isInvalid={!isConfirmCodeValid}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Confirm code is required.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+                }
                 <Row>
                   <p></p>
                   <Alert
@@ -205,6 +279,7 @@ const RegisterAccount = () => {
                       </Button>
                     </Link>
                   </Col>
+                  {!isConfirmsignUp && 
                   <Col className="d-flex justify-content-end">
                     <Button
                       variant="primary"
@@ -212,6 +287,13 @@ const RegisterAccount = () => {
                       className="btn-custom"
                     >
                       Register
+                    </Button>
+                  </Col>}
+                  <Col className="d-flex justify-content-end">
+                    <Button
+                      variant="success" className="btn-custom"
+                      onClick={confirmSignupOnClickHandler}>
+                      Confirm Registration
                     </Button>
                   </Col>
                 </Row>
