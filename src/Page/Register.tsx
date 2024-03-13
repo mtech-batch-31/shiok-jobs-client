@@ -35,6 +35,8 @@ const RegisterAccount = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
   const [isConfirmCodeValid, setIsConfirmCodeValid] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const [showUncheckedError, setShowUncheckedError] = useState(false);
   const [registerResult, setRegisterResult] = useState<RegisterResult>({
     isSuccess: false,
     message: "",
@@ -46,6 +48,12 @@ const RegisterAccount = () => {
     const { id, value } = event.target;
     setFormData({ ...formData, [id]: value });
   };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setShowUncheckedError(false); // Reset error message when checkbox is toggled
+  }
+
   const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     switch (event.target.id) {
       case "email":
@@ -87,7 +95,10 @@ const RegisterAccount = () => {
     setIsPasswordValid(isPasswordValidNew);
     setIsConfirmPasswordValid(isConfirmPasswordValidNew);
     //is form is valid
-    if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew) {
+    if (!isChecked) {
+      setShowUncheckedError(true);
+    }
+    if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew && isChecked) {
       try {
         const registerUrl =API_URL.REGISTER;
         console.log(
@@ -195,7 +206,7 @@ const RegisterAccount = () => {
             <div className=" mx-auto">
               <Form onSubmit={submitRegistration}>
                 <h1 className="text-dark text-serif text-center pb-3">Join Us</h1>
-                <Row>
+                <Row className="mb-2">
                   <Form.Group controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -212,39 +223,59 @@ const RegisterAccount = () => {
                   </Form.Group>
                 </Row>
                 {!isConfirmsignUp && 
-                <Row>
-                  <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      onChange={onChangeHandler}
-                      value={formData.password}
-                      isInvalid={!isPasswordValid}
-                      onBlur={onBlurHandler}
+                <>
+                  <Row className="mb-3">
+                    <Form.Group controlId="password">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        onChange={onChangeHandler}
+                        value={formData.password}
+                        isInvalid={!isPasswordValid}
+                        onBlur={onBlurHandler}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Password must be at least 8 characters, is alphanumeric
+                        and contain special character.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row className="mb-4">
+                    <Form.Group controlId="confirmPassword">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        onChange={onChangeHandler}
+                        value={formData.confirmPassword}
+                        isInvalid={!isConfirmPasswordValid}
+                        onBlur={onBlurHandler}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Confirm password and password does not match.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row className="mb-3">
+                  <Form.Group controlId="privacyCheckbox">
+                    <Form.Check
+                      type="checkbox"
+                      label={
+                        <span className="font-weight-norm">
+                          By registering, I agree to the <a href="/privacy-policy" target="_blank">Privacy Policy</a> and consent to the collection, storage and use of my personal data as described in that policy.
+                        </span>
+                      }
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+    
                     />
-                    <Form.Control.Feedback type="invalid">
-                      Password must be at least 8 characters, is alphanumeric
-                      and contain special character.
-                    </Form.Control.Feedback>
+                    { showUncheckedError && 
+                      <p className="error-message text-danger">
+                        You must agree to the Privacy Policy before submitting.
+                      </p>
+                    }
                   </Form.Group>
-                </Row>
-                }
-                {!isConfirmsignUp && 
-                <Row>
-                  <Form.Group controlId="confirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      onChange={onChangeHandler}
-                      value={formData.confirmPassword}
-                      isInvalid={!isConfirmPasswordValid}
-                      onBlur={onBlurHandler}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Confirm password and password does not match.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Row>
+                  </Row>
+                  </>
                 }
                 {isConfirmsignUp && 
                 <Row>

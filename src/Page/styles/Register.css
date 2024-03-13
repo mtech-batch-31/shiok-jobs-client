@@ -39,3 +39,11 @@ label {
   background-color: #0ca789;
   color: #ffffff;
 }
+
+.font-weight-norm{
+  font-weight: normal !important;
+}
+
+.error-message{
+  font-size: .9em;
+}
