@@ -8,7 +8,9 @@ import { API_URL, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import { ACCESS_TOKEN } from "../utilities/constants";
 import axios, { AxiosError } from "axios";
 import { useAuth } from '../Auth/AuthContext';
-
+import { Auth } from '@aws-amplify/auth';
+import { Hub } from '@aws-amplify/core';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 interface LoginFormState {
   email: string;
   password: string;
@@ -27,6 +29,49 @@ const Login = () => {
     email: "",
     password: "",
   };
+
+  // eslint-disable-next-line no-unused-vars
+  const [user, setUser] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [customState, setCustomState] = useState<string | null>(null);
+
+  useEffect(() => {
+  const unsubscribe = Hub.listen("auth", ({ payload: { event, data }}) => {
+    switch (event) {
+      case "signIn":
+        setUser(data);
+        break;
+      case "signOut":
+        setUser(null);
+        break;
+      case "customOAuthState":
+        setCustomState(data);
+    }
+  });
+
+  getUser();
+
+  return unsubscribe;
+}, []);
+
+const getUser = async (): Promise<void> => {
+  try {
+    const currentUser = await Auth.currentAuthenticatedUser();
+    setUser(currentUser);
+    //console.log(`What is the current user: ${JSON.stringify(currentUser)}`);
+    Auth.currentSession().then(res=>{
+      let accessToken = res.getAccessToken()
+      let jwt = accessToken.getJwtToken()
+          
+      //You can print them to see the full objects
+      console.log(`myAccessToken: ${JSON.stringify(accessToken)}`);
+      console.log(`myJwt: ${jwt}`);
+    })
+  } catch(error) {
+    console.error(error);
+    console.log("Not signed in");
+  }
+};
 
   const [formData, setFormData] = useState<LoginFormState>(initialFormData);
   // const [responseData, setResponseData] = useState<ResponseData | null>(null); // eslint-disable-line no-unused-vars
@@ -98,6 +143,9 @@ const Login = () => {
     <Container fluid className="bgimage vh-100">
       <Row className="d-flex justify-content-center">
         <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-white rounded-edges shadow-sm">
+        <div className="App">
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
+    </div>
           <Form onSubmit={(e) => handleFormSubmit(e)}>
             <h1 className="text-dark text-serif text-center pb-3">Welcome back</h1>
             <Form.Group controlId="email">
