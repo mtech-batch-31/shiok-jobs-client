@@ -45,7 +45,6 @@ jobs:
           cache: 'npm'
       - run: npm run build
         env:
-          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
           REACT_APP_GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
 
       - name: Upload Artifact
@@ -90,12 +89,7 @@ jobs:
       - name: Build React app
         run: npm run build
         env:
-          REACT_APP_SHIOK_JOBS_BFF_URL: ${{ secrets.SHIOK_JOBS_BFF_URL }}
           REACT_APP_GATEWAY_URL: ${{ secrets.GATEWAY_URL }}
-
-      - name: Delete S3 contents
-        run: |
-          aws s3 rm s3://shiok-jobs-security --recursive  
 
       - name: Deploy to S3
         run: |

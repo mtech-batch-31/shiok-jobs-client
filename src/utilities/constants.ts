@@ -2,7 +2,7 @@ export const API_URL = {
     LOGIN : `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/login`,
     REGISTER: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/signup`,
     REFRESH_TOKEN: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/refresh`,
-    REG_CONFIRM: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/v1/user/registrationConfirm`,
+    REG_CONFIRM: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/confirmsignup`,
     USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user/me`,
     UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
     JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs`,
@@ -82,7 +82,7 @@ export const MOCK_USERDETAILS_RESP =
     "jobTitle": "Job Title",
     "image": "https://shiok-jobs-profile-images.s3.ap-southeast-1.amazonaws.com/images/generic.jpeg",
     "about": "About",
-    "workingExperience": [
+    "workExperience": [
         {
             "id": 1,
             "company": "Company",
@@ -93,7 +93,7 @@ export const MOCK_USERDETAILS_RESP =
             "experience": "Experience"
         }
     ],
-    "educationalExperience": [
+    "education": [
         {
             "id": 1,
             "school": "School",

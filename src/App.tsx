@@ -6,7 +6,6 @@ import JobSearch from "./Page/JobSearch";
 import JobDetails from "./Page/JobDetails";
 import UserProfile from "./Page/UserProfile";
 import RegisterAccount from "./Page/Register";
-import RegistrationConfirm from "./Page/RegistrationConfirm";
 import React from "react";
 import { AuthProvider } from './Auth/AuthContext';
 import "./App.css";
@@ -25,7 +24,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <RequireAuth component={UserProfile} /> },
       { path: "/register", element: <RegisterAccount /> },
       { path: "/login", element: <Login /> },
-      { path: "/registrationConfirm", element: <RegistrationConfirm /> },
+      //{ path: "/registrationConfirm", element: <RegistrationConfirm /> },
     ],
   },
 ]);

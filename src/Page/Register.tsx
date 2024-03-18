@@ -5,13 +5,14 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Button, Form, Container, Row, Col, Alert } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import "./styles/Register.css";
+import { API_URL } from '../utilities/constants';
 import React from "react";
-import { API_URL } from "../utilities/constants";
 
 interface RegisterAccountState {
   email: string;
   password: string;
   confirmPassword: string;
+  confirmCode : string;
 }
 interface RegisterResult {
   isSuccess: boolean;
@@ -25,22 +26,34 @@ const RegisterAccount = () => {
   const initFormState: RegisterAccountState = {
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    confirmCode: ""
   };
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterAccountState>(initFormState);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
+  const [isConfirmCodeValid, setIsConfirmCodeValid] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const [showUncheckedError, setShowUncheckedError] = useState(false);
   const [registerResult, setRegisterResult] = useState<RegisterResult>({
     isSuccess: false,
     message: "",
   });
 
+  const [isConfirmsignUp, setIsConfirmSignUp] = useState(false);
+
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setFormData({ ...formData, [id]: value });
   };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setShowUncheckedError(false); // Reset error message when checkbox is toggled
+  }
+
   const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     switch (event.target.id) {
       case "email":
@@ -49,18 +62,23 @@ const RegisterAccount = () => {
         );
         break;
       case "password":
-        setIsPasswordValid(
+        setIsPasswordValid(isConfirmsignUp || 
           /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/.test(
             formData.password
           )
         );
         break;
       case "confirmPassword":
-        setIsConfirmPasswordValid(
+        setIsConfirmPasswordValid(isConfirmsignUp ||
           formData.password === formData.confirmPassword
         );
         break;
-    }
+      case "confirmCode":
+          setIsConfirmCodeValid(!isConfirmsignUp ||
+            formData.confirmCode.length > 0
+          );
+          break;
+      }
   };
   const submitRegistration = async (
     event: React.FormEvent<HTMLFormElement>
@@ -77,9 +95,12 @@ const RegisterAccount = () => {
     setIsPasswordValid(isPasswordValidNew);
     setIsConfirmPasswordValid(isConfirmPasswordValidNew);
     //is form is valid
-    if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew) {
+    if (!isChecked) {
+      setShowUncheckedError(true);
+    }
+    if (isEmailValidNew && isPasswordValidNew && isConfirmPasswordValidNew && isChecked) {
       try {
-        const registerUrl = API_URL.REGISTER;
+        const registerUrl =API_URL.REGISTER;
         console.log(
           "calling register API (" + process.env.NODE_ENV + ") " + registerUrl
         );
@@ -100,11 +121,9 @@ const RegisterAccount = () => {
         } else {
           setRegisterResult({
             isSuccess: true,
-            message: "Your account has been successfully registered.",
+            message: "Please enter confirm code sent to your email.",
           });
-          setTimeout(function () {
-            navigate("/home");
-          }, 2000);
+          setIsConfirmSignUp(true);
         }
       } catch (err) {
         const error = err as AxiosError;
@@ -132,7 +151,53 @@ const RegisterAccount = () => {
       setRegisterResult({ isSuccess: false, message: "" });
     }
   };
+  const confirmSignupOnClickHandler = async() => {
+    if(!isConfirmsignUp) setIsConfirmSignUp(true);
+    else{
+      //validate input
+      var valid = true;
+      if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)){
+        setIsEmailValid(false);
+        valid = false;
+      }
+      else
+        setIsEmailValid(true);
+      if(formData.confirmCode.length <= 0){
+        setIsConfirmCodeValid(false);
+        valid = false;
+      }
+      else setIsConfirmCodeValid(true);
+      if(!valid)
+        return;
 
+      try{
+        const response = await axios.post(API_URL.REG_CONFIRM, 
+        {
+          email: formData.email,
+          code: formData.confirmCode,
+        });
+        console.log(response);
+        if (response.status == 200) {
+          setRegisterResult({
+            isSuccess: true,
+            message: "Welcome, you have successfully joined shiok jobs.",
+          });
+          setTimeout(function () {
+            navigate("/login");
+          }, 2000);
+
+        }
+      }catch( err){
+        const error = err as AxiosError;
+        if(process.env.NODE_ENV != 'production')
+          console.log(error)
+        setRegisterResult({
+          isSuccess: false,
+          message: "Error when registering. Please try again.",
+        });
+      }
+    }
+  }
   return (
     <Container fluid className="bgimage vh-100">
       <Row className="d-flex justify-content-center">
@@ -141,7 +206,7 @@ const RegisterAccount = () => {
             <div className=" mx-auto">
               <Form onSubmit={submitRegistration}>
                 <h1 className="text-dark text-serif text-center pb-3">Join Us</h1>
-                <Row>
+                <Row className="mb-2">
                   <Form.Group controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -157,37 +222,77 @@ const RegisterAccount = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
+                {!isConfirmsignUp && 
+                <>
+                  <Row className="mb-3">
+                    <Form.Group controlId="password">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        onChange={onChangeHandler}
+                        value={formData.password}
+                        isInvalid={!isPasswordValid}
+                        onBlur={onBlurHandler}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Password must be at least 8 characters, is alphanumeric
+                        and contain special character.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row className="mb-4">
+                    <Form.Group controlId="confirmPassword">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        onChange={onChangeHandler}
+                        value={formData.confirmPassword}
+                        isInvalid={!isConfirmPasswordValid}
+                        onBlur={onBlurHandler}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Confirm password and password does not match.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row className="mb-3">
+                  <Form.Group controlId="privacyCheckbox">
+                    <Form.Check
+                      type="checkbox"
+                      label={
+                        <span className="font-weight-norm">
+                          By registering, I agree to the <a href="/privacy-policy" target="_blank">Privacy Policy</a> and consent to the collection, storage and use of my personal data as described in that policy.
+                        </span>
+                      }
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+    
+                    />
+                    { showUncheckedError && 
+                      <p className="error-message text-danger">
+                        You must agree to the Privacy Policy before submitting.
+                      </p>
+                    }
+                  </Form.Group>
+                  </Row>
+                  </>
+                }
+                {isConfirmsignUp && 
                 <Row>
-                  <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
+                  <Form.Group controlId="confirmCode">
+                    <Form.Label>Code</Form.Label>
                     <Form.Control
-                      type="password"
+                      type="text"
+                      value={formData.confirmCode}
                       onChange={onChangeHandler}
-                      value={formData.password}
-                      isInvalid={!isPasswordValid}
-                      onBlur={onBlurHandler}
+                      isInvalid={!isConfirmCodeValid}
                     />
                     <Form.Control.Feedback type="invalid">
-                      Password must be at least 8 characters, is alphanumeric
-                      and contain special character.
+                      Confirm code is required.
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
-                <Row>
-                  <Form.Group controlId="confirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      onChange={onChangeHandler}
-                      value={formData.confirmPassword}
-                      isInvalid={!isConfirmPasswordValid}
-                      onBlur={onBlurHandler}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Confirm password and password does not match.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Row>
+                }
                 <Row>
                   <p></p>
                   <Alert
@@ -205,6 +310,7 @@ const RegisterAccount = () => {
                       </Button>
                     </Link>
                   </Col>
+                  {!isConfirmsignUp && 
                   <Col className="d-flex justify-content-end">
                     <Button
                       variant="primary"
@@ -212,6 +318,13 @@ const RegisterAccount = () => {
                       className="btn-custom"
                     >
                       Register
+                    </Button>
+                  </Col>}
+                  <Col className="d-flex justify-content-end">
+                    <Button
+                      variant="success" className="btn-custom"
+                      onClick={confirmSignupOnClickHandler}>
+                      Confirm Registration
                     </Button>
                   </Col>
                 </Row>
