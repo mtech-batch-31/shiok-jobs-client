@@ -51,7 +51,7 @@ const Home: React.FC = () => {
   }, [jobId, isLoggedIn]);
 
   const loadJobDetails = () => {
-    let url = `${API_URL.JOBS}/${jobId}`;
+    let url = `${API_URL.JOBS}/details?id=${jobId}`;
     if (isLoggedIn) {
       url = `${API_URL.JOBS_AUTH}/${jobId}`;
     }
