@@ -9,7 +9,6 @@ import { ACCESS_TOKEN } from "../utilities/constants";
 import axios, { AxiosError } from "axios";
 import { useAuth } from '../Auth/AuthContext';
 import { Auth } from '@aws-amplify/auth';
-import { Hub } from '@aws-amplify/core';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 interface LoginFormState {
   email: string;
@@ -35,37 +34,34 @@ const Login = () => {
   // eslint-disable-next-line no-unused-vars
   const [customState, setCustomState] = useState<string | null>(null);
 
-  useEffect(() => {
-  const unsubscribe = Hub.listen("auth", ({ payload: { event, data }}) => {
-    switch (event) {
-      case "signIn":
-        setUser(data);
-        break;
-      case "signOut":
-        setUser(null);
-        break;
-      case "customOAuthState":
-        setCustomState(data);
-    }
-  });
 
-  getUser();
-
-  return unsubscribe;
-}, []);
+const federatedSignInUpdateUser = async () : Promise<void> => {
+  try {
+    await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
 
 const getUser = async (): Promise<void> => {
-  try {
+    // return Auth.currentAuthenticatedUser()
+    //   .then(userData => {userData
+    //   console.log(userData);
+    //     setUser(userData)
+    //   })
+    //   .catch(() => console.log('Not signed in'));
+    try {
     const currentUser = await Auth.currentAuthenticatedUser();
     setUser(currentUser);
     //console.log(`What is the current user: ${JSON.stringify(currentUser)}`);
     Auth.currentSession().then(res=>{
-      let accessToken = res.getAccessToken()
-      let jwt = accessToken.getJwtToken()
-          
-      //You can print them to see the full objects
-      console.log(`myAccessToken: ${JSON.stringify(accessToken)}`);
-      console.log(`myJwt: ${jwt}`);
+      Cookies.set(ACCESS_TOKEN, JSON.stringify(res.getAccessToken()), { path: "/" });
+      Cookies.set(REFRESH_TOKEN, JSON.stringify(res.getRefreshToken()), { path: "/" });
+      Cookies.set(ID_TOKEN, JSON.stringify(res.getIdToken()), { path: "/" });     
+
+      login();
+      navigate(redirectUrl);
     })
   } catch(error) {
     console.error(error);
@@ -83,6 +79,7 @@ const getUser = async (): Promise<void> => {
   const redirectUrl = queryParams.get("redirect") || "/profile";
 
   useEffect(() => {
+    getUser();
     if (Cookies.get(ACCESS_TOKEN)) {
       // setIsLoggedIn(true);
     }
@@ -144,7 +141,7 @@ const getUser = async (): Promise<void> => {
       <Row className="d-flex justify-content-center">
         <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-white rounded-edges shadow-sm">
         <div className="App">
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
+      <button onClick={() => federatedSignInUpdateUser()}>Open Google</button>
     </div>
           <Form onSubmit={(e) => handleFormSubmit(e)}>
             <h1 className="text-dark text-serif text-center pb-3">Welcome back</h1>
