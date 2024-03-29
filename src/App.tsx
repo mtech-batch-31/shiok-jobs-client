@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./Page/Layout";
 import Login from "./Page/Login";
 import Home from "./Page/Home";
+import PrivacyPolicy from "./Page/PrivacyPolicy";
 import JobSearch from "./Page/JobSearch";
 import JobDetails from "./Page/JobDetails";
 import UserProfile from "./Page/UserProfile";
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <RequireAuth component={UserProfile} /> },
       { path: "/register", element: <RegisterAccount /> },
       { path: "/login", element: <Login /> },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> }
       //{ path: "/registrationConfirm", element: <RegistrationConfirm /> },
     ],
   },

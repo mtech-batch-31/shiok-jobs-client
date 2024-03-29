@@ -6,7 +6,7 @@ export const API_URL = {
     REG_CONFIRM: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/confirmsignup`,
     USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user/me`,
     UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
-    JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs`,
+    JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/jobs`,
     JOBS_AUTH: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs/auth`
 }
 
