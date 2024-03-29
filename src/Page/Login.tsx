@@ -44,30 +44,30 @@ const federatedSignInUpdateUser = async () : Promise<void> => {
   }
 }
 
-const getUser = async (): Promise<void> => {
-    // return Auth.currentAuthenticatedUser()
-    //   .then(userData => {userData
-    //   console.log(userData);
-    //     setUser(userData)
-    //   })
-    //   .catch(() => console.log('Not signed in'));
-    try {
-    const currentUser = await Auth.currentAuthenticatedUser();
-    setUser(currentUser);
-    //console.log(`What is the current user: ${JSON.stringify(currentUser)}`);
-    Auth.currentSession().then(res=>{
-      Cookies.set(ACCESS_TOKEN, JSON.stringify(res.getAccessToken()), { path: "/" });
-      Cookies.set(REFRESH_TOKEN, JSON.stringify(res.getRefreshToken()), { path: "/" });
-      Cookies.set(ID_TOKEN, JSON.stringify(res.getIdToken()), { path: "/" });     
+// const getUser = async (): Promise<void> => {
+//     // return Auth.currentAuthenticatedUser()
+//     //   .then(userData => {userData
+//     //   console.log(userData);
+//     //     setUser(userData)
+//     //   })
+//     //   .catch(() => console.log('Not signed in'));
+//     try {
+//     const currentUser = await Auth.currentAuthenticatedUser();
+//     setUser(currentUser);
+//     //console.log(`What is the current user: ${JSON.stringify(currentUser)}`);
+//     Auth.currentSession().then(res=>{
+//       Cookies.set(ACCESS_TOKEN, JSON.stringify(res.getAccessToken()), { path: "/" });
+//       Cookies.set(REFRESH_TOKEN, JSON.stringify(res.getRefreshToken()), { path: "/" });
+//       Cookies.set(ID_TOKEN, JSON.stringify(res.getIdToken()), { path: "/" });     
 
-      login();
-      navigate(redirectUrl);
-    })
-  } catch(error) {
-    console.error(error);
-    console.log("Not signed in");
-  }
-};
+//       login();
+//       navigate(redirectUrl);
+//     })
+//   } catch(error) {
+//     console.error(error);
+//     console.log("Not signed in");
+//   }
+// };
 
   const [formData, setFormData] = useState<LoginFormState>(initialFormData);
   // const [responseData, setResponseData] = useState<ResponseData | null>(null); // eslint-disable-line no-unused-vars
@@ -79,7 +79,7 @@ const getUser = async (): Promise<void> => {
   const redirectUrl = queryParams.get("redirect") || "/profile";
 
   useEffect(() => {
-    getUser();
+    // getUser();
     if (Cookies.get(ACCESS_TOKEN)) {
       // setIsLoggedIn(true);
     }
