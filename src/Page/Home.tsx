@@ -33,7 +33,7 @@ const Home: React.FC = () => {
   const [formData, setFormData] = useState<SearchFormState>(initialFormData);
   const queryParams = new URLSearchParams(location.search);
   const redirectUrl = queryParams.get("redirect") || "/profile";
-
+  const { isLoggedIn } = useAuth();
   
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,8 @@ const Home: React.FC = () => {
   };
   useEffect(() => {
     getUser();
-  }, []);
+    console.log("log in status " + isLoggedIn);
+  }, [isLoggedIn]);
 
   const getUser = async (): Promise<void> => {
     // return Auth.currentAuthenticatedUser()
