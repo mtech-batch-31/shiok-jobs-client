@@ -16,10 +16,17 @@ Amplify.configure({
   oauth: {
     domain: 'shiok-jobs.auth.ap-southeast-1.amazoncognito.com',
     scope: ['openid', 'email', 'phone'],
-    redirectSignIn: [`${window.location.origin}/login`],
+    redirectSignIn: [`${window.location.origin}`],
     responseType: 'token'
   },
 });
+
+// const listener = (data: any) => {
+//   console.log("lol "  + data);
+
+// };
+
+// Hub.listen('auth', listener);
 
 axios.interceptors.request.use(request => {
 
