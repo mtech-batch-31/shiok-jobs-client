@@ -16,7 +16,7 @@ const Home: React.FC = () => {
 
     let url = API_URL.USER_PROFILE
     console.log(`calling ${url}`);
-    console.log('log deleted');
+    console.log('log deleted234');
     axiosInstance
       .get(
         url
