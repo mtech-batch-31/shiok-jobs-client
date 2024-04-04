@@ -4,8 +4,10 @@ export const API_URL = {
     REGISTER: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/signup`,
     REFRESH_TOKEN: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/refresh`,
     REG_CONFIRM: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/confirmsignup`,
-    USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user/me`,
-    UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
+    // USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user/me`,
+    USER_PROFILE: '/shiokjobs/users/v1/users/me',
+    UPDATE_PROFILE: 'https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com/shiokjobs/user/v1/users',
+    // UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
     JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/jobs`,
     JOBS_AUTH: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs/auth`
 }
