@@ -16,13 +16,10 @@ const Home: React.FC = () => {
 
     let url = API_URL.USER_PROFILE
     console.log(`calling ${url}`);
+    console.log('add loggng');
     axiosInstance
       .get(
-        url,
-        {
-          // headers: { Authorization: `Bearer ${token}` },
-          headers: { 'user-id': '06396421-0159-42cf-a6a6-64aac15cc4b1' },
-        }
+        url
       )
       .then((res) => {
         console.log("api response ", res.data);
