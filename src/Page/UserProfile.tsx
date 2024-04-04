@@ -20,6 +20,7 @@ const Home: React.FC = () => {
       .get(
         url,
         {
+          // headers: { Authorization: `Bearer ${token}` },
           headers: { 'user-id': '06396421-0159-42cf-a6a6-64aac15cc4b1' },
         }
       )
