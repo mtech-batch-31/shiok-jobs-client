@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
     // baseURL: process.env.REACT_APP_SHIOK_JOBS_BFF_URL, // 你的 API base URL
-    baseURL: 'https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com', // 你的 API 
+    baseURL: process.env.REACT_APP_GATEWAY_URL, // 你的 API 
   });
   axiosInstance.interceptors.request.use((config) => {
     const accessToken = Cookies.get('accessToken');
