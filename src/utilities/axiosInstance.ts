@@ -7,12 +7,12 @@ const axiosInstance = axios.create({
   });
   axiosInstance.interceptors.request.use((config) => {
     const accessToken = Cookies.get('accessToken');
-    const idToken = Cookies.get('idToken');
-    const refreshToken = Cookies.get('refreshToken');
+    // const idToken = Cookies.get('idToken');
+    // const refreshToken = Cookies.get('refreshToken');
 
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
-    if (idToken) config.headers['x-id-token'] = idToken;
-    if (refreshToken) config.headers['x-refresh-token'] = refreshToken;
+    // if (idToken) config.headers['x-id-token'] = idToken;
+    // if (refreshToken) config.headers['x-refresh-token'] = refreshToken;
 
     return config;
   });
