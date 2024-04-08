@@ -9,7 +9,7 @@ export const API_URL = {
     // UPDATE_PROFILE: 'https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com/shiokjobs/user/v1/users',
     UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
     JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/jobs`,
-    JOBS_AUTH: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/v1/jobs/auth`
+    JOBS_AUTH_DETAILS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/job/auth/details`
 }
 
 export const AUTH = {

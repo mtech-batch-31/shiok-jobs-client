@@ -53,7 +53,7 @@ const Home: React.FC = () => {
   const loadJobDetails = () => {
     let url = `${API_URL.JOBS}/details?id=${jobId}`;
     if (isLoggedIn) {
-      url = `${API_URL.JOBS_AUTH}/${jobId}`;
+      url = `${API_URL.JOBS_AUTH_DETAILS}?id=${jobId}`;
     }
     console.log(`calling ${url}`);
     axiosInstance
