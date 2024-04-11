@@ -40,7 +40,7 @@ const Home: React.FC = () => {
     return (
       <div>
         <h2>Working Experience</h2>
-        {workExperience.map((experience) => (
+        {workExperience != null ? ( workExperience.map((experience) => (
           <div key={experience.id}>
             <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
             <Row className="">
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
               </Col>
             </Row>
           </div>
-        ))}
+        ))) :(<h4>No work experience</h4>)}
       </div>
     );
   };
@@ -71,7 +71,7 @@ const Home: React.FC = () => {
       <div>
         <h2>Educational Experience</h2>
         {/* <ul> */}
-        {education.map((experience) => (
+        {education != null ? (education.map((experience) => (
           <div key={experience.id}>
             <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
             <Row className="">
@@ -91,7 +91,7 @@ const Home: React.FC = () => {
               </Col>
             </Row>
           </div>
-        ))}
+        ))) : (<h4>Education not filled</h4>)}
         {/* </ul> */}
       </div>
     );
