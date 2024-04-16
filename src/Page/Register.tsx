@@ -63,7 +63,7 @@ const RegisterAccount = () => {
         break;
       case "password":
         setIsPasswordValid(isConfirmsignUp || 
-          /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/.test(
+          /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,16}$/.test(
             formData.password
           )
         );
@@ -87,7 +87,7 @@ const RegisterAccount = () => {
     //validate form data when submit
 
     const isEmailValidNew = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email);
-    const isPasswordValidNew = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/.test(
+    const isPasswordValidNew = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,16}$/.test(
         formData.password
       );
     const isConfirmPasswordValidNew = formData.password === formData.confirmPassword;
@@ -235,7 +235,7 @@ const RegisterAccount = () => {
                         onBlur={onBlurHandler}
                       />
                       <Form.Control.Feedback type="invalid">
-                        Password must be at least 8 characters, is alphanumeric
+                        Password must be at least 12 characters, is alphanumeric
                         and contain special character.
                       </Form.Control.Feedback>
                     </Form.Group>
