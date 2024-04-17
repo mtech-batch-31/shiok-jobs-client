@@ -34,13 +34,13 @@ const Home: React.FC = (event: any) => {
     try {
       //console.log(`What is the current user: ${JSON.stringify(currentUser)}`);
       Auth.currentSession().then((res) => {
-        Cookies.set(ACCESS_TOKEN, JSON.stringify(res.getAccessToken().getJwtToken()), {
+        Cookies.set(ACCESS_TOKEN, res.getAccessToken().getJwtToken(), {
           path: '/',
         });
-        Cookies.set(REFRESH_TOKEN, JSON.stringify(res.getRefreshToken().getToken()), {
+        Cookies.set(REFRESH_TOKEN, res.getRefreshToken().getToken(), {
           path: '/',
         });
-        Cookies.set(ID_TOKEN, JSON.stringify(res.getIdToken().getJwtToken()), { path: '/' });
+        Cookies.set(ID_TOKEN, res.getIdToken().getJwtToken(), { path: '/' });
         window.location.href = `${window.location.origin}${redirectUrl}`;
       });
     } catch (error) {
