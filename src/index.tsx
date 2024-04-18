@@ -11,13 +11,15 @@ Amplify.configure({
   Auth: {
     userPoolId: 'ap-southeast-1_MB8MD8ix8',
     region: 'ap-southeast-1',
-    userPoolWebClientId: '54cq161otkrf4pqnods75b2lcm'
+    userPoolWebClientId: '54cq161otkrf4pqnods75b2lcm',
+    mandatorySignIn: false,
+    authenticationFlowType: 'USER_PASSWORD_AUTH',
   },
   oauth: {
     domain: 'shiok-jobs.auth.ap-southeast-1.amazoncognito.com',
     scope: ['openid', 'email', 'phone'],
     redirectSignIn: [`${window.location.origin}`],
-    responseType: 'token'
+    responseType: 'code'
   },
 });
 

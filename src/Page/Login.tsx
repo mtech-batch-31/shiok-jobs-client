@@ -2,14 +2,15 @@ import "./styles/Login.css";
 
 import React, { useState, useEffect } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API_URL, ID_TOKEN, REFRESH_TOKEN } from "../utilities/constants";
 import { ACCESS_TOKEN } from "../utilities/constants";
 import axios, { AxiosError } from "axios";
 import { useAuth } from '../Auth/AuthContext';
-import { Auth } from '@aws-amplify/auth';
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import axiosInstance from "../utilities/axiosInstance";
+// import { Auth } from '@aws-amplify/auth';
+// import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 interface LoginFormState {
   email: string;
   password: string;
@@ -35,14 +36,17 @@ const Login = () => {
   const [customState, setCustomState] = useState<string | null>(null);
 
 
-const federatedSignInUpdateUser = async () : Promise<void> => {
-  try {
-    await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})
-  }
-  catch (error) {
-    console.log(error);
-  }
-}
+// const federatedSignInUpdateUser = async () : Promise<void> => {
+//   try {
+//     const test = await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})
+
+//     test.authenticated;
+    
+//   }
+//   catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // const getUser = async (): Promise<void> => {
 //     // return Auth.currentAuthenticatedUser()
@@ -74,6 +78,9 @@ const federatedSignInUpdateUser = async () : Promise<void> => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
+  const [queryParameter] = useSearchParams();
+  const code = queryParameter.get('code');
+  const state = queryParameter.get('state');
 
   const queryParams = new URLSearchParams(location.search);
   const redirectUrl = queryParams.get("redirect") || "/profile";
@@ -83,6 +90,42 @@ const federatedSignInUpdateUser = async () : Promise<void> => {
     if (Cookies.get(ACCESS_TOKEN)) {
       // setIsLoggedIn(true);
     }
+    const config = {
+      method: 'POST',
+      url: "https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/token",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': "Basic NTRjcTE2MW90a3JmNHBxbm9kczc1YjJsY206MWtjdDMxbHJwOTF0cTJrcDZwbDFibmVtcmZiMmtlZmxiYW5kNnRhNHZvMHBsYmpqYWc5bw==",
+        // Add any other headers as needed
+      },
+      data: {
+        grant_type: "authorization_code",
+        redirect_uri: "http://localhost:3000/login",
+        client_id: "54cq161otkrf4pqnods75b2lcm",
+        code: code,
+        code_verifier: state,
+        scope: "phone email openid"
+      }
+    };
+    axiosInstance(config)
+    .then((response) => {
+      if (response.status === 200) {
+        const token = response.data.access_token;
+        Cookies.set(ACCESS_TOKEN, token, { path: "/" });
+        Cookies.set(REFRESH_TOKEN, response.data.refresh_token, { path: "/" });
+        Cookies.set(ID_TOKEN, response.data.id_token, { path: "/" });
+
+        console.log("redirect to: ", redirectUrl); // uncommment to see logs!
+        login();
+        navigate(redirectUrl);
+      } else {
+        console.error('Failed to update seeking status');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+ 
   }, []);
 
   const removeToken = () => {
@@ -141,7 +184,13 @@ const federatedSignInUpdateUser = async () : Promise<void> => {
       <Row className="d-flex justify-content-center">
         <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-white rounded-edges shadow-sm">
         <div className="App">
-      <button onClick={() => federatedSignInUpdateUser()}>Open Google</button>
+        <Link to="https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=54cq161otkrf4pqnods75b2lcm&redirect_uri=http://localhost:3000/login&scope=openid+email+phone&identity_provider=Google&state=9RmWtPYDDYBmw41IVDm13MHXifQoVyVK">
+                  <Button variant="primary" className="btn-custom">
+                    Open Google 2
+                  </Button>
+                </Link>
+
+       {/* <button onClick={() => federatedSignInUpdateUser()}>Open Google</button> */}
     </div>
           <Form onSubmit={(e) => handleFormSubmit(e)}>
             <h1 className="text-dark text-serif text-center pb-3">Welcome back</h1>
