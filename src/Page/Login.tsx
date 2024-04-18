@@ -100,7 +100,7 @@ const Login = () => {
       },
       data: {
         grant_type: "authorization_code",
-        redirect_uri: "http://localhost:3000/login",
+        redirect_uri: "https://d2loqognvf0v5n.cloudfront.net/login",
         client_id: "54cq161otkrf4pqnods75b2lcm",
         code: code,
         code_verifier: state,
@@ -111,6 +111,7 @@ const Login = () => {
     .then((response) => {
       if (response.status === 200) {
         const token = response.data.access_token;
+        console.log("access token please " + response.data.access_token )
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
         Cookies.set(REFRESH_TOKEN, response.data.refresh_token, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.id_token, { path: "/" });
