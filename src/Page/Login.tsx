@@ -185,7 +185,7 @@ const Login = () => {
       <Row className="d-flex justify-content-center">
         <div className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-10 col-11  mt-5 p-5 bg-white rounded-edges shadow-sm">
         <div className="App">
-        <Link to="https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=54cq161otkrf4pqnods75b2lcm&redirect_uri=http://localhost:3000/login&scope=openid+email+phone&identity_provider=Google&state=9RmWtPYDDYBmw41IVDm13MHXifQoVyVK">
+        <Link to="https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=54cq161otkrf4pqnods75b2lcm&redirect_uri=https://d2loqognvf0v5n.cloudfront.net/login&scope=openid+email+phone&identity_provider=Google&state=9RmWtPYDDYBmw41IVDm13MHXifQoVyVK">
                   <Button variant="primary" className="btn-custom">
                     Open Google 2
                   </Button>
