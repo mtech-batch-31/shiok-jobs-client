@@ -78,9 +78,9 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
-  const [queryParameter] = useSearchParams();
-  const code = queryParameter.get('code');
-  const state = queryParameter.get('state');
+  const [queryParams3] = useSearchParams();
+  const code = queryParams3.get('code');
+  const state = queryParams3.get('state');
 
   const queryParams = new URLSearchParams(location.search);
   const redirectUrl = queryParams.get("redirect") || "/profile";
@@ -111,10 +111,10 @@ const Login = () => {
     .then((response) => {
       if (response.status === 200) {
         const token = response.data.access_token;
-        console.log("access token please " + response.data.access_token )
         Cookies.set(ACCESS_TOKEN, token, { path: "/" });
         Cookies.set(REFRESH_TOKEN, response.data.refresh_token, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.id_token, { path: "/" });
+  
 
         console.log("redirect to: ", redirectUrl); // uncommment to see logs!
         login();
