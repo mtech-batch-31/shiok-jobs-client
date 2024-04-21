@@ -12,6 +12,9 @@ import React, { useEffect } from "react";
 import { getToken, removeToken } from "../utilities/auth";
 import "./Header.css";
 import { useAuth } from '../Auth/AuthContext';
+import { API_URL } from "../utilities/constants";
+import axiosInstance from "../utilities/axiosInstance";
+import { AxiosError } from "axios";
 
 function Header() {
   const navigate = useNavigate();
@@ -42,6 +45,16 @@ function Header() {
   }, [navigate, login, logout]);
 
   const onLogout = () => {
+      //call api to revoke token
+      let url = `${API_URL.LOGOUT};`
+      axiosInstance
+      .post(url, getToken())
+      .then((res) => {
+        console.log("api response ", res);
+      })
+      .catch((error: AxiosError) => {
+        console.error("error when calling API", error);
+      });
       removeToken();
       logout();
   }
