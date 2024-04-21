@@ -46,7 +46,7 @@ function Header() {
 
   const onLogout = () => {
       //call api to revoke token
-      let url = `${API_URL.LOGOUT};`
+      let url = `${API_URL.LOGOUT}`
       axiosInstance
       .post(url, getToken())
       .then((res) => {
