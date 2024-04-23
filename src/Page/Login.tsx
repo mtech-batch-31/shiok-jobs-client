@@ -142,16 +142,15 @@ const Login = () => {
   function encrypt(plaintext: string){
     var encrypt = new JSEncrypt();
 
-    var publicKey = `
-    -----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAou8nAZlpSvl27+BMNGon
-fr6ZqXwZCi7sgV1RNlXJxqI9kNCR9D3DdvXOWioQ/0jWdu/QJZ21rXI3zO4qnk97
-2WH0HNKYZ5rGikNKeCOmiNyhqfPPzQSTuUch0aE988CahO9wTr7qRX/iUMcgGtor
-wDOWS/USPTWaURIZss9xv2SEZUkkjy7M2IEHAUmwOn+bP8eyERi6mlgrcwR8FSrY
-p0O7YACO5MTsccfzS2eB7WEZsnewpzgAs4u4GMof2lgPXlQ7k1L4xp42riWjpxXB
-T5HKf6MG+titPpTe7ZPtwABbWo+0jPPyPRPIMg2YpUsjhC2vst6BQAPU7srGlB2S
-UwIDAQAB
------END PUBLIC KEY-----`;
+    var publicKey = `-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy1AvASP1r6YIXeuLH0j5
+    CQsM+ZLrHDnIZ407mw76szq6+QMDspK65bp2ui8P9KvD0GAOTSpSUXY9qQHe3c/N
+    3FNf7Abp1LjAKqniFO7PbFW8STBYmLfpAmcHxCxSu/E2nfW8Y2yCR+gxIa+RiI9f
+    WO2JV2JrOS2SF/3/sxqNjfdX2/mHMC5yrpOjc/fMvzoI/83RD2EgLz3+y76ehPf9
+    BpDS82pTljBveNXqhJbQmCvcqbs6bmi0ZKBkfcDFFQas4ZO6WgSuT/YaTSIfjvyw
+    u+oG+XpEi+UhsgJiqHqFXlAj5YUqzsUNy+ESVT4vMUQqil2OEJO8UL+XzGs354SA
+    KwIDAQAB
+    -----END PUBLIC KEY-----`;
     encrypt.setPublicKey(publicKey);
     return encrypt.encrypt(plaintext);
   }
