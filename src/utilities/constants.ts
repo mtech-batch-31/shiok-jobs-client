@@ -1,6 +1,7 @@
 export const API_URL = {
     // LOGIN : 'https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com/shiokjobs/auth/login',
     LOGIN : `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/login`,
+    SIGIN: `${process.env.REACT_APP_GATEWAY_URL}/auth/signin`,
     LOGOUT : `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/logout`,
     REGISTER: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/signup`,
     REFRESH_TOKEN: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/auth/refresh`,

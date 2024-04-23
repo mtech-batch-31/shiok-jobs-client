@@ -9,6 +9,8 @@ import { ACCESS_TOKEN } from "../utilities/constants";
 import axios, { AxiosError } from "axios";
 import { useAuth } from '../Auth/AuthContext';
 import axiosInstance from "../utilities/axiosInstance";
+import { JSEncrypt } from "jsencrypt";
+
 // import { Auth } from '@aws-amplify/auth';
 // import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 interface LoginFormState {
@@ -137,16 +139,31 @@ const Login = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  function encrypt(plaintext: string){
+    var encrypt = new JSEncrypt();
 
+    var publicKey = `
+    -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAou8nAZlpSvl27+BMNGon
+fr6ZqXwZCi7sgV1RNlXJxqI9kNCR9D3DdvXOWioQ/0jWdu/QJZ21rXI3zO4qnk97
+2WH0HNKYZ5rGikNKeCOmiNyhqfPPzQSTuUch0aE988CahO9wTr7qRX/iUMcgGtor
+wDOWS/USPTWaURIZss9xv2SEZUkkjy7M2IEHAUmwOn+bP8eyERi6mlgrcwR8FSrY
+p0O7YACO5MTsccfzS2eB7WEZsnewpzgAs4u4GMof2lgPXlQ7k1L4xp42riWjpxXB
+T5HKf6MG+titPpTe7ZPtwABbWo+0jPPyPRPIMg2YpUsjhC2vst6BQAPU7srGlB2S
+UwIDAQAB
+-----END PUBLIC KEY-----`;
+    encrypt.setPublicKey(publicKey);
+    return encrypt.encrypt(plaintext);
+  }
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // setResponseData(null);
     setErrorMessage("");
     try {
-      const response = await axios.post(API_URL.LOGIN,
+      const response = await axios.post(API_URL.SIGIN,
         {
           email: formData.email,
-          password: formData.password,
+          password: encrypt(formData.password),
         }
       );
       console.log("api response: ", response.data); // uncommment to see logs!
