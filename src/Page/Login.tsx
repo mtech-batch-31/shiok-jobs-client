@@ -170,7 +170,11 @@ const Login = () => {
         setErrorMessage("Wrong password. Try again or contact us to reset it.");
       } else {
         const token = response.data.authenticationResult.accessToken;
-        Cookies.set(ACCESS_TOKEN, token, { path: "/" });
+        Cookies.set(ACCESS_TOKEN, token, 
+          { path: "/",
+            httpOnly: true,
+            secure: true // Set to true if using HTTPS
+         });
         console.log("test normal login dont store accessToken ");
         Cookies.set(REFRESH_TOKEN, response.data.authenticationResult.refreshToken, { path: "/" });
         Cookies.set(ID_TOKEN, response.data.authenticationResult.idToken, { path: "/" });
