@@ -77,10 +77,8 @@ const Home: React.FC = () => {
   return (
     <div className="container-main job-details pt-5">
       <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
-        { (
+        { ready && (
           <>
-          <span>{ready}</span>
-          <span>{JSON.stringify(data)}</span>
             <div className="job-details-part1 d-flex p-3  pb-4">
               <div className="flex-grow-1 ">
                 <h1>{data.jobTitle}</h1>
