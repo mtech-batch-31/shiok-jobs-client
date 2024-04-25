@@ -48,7 +48,11 @@ function Header() {
       //call api to revoke token
       let url = `${API_URL.LOGOUT}`
       axiosInstance
-      .post(url, getToken())
+      .post(url, getToken(), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then((res) => {
         console.log("api response ", res);
       })
