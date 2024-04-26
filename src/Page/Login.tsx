@@ -106,7 +106,7 @@ const Login = () => {
         client_id: "54cq161otkrf4pqnods75b2lcm",
         code: code,
         code_verifier: state,
-        scope: "phone email openid"
+        scope: "phone email openid aws.cognito.signin.user.admin"
       }
     };
     axiosInstance(config)
