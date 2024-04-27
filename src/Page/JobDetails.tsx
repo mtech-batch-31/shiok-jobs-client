@@ -67,6 +67,7 @@ const Home: React.FC = () => {
         setReady(true);
       })
       .catch((err) => {
+        console.error("error when calling API, url=", url);
         const error = err as AxiosError;
         console.error("error when calling API", error);
         // setData(MOCK_JOBDETAILS_RESP);
@@ -76,7 +77,7 @@ const Home: React.FC = () => {
   return (
     <div className="container-main job-details pt-5">
       <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
-        {ready && (
+        { ready && (
           <>
             <div className="job-details-part1 d-flex p-3  pb-4">
               <div className="flex-grow-1 ">

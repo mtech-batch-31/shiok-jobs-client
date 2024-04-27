@@ -17,7 +17,7 @@ Amplify.configure({
   },
   oauth: {
     domain: 'shiok-jobs.auth.ap-southeast-1.amazoncognito.com',
-    scope: ['openid', 'email', 'phone'],
+    scope: ['openid', 'email', 'phone', 'aws.cognito.signin.user.admin'],
     redirectSignIn: [`${window.location.origin}`],
     responseType: 'code'
   },

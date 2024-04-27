@@ -15,7 +15,10 @@ import axios, { AxiosError } from 'axios';
 import { useAuth } from '../Auth/AuthContext';
 import axiosInstance from '../utilities/axiosInstance';
 import GoogleButton from 'react-google-button';
+import { JSEncrypt } from 'jsencrypt';
 
+// import { Auth } from '@aws-amplify/auth';
+// import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 interface LoginFormState {
   email: string;
   password: string;
@@ -162,7 +165,7 @@ const Login = () => {
         client_id: '5i5fgd57n42nmala1b7ahmfsl0',
         code: code,
         code_verifier: tokenState,
-        scope: 'phone email openid',
+        scope: 'phone email openid aws.cognito.signin.user.admin',
       },
     };
     axiosInstance(config)
@@ -196,15 +199,29 @@ const Login = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  function encrypt(plaintext: string) {
+    var encrypt = new JSEncrypt();
 
+    var publicKey = `-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy1AvASP1r6YIXeuLH0j5
+    CQsM+ZLrHDnIZ407mw76szq6+QMDspK65bp2ui8P9KvD0GAOTSpSUXY9qQHe3c/N
+    3FNf7Abp1LjAKqniFO7PbFW8STBYmLfpAmcHxCxSu/E2nfW8Y2yCR+gxIa+RiI9f
+    WO2JV2JrOS2SF/3/sxqNjfdX2/mHMC5yrpOjc/fMvzoI/83RD2EgLz3+y76ehPf9
+    BpDS82pTljBveNXqhJbQmCvcqbs6bmi0ZKBkfcDFFQas4ZO6WgSuT/YaTSIfjvyw
+    u+oG+XpEi+UhsgJiqHqFXlAj5YUqzsUNy+ESVT4vMUQqil2OEJO8UL+XzGs354SA
+    KwIDAQAB
+    -----END PUBLIC KEY-----`;
+    encrypt.setPublicKey(publicKey);
+    return encrypt.encrypt(plaintext);
+  }
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // setResponseData(null);
     setErrorMessage('');
     try {
-      const response = await axios.post(API_URL.LOGIN, {
+      const response = await axios.post(API_URL.SIGIN, {
         email: formData.email,
-        password: formData.password,
+        password: encrypt(formData.password),
       });
       console.log('api response: ', response.data); // uncommment to see logs!
       if (response.data.authenticationResult.accessToken == null) {
@@ -212,6 +229,7 @@ const Login = () => {
       } else {
         const token = response.data.authenticationResult.accessToken;
         Cookies.set(ACCESS_TOKEN, token, { path: '/' });
+        console.log('test normal login dont store accessToken ');
         Cookies.set(
           REFRESH_TOKEN,
           response.data.authenticationResult.refreshToken,
@@ -301,6 +319,7 @@ const Login = () => {
                 className='btn-custom'
                 onClick={getAuth}
               ></GoogleButton>
+              {/* <button onClick={() => federatedSignInUpdateUser()}>Open Google</button> */}
             </Row>
           </Form>
         </div>

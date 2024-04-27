@@ -18,7 +18,8 @@ const Home: React.FC = () => {
     console.log(`calling ${url}`);
     axiosInstance
       .get(
-        url
+        url,
+        { withCredentials: true } 
       )
       .then((res) => {
         console.log("api response ", res.data);
