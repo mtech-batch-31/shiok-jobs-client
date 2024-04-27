@@ -142,7 +142,7 @@ const Login = () => {
       code_challenge = await generateCodeChallengeFromVerifier(
         sessionStorage.getItem('react-use-oauth2-state-key')
       );
-      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${API_URL.REDIRECT_URL_PROD}/login&state=${authorizeState}&scope=openid+email+phone&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
+      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${API_URL.REDIRECT_URL_PROD}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.sigin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
     })();
     removeState();
   }, []);
