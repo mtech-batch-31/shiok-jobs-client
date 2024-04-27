@@ -4,7 +4,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
     // baseURL: process.env.REACT_APP_SHIOK_JOBS_BFF_URL, // 你的 API base URL
     baseURL: process.env.REACT_APP_GATEWAY_URL, // 你的 API 
-    withCredentials: true // Enable sending cookies with requests
+    // withCredentials: true // Enable sending cookies with requests
   });
 
 axiosInstance.interceptors.request.use((config) => {

@@ -1,40 +1,39 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "./styles/UserProfile.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import './styles/UserProfile.css';
 
-import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { API_URL, MOCK_USERDETAILS_RESP } from "../utilities/constants";
-import { AxiosError } from "axios";
-import axiosInstance from "../utilities/axiosInstance";
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { API_URL, MOCK_USERDETAILS_RESP } from '../utilities/constants';
+import { AxiosError } from 'axios';
+import axiosInstance from '../utilities/axiosInstance';
 
 const Home: React.FC = () => {
   const [data, setData] = useState(MOCK_USERDETAILS_RESP);
-  const [workExperience, setWork] = useState(MOCK_USERDETAILS_RESP.workExperience);
+  const [workExperience, setWork] = useState(
+    MOCK_USERDETAILS_RESP.workExperience
+  );
   const [education, setEducation] = useState(MOCK_USERDETAILS_RESP.education);
   useEffect(() => {
-
-    let url = API_URL.USER_PROFILE
+    let url = API_URL.USER_PROFILE;
     console.log(`calling ${url}`);
     axiosInstance
       .get(
-        url,
-        { withCredentials: true } 
+        url
+        // { withCredentials: true }
       )
       .then((res) => {
-        console.log("api response ", res.data);
+        console.log('api response ', res.data);
         // data = res.data;
         setData(res.data);
         setWork(res.data.workExperience);
         setEducation(res.data.education);
       })
       .catch((err) => {
-
         const error = err as AxiosError;
-        console.error("error when calling API", error);
+        console.error('error when calling API', error);
         // setData(MOCK_JOBDETAILS_RESP);
       });
-
   }, []);
 
   const WorkExperience = () => {
@@ -43,19 +42,22 @@ const Home: React.FC = () => {
         <h2>Working Experience</h2>
         {workExperience.map((experience) => (
           <div key={experience.id}>
-            <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
-            <Row className="">
-              <Col xs="auto" className="logo">
-                <img src={experience.logo} alt="" width="70px" />
+            <div className='job-details-part1 d-flex p-3  pb-4'></div>
+            <br />
+            <Row className=''>
+              <Col xs='auto' className='logo'>
+                <img src={experience.logo} alt='' width='70px' />
               </Col>
               <Col>
                 <h3>{experience.company}</h3>
-                <div className="d-flex pb-4">
-                  <div className="flex-grow-1 ">
-                    <div className="">{experience.jobTitle}</div>
+                <div className='d-flex pb-4'>
+                  <div className='flex-grow-1 '>
+                    <div className=''>{experience.jobTitle}</div>
                   </div>
-                  <div className="salary text-end p-2">
-                    <div className=" fw-bold">{experience.yearStart} - {experience.yearEnd}</div>
+                  <div className='salary text-end p-2'>
+                    <div className=' fw-bold'>
+                      {experience.yearStart} - {experience.yearEnd}
+                    </div>
                   </div>
                 </div>
                 <p>{experience.experience}</p>
@@ -74,18 +76,23 @@ const Home: React.FC = () => {
         {/* <ul> */}
         {education.map((experience) => (
           <div key={experience.id}>
-            <div className="job-details-part1 d-flex p-3  pb-4"></div><br />
-            <Row className="">
-              <Col xs="auto" className="logo">
-                <img src={experience.logo} alt="" width="70px" />
+            <div className='job-details-part1 d-flex p-3  pb-4'></div>
+            <br />
+            <Row className=''>
+              <Col xs='auto' className='logo'>
+                <img src={experience.logo} alt='' width='70px' />
               </Col>
               <Col>
-                <div className="d-flex pb-4">
-                  <div className="flex-grow-1 ">
-                    <div className=""><h4>{experience.school}</h4></div>
+                <div className='d-flex pb-4'>
+                  <div className='flex-grow-1 '>
+                    <div className=''>
+                      <h4>{experience.school}</h4>
+                    </div>
                   </div>
-                  <div className="salary text-end p-2">
-                    <div className=" fw-bold">{experience.yearStart} - {experience.yearEnd}</div>
+                  <div className='salary text-end p-2'>
+                    <div className=' fw-bold'>
+                      {experience.yearStart} - {experience.yearEnd}
+                    </div>
                   </div>
                 </div>
                 <p>{experience.description}</p>
@@ -97,7 +104,6 @@ const Home: React.FC = () => {
       </div>
     );
   };
-
 
   // const [isSeeking] = useState(false);
   const handleSeekingStatusChange = () => {
@@ -131,43 +137,49 @@ const Home: React.FC = () => {
   };
 
   return (
-
-    <div className="container-main job-details pt-5">
-      <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
-        <p className="flex-grow-1 ">
-          <Row className="">
-            <Col xs="auto" className="logo">
-              <img src={data.image} alt="" width="70px" />
+    <div className='container-main job-details pt-5'>
+      <Container className='job-details-card bg-white p-4 pb-5 custom-shadow'>
+        <p className='flex-grow-1 '>
+          <Row className=''>
+            <Col xs='auto' className='logo'>
+              <img src={data.image} alt='' width='70px' />
             </Col>
             <Col>
               <h1>{data.name}</h1>
-              <p className="">
-                <p className="salary fw-bold">{data.seeking ? "Open to Jobs" : "Not Open to Jobs"}</p>
-                <p className="">{data.jobTitle}</p>
-                <p className="">{data.about}</p>
-                <p className="d-flex justify-content-end align-items-end mt-4 px-3">
-                  <div className="part2 mx-2">
-                    <span onClick={handleSeekingStatusChange}>{data.seeking ? "Stop looking for jobs" : "Restart job search"}</span>
+              <p className=''>
+                <p className='salary fw-bold'>
+                  {data.seeking ? 'Open to Jobs' : 'Not Open to Jobs'}
+                </p>
+                <p className=''>{data.jobTitle}</p>
+                <p className=''>{data.about}</p>
+                <p className='d-flex justify-content-end align-items-end mt-4 px-3'>
+                  <div className='part2 mx-2'>
+                    <span onClick={handleSeekingStatusChange}>
+                      {data.seeking
+                        ? 'Stop looking for jobs'
+                        : 'Restart job search'}
+                    </span>
                   </div>
                 </p>
               </p>
             </Col>
           </Row>
         </p>
-      </Container><br />
-      <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
+      </Container>
+      <br />
+      <Container className='job-details-card bg-white p-4 pb-5 custom-shadow'>
         <div>
           <WorkExperience />
         </div>
-      </Container><br />
-      <Container className="job-details-card bg-white p-4 pb-5 custom-shadow">
+      </Container>
+      <br />
+      <Container className='job-details-card bg-white p-4 pb-5 custom-shadow'>
         <div>
           <Education />
         </div>
-      </Container><br />
-
+      </Container>
+      <br />
     </div>
-
   );
 };
 
