@@ -20,7 +20,6 @@ const Home: React.FC = () => {
     axiosInstance
       .get(
         url
-        // { withCredentials: true }
       )
       .then((res) => {
         console.log('api response ', res.data);
@@ -108,21 +107,25 @@ const Home: React.FC = () => {
   // const [isSeeking] = useState(false);
   const handleSeekingStatusChange = () => {
     const newIsSeeking = !data.seeking;
-    const config = {
-      method: 'PUT',
-      url: API_URL.UPDATE_PROFILE,
-      headers: {
-        'Content-Type': 'application/json',
-        'user-id': '06396421-0159-42cf-a6a6-64aac15cc4b1',
-        // Add any other headers as needed
-      },
-      data: {
-        seekingJob: newIsSeeking, // Toggle the seeking status
-      },
-    };
+    const newData = {... data };
+    newData.seeking = newIsSeeking;
+    // const config = {
+    //   method: 'PUT',
+    //   url: API_URL.UPDATE_PROFILE,
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'user-id': '06396421-0159-42cf-a6a6-64aac15cc4b1',
+    //     // Add any other headers as needed
+    //   },
+    //   data: {
+    //     seekingJob: newIsSeeking, // Toggle the seeking status
+    //   },
+    // };
 
     // Make the Axios request
-    axiosInstance(config)
+    console.log("updating profile ", newData);
+    axiosInstance
+      .post(API_URL.UPDATE_PROFILE, newData)
       .then((response) => {
         if (response.status === 200) {
           setData(response.data);

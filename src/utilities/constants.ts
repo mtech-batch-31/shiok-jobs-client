@@ -10,7 +10,7 @@ export const API_URL = {
     USER_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/users/v1/users/me`,
     // USER_PROFILE: "https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com/shiokjobs/users/v1/users/me",
     // UPDATE_PROFILE: 'https://j0o5s8d9pe.execute-api.ap-southeast-1.amazonaws.com/shiokjobs/user/v1/users',
-    UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/user/v1/user`,
+    UPDATE_PROFILE: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/users/v1/users`,
     JOBS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/jobs`,
     JOBS_AUTH_DETAILS: `${process.env.REACT_APP_GATEWAY_URL}/shiokjobs/jobs/auth/details`,
     REDIRECT_URL_PROD: 'https://d2loqognvf0v5n.cloudfront.net',
