@@ -241,7 +241,7 @@ const Login = () => {
     // setResponseData(null);
     setErrorMessage('');
     try {
-      const response = await axios.post(API_URL.LOGIN, {
+      const response = await axios.post(API_URL.SIGIN, {
         email: formData.email,
         password: encrypt(formData.password),
       });
