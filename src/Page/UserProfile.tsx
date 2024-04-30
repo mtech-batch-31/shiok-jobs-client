@@ -149,6 +149,7 @@ const Home: React.FC = () => {
             </Col>
             <Col>
               <h1>{data.name}</h1>
+              <p className=''>{data.email}</p>
               <p className=''>
                 <p className='salary fw-bold'>
                   {data.seeking ? 'Open to Jobs' : 'Not Open to Jobs'}

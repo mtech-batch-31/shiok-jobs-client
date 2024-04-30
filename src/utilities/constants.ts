@@ -86,6 +86,7 @@ export const MOCK_USERDETAILS_RESP =
     "id": 1,
     "accountUuid": "06396421-0159-42cf-a6a6-64aac15cc4b1",
     "name": "Name",
+    "email":"email",
     "seeking": false,
     "jobTitle": "Job Title",
     "image": "https://shiok-jobs-profile-images.s3.ap-southeast-1.amazonaws.com/images/generic.jpeg",
