@@ -109,6 +109,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   zap_scan:
+    permissions: write-all
     needs: deploy_to_s3
     runs-on: ubuntu-latest
     name: Zap Scan
