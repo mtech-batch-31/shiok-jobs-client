@@ -85,6 +85,8 @@ const Login = () => {
   const queryParams = new URLSearchParams(location.search);
   const redirectUrl = queryParams.get('redirect') || '/profile';
   const OAUTH_STATE_KEY = 'react-use-oauth2-state-key';
+  const OAUTH_CODE_VERIFIER = 'react-use-oauth2-code-verifier';
+  const OAUTH_REDIRECT_URL = API_URL.REDIRECT_URL_DEV;
 
   const saveState = (state: string) => {
     sessionStorage.setItem(OAUTH_STATE_KEY, state);
@@ -100,7 +102,7 @@ const Login = () => {
     return ('0' + dec.toString(16)).substr(-2);
   }
 
-  function generateCodeVerifier() {
+  function generateRandomVValue() {
     var array = new Uint32Array(56 / 2);
     window.crypto.getRandomValues(array);
     return Array.from(array, dec2hex).join('');
@@ -130,21 +132,27 @@ const Login = () => {
   async function generateCodeChallengeFromVerifier(v: any) {
     var hashed = await sha256(v);
     var base64encoded = base64urlencode(hashed);
+    console.log("codeChallenge: ", base64encoded);
     return base64encoded;
   }
 
   const getAuth = useCallback(() => {
     // 1. Generate and save state
-    const authorizeState = generateCodeVerifier();
+    
+    const authorizeState = generateRandomVValue();
+    console.log("state: ", authorizeState);
     saveState(authorizeState);
+    const codeVerifier = generateRandomVValue();
+    console.log("codeVerifier: ", codeVerifier);
+    sessionStorage.setItem(OAUTH_CODE_VERIFIER, codeVerifier);
     let code_challenge = null;
     (async () => {
       code_challenge = await generateCodeChallengeFromVerifier(
-        sessionStorage.getItem('react-use-oauth2-state-key')
+        sessionStorage.getItem(OAUTH_CODE_VERIFIER)
       );
-      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${API_URL.REDIRECT_URL_PROD}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.signin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
+      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${OAUTH_REDIRECT_URL}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.signin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
     })();
-    removeState();
+
   }, []);
 
   useEffect(() => {
@@ -152,6 +160,17 @@ const Login = () => {
     if (Cookies.get(ACCESS_TOKEN)) {
       // setIsLoggedIn(true);
     }
+
+    if (code == null){
+      return;
+    }
+    let storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
+    if (tokenState !== storedState) {
+        console.error("state mismatch: ", tokenState, " ", storedState);
+        sessionStorage.clear();
+        return;
+    }
+    
     const config = {
       method: 'POST',
       url: 'https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/token',
@@ -161,13 +180,15 @@ const Login = () => {
       },
       data: {
         grant_type: 'authorization_code',
-        redirect_uri: `${API_URL.REDIRECT_URL_PROD}/login`,
+        redirect_uri: `${OAUTH_REDIRECT_URL}/login`,
         client_id: '5i5fgd57n42nmala1b7ahmfsl0',
         code: code,
-        code_verifier: tokenState,
+        code_verifier: sessionStorage.getItem(OAUTH_CODE_VERIFIER),
         scope: 'phone email openid aws.cognito.signin.user.admin',
       },
     };
+    // console.log(config);
+
     axiosInstance(config)
       .then((response) => {
         if (response.status === 200) {
@@ -182,6 +203,8 @@ const Login = () => {
           // console.log("redirect to: ", redirectUrl); // uncommment to see logs!
           login();
           navigate(redirectUrl);
+          sessionStorage.removeItem(OAUTH_CODE_VERIFIER);
+          removeState();
         } else {
           console.error('Failed to update seeking status');
         }
