@@ -132,18 +132,18 @@ const Login = () => {
   async function generateCodeChallengeFromVerifier(v: any) {
     var hashed = await sha256(v);
     var base64encoded = base64urlencode(hashed);
-    console.log("codeChallenge: ", base64encoded);
+    console.log('codeChallenge: ', base64encoded);
     return base64encoded;
   }
 
   const getAuth = useCallback(() => {
     // 1. Generate and save state
-    
+
     const authorizeState = generateRandomVValue();
-    console.log("state: ", authorizeState);
+    console.log('state: ', authorizeState);
     saveState(authorizeState);
     const codeVerifier = generateRandomVValue();
-    console.log("codeVerifier: ", codeVerifier);
+    console.log('codeVerifier: ', codeVerifier);
     sessionStorage.setItem(OAUTH_CODE_VERIFIER, codeVerifier);
     let code_challenge = null;
     (async () => {
@@ -152,7 +152,6 @@ const Login = () => {
       );
       window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${OAUTH_REDIRECT_URL}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.signin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
     })();
-
   }, []);
 
   useEffect(() => {
@@ -161,16 +160,16 @@ const Login = () => {
       // setIsLoggedIn(true);
     }
 
-    if (code == null){
+    if (code == null) {
       return;
     }
     let storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
     if (tokenState !== storedState) {
-        console.error("state mismatch: ", tokenState, " ", storedState);
-        sessionStorage.clear();
-        return;
+      console.error('state mismatch: ', tokenState, ' ', storedState);
+      sessionStorage.clear();
+      return;
     }
-    
+
     const config = {
       method: 'POST',
       url: 'https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/token',
@@ -242,7 +241,7 @@ const Login = () => {
     // setResponseData(null);
     setErrorMessage('');
     try {
-      const response = await axios.post(API_URL.SIGIN, {
+      const response = await axios.post(API_URL.LOGIN, {
         email: formData.email,
         password: encrypt(formData.password),
       });
@@ -340,6 +339,7 @@ const Login = () => {
               <Col className='d-flex justify-content-end'></Col>
               <GoogleButton
                 className='btn-custom'
+                type='dark'
                 onClick={getAuth}
               ></GoogleButton>
               {/* <button onClick={() => federatedSignInUpdateUser()}>Open Google</button> */}

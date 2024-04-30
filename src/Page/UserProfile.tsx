@@ -16,11 +16,36 @@ const Home: React.FC = () => {
   const [education, setEducation] = useState(MOCK_USERDETAILS_RESP.education);
   useEffect(() => {
     let url = API_URL.USER_PROFILE;
+    // let url2 = API_URL.UPDATE_PROFILE;
+    const config2 = {
+      method: 'POST',
+      url: API_URL.UPDATE_PROFILE,
+      headers: {
+        'Content-Type': 'application/json',
+        // 'user-id': '06396421-0159-42cf-a6a6-64aac15cc4b1',
+        // Add any other headers as needed
+      },
+      data: {
+        email: 'newIsSeeking', // Toggle the seeking status
+      },
+    };
     console.log(`calling ${url}`);
     axiosInstance
-      .get(
-        url
-      )
+      .get(url)
+      .then((res) => {
+        console.log('api response ', res.data);
+        // data = res.data;
+        setData(res.data);
+        setWork(res.data.workExperience);
+        setEducation(res.data.education);
+      })
+      .catch((err) => {
+        const error = err as AxiosError;
+        console.error('error when calling API', error);
+        // setData(MOCK_JOBDETAILS_RESP);
+      });
+
+    axiosInstance(config2)
       .then((res) => {
         console.log('api response ', res.data);
         // data = res.data;
@@ -107,7 +132,7 @@ const Home: React.FC = () => {
   // const [isSeeking] = useState(false);
   const handleSeekingStatusChange = () => {
     const newIsSeeking = !data.seeking;
-    const newData = {... data };
+    const newData = { ...data };
     newData.seeking = newIsSeeking;
     // const config = {
     //   method: 'PUT',
@@ -123,7 +148,7 @@ const Home: React.FC = () => {
     // };
 
     // Make the Axios request
-    console.log("updating profile ", newData);
+    console.log('updating profile ', newData);
     axiosInstance
       .post(API_URL.UPDATE_PROFILE, newData)
       .then((response) => {
