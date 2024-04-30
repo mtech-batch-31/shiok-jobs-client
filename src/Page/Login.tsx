@@ -86,7 +86,7 @@ const Login = () => {
   const redirectUrl = queryParams.get('redirect') || '/profile';
   const OAUTH_STATE_KEY = 'react-use-oauth2-state-key';
   const OAUTH_CODE_VERIFIER = 'react-use-oauth2-code-verifier';
-  const OAUTH_REDIRECT_URL = API_URL.REDIRECT_URL_DEV;
+  const OAUTH_REDIRECT_URL = API_URL.REDIRECT_URL_PROD;
 
   const saveState = (state: string) => {
     sessionStorage.setItem(OAUTH_STATE_KEY, state);
