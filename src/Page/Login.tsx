@@ -2,6 +2,8 @@ import './styles/Login.css';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import * as jose from 'jose';
+import {Buffer} from 'buffer';
 import {
   Link,
   useLocation,
@@ -87,13 +89,16 @@ const Login = () => {
   const OAUTH_STATE_KEY = 'react-use-oauth2-state-key';
   const OAUTH_CODE_VERIFIER = 'react-use-oauth2-code-verifier';
   const OAUTH_REDIRECT_URL = API_URL.REDIRECT_URL_PROD;
+  const { logout } = useAuth();
+  const USER_POOL_ID = 'ap-southeast-1_MB8MD8ix8';
+  const REGION = 'ap-southeast-1';
+  const cachedJwks: any = [];
 
   const saveState = (state: string) => {
     sessionStorage.setItem(OAUTH_STATE_KEY, state);
   };
 
   const removeState = () => {
-    //eslint-disable-line no-unused-vars
     sessionStorage.removeItem(OAUTH_STATE_KEY);
   };
 
@@ -136,6 +141,103 @@ const Login = () => {
     return base64encoded;
   }
 
+  function randomString(length: any) {
+    var charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz+/'
+    let result = ''
+
+    while (length > 0) {
+        var bytes = new Uint8Array(16);
+        var random = window.crypto.getRandomValues(bytes);
+
+        random.forEach(function(c) {
+            if (length == 0) {
+                return;
+            }
+            if (c < charset.length) {
+                result += charset[c];
+                length--;
+            }
+        });
+    }
+    return result;
+}
+
+
+/**
+ * @description get cognito JWKS and cache the result. If kid is no found refresh cache.
+ * @param {string} currentKid - current kid to double check cache or refresh.
+ */
+const getJwk = async (currentKid:any) => {
+    if (currentKid) {
+        console.log('-----> cachedJwks', cachedJwks)
+        const cachedKey = cachedJwks.find((item:any) => item.kid === currentKid)
+        if (cachedKey) {
+            console.log('-----> cachedKey', cachedKey)
+            return cachedKey
+        }
+        cachedJwks.length = 0
+
+        const { data } = await axios.get(`https://cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}/.well-known/jwks.json`)
+            .catch(error => {
+                console.error('Error on getJwk axios call', error)
+                return { data: null }
+            })
+        if (data?.keys) {
+            // console.log('-----> data call')
+            const key = data.keys.find((item:any) => item.kid === currentKid)
+            if (key) {
+                cachedJwks.push(...data.keys)
+                return key
+            }
+        }
+    }
+    console.error('No Key found to verify the token: ', currentKid)
+    return null
+}
+
+const verifyToken = async (response:any) => {
+  try {
+      // get header using jose get protected header method.
+      const header = jose.decodeProtectedHeader(response.data.id_token)
+      const jwk = await getJwk(header.kid)
+      if (jwk) {
+        (async () => {
+          const pem = await jose.importJWK(jwk, 'RS256')
+          const { payload: verifiedBufferData } = await jose.compactVerify(response.data.id_token, pem)
+          const verifiedData = JSON.parse(Buffer.from(verifiedBufferData).toString('utf8'))
+          console.log("verfied token inside " + JSON.stringify(verifiedData));
+          let storedNonce = sessionStorage.getItem('nonce');
+          if (verifiedData.nonce !== storedNonce) {
+              console.log("nonce mismatch: ", storedNonce, " ", verifiedData.nonce);
+              sessionStorage.clear();
+              logout();
+              return;
+          }
+           else {
+            const token = response.data.access_token;
+            Cookies.set(ACCESS_TOKEN, token, { path: '/' });
+            Cookies.set(REFRESH_TOKEN, response.data.refresh_token, {
+              path: '/',
+            });
+            Cookies.set(ID_TOKEN, response.data.id_token, { path: '/' });
+            console.log('refresh token ' + response.data.refresh_token);
+            console.log('id token ' + response.data.id_token);
+  
+            // console.log("redirect to: ", redirectUrl); // uncommment to see logs!
+            login();
+            navigate(redirectUrl);
+            sessionStorage.removeItem(OAUTH_CODE_VERIFIER);
+            removeState();
+           }
+          // return verifiedData;
+        })();
+      }
+  } catch (error) {
+      console.error('Error on verifyToken', error)
+  }
+  return null
+}
+
   const getAuth = useCallback(() => {
     // 1. Generate and save state
     
@@ -145,14 +247,15 @@ const Login = () => {
     const codeVerifier = generateRandomVValue();
     console.log("codeVerifier: ", codeVerifier);
     sessionStorage.setItem(OAUTH_CODE_VERIFIER, codeVerifier);
+    const nonce = randomString(16);
+    sessionStorage.setItem('nonce', nonce);
     let code_challenge = null;
     (async () => {
       code_challenge = await generateCodeChallengeFromVerifier(
         sessionStorage.getItem(OAUTH_CODE_VERIFIER)
       );
-      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${OAUTH_REDIRECT_URL}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.signin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}`;
+      window.location.href = `https://shiok-jobs.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5i5fgd57n42nmala1b7ahmfsl0&redirect_uri=${OAUTH_REDIRECT_URL}/login&state=${authorizeState}&scope=openid+email+phone+aws.cognito.signin.user.admin&identity_provider=Google&code_challenge_method=S256&code_challenge=${code_challenge}&nonce=${nonce}`;
     })();
-
   }, []);
 
   useEffect(() => {
@@ -164,7 +267,7 @@ const Login = () => {
     if (code == null){
       return;
     }
-    let storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
+    const storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
     if (tokenState !== storedState) {
         console.error("state mismatch: ", tokenState, " ", storedState);
         sessionStorage.clear();
@@ -192,19 +295,7 @@ const Login = () => {
     axiosInstance(config)
       .then((response) => {
         if (response.status === 200) {
-          const token = response.data.access_token;
-          Cookies.set(ACCESS_TOKEN, token, { path: '/' });
-          Cookies.set(REFRESH_TOKEN, response.data.refresh_token, {
-            path: '/',
-          });
-          Cookies.set(ID_TOKEN, response.data.id_token, { path: '/' });
-          console.log('refresh token ' + response.data.refresh_token);
-
-          // console.log("redirect to: ", redirectUrl); // uncommment to see logs!
-          login();
-          navigate(redirectUrl);
-          sessionStorage.removeItem(OAUTH_CODE_VERIFIER);
-          removeState();
+          verifyToken(response);
         } else {
           console.error('Failed to update seeking status');
         }
