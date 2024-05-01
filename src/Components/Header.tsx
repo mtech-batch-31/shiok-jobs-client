@@ -22,7 +22,7 @@ function Header() {
 
   useEffect(() => {
     const token = getToken();
-    console.log("token from cookies: " + token + " " + new Date());
+    //console.log("token from cookies: " + token + " " + new Date());
     if (token) {
 
       // call secured url, if success, login

@@ -337,7 +337,7 @@ const verifyToken = async (response:any) => {
         email: formData.email,
         password: encrypt(formData.password),
       });
-      console.log('api response: ', response.data); // uncommment to see logs!
+      //console.log('api response: ', response.data); // uncommment to see logs!
       if (response.data.authenticationResult.accessToken == null) {
         setErrorMessage('Wrong password. Try again or contact us to reset it.');
       } else {
