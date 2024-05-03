@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     let url = `${API_URL.JOBS}/apply`;
     console.log(`calling ${url}`);
     axiosInstance
-      .post(url, jobId, {
+      .post(url, {id: jobId}, {
         headers: {
           "Content-Type": "text/plain",
         },
