@@ -169,10 +169,10 @@ const Login = () => {
  */
 const getJwk = async (currentKid:any) => {
     if (currentKid) {
-        console.log('-----> cachedJwks', cachedJwks)
+        // console.log('-----> cachedJwks', cachedJwks)
         const cachedKey = cachedJwks.find((item:any) => item.kid === currentKid)
         if (cachedKey) {
-            console.log('-----> cachedKey', cachedKey)
+            // console.log('-----> cachedKey', cachedKey)
             return cachedKey
         }
         cachedJwks.length = 0
@@ -208,7 +208,7 @@ const verifyToken = async (response:any) => {
           // console.log("verfied token inside " + JSON.stringify(verifiedData));
           let storedNonce = sessionStorage.getItem('nonce');
           if (verifiedData.nonce !== storedNonce) {
-              console.log("nonce mismatch: ", storedNonce, " ", verifiedData.nonce);
+              // console.log("nonce mismatch: ", storedNonce, " ", verifiedData.nonce);
               sessionStorage.clear();
               logout();
               return;
