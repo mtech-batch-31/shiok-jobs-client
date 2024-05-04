@@ -33,8 +33,8 @@ Amplify.configure({
 axios.interceptors.request.use(request => {
 
     const token = Cookies.get('XSRF-TOKEN');
-    console.log("token")
-    console.log(token)
+    // console.log("token")
+    // console.log(token)
     if (token) {
         request.headers['X-XSRF-TOKEN'] = token;
     }

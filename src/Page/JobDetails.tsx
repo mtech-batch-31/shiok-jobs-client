@@ -29,11 +29,7 @@ const Home: React.FC = () => {
     let url = `${API_URL.JOBS}/apply`;
     console.log(`calling ${url}`);
     axiosInstance
-      .post(url, jobId, {
-        headers: {
-          "Content-Type": "text/plain",
-        },
-      })
+      .post(url, {id: jobId})
       .then((res) => {
         console.log("api response ", res.data);
         loadJobDetails();
