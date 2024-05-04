@@ -162,6 +162,25 @@ const Login = () => {
     return result;
 }
 
+const onLogout = (access_token:any) => {
+  //call api to revoke token
+  let url = `${API_URL.LOGOUT}`
+  axiosInstance
+  .post(url, access_token, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((res) => {
+    console.log("api response ", res);
+  })
+  .catch((error: AxiosError) => {
+    console.error("error when calling API", error);
+  });
+  removeToken();
+  logout();
+}
+
 
 /**
  * @description get cognito JWKS and cache the result. If kid is no found refresh cache.
@@ -210,7 +229,7 @@ const verifyToken = async (response:any) => {
           if (verifiedData.nonce !== storedNonce) {
               console.log("nonce mismatch: ", storedNonce, " ", verifiedData.nonce);
               sessionStorage.clear();
-              logout();
+              onLogout(response.data.access_token);
               return;
           }
            else {
