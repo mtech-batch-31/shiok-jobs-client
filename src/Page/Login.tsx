@@ -269,7 +269,7 @@ const verifyToken = async (response:any) => {
     }
     const storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
     if (tokenState !== storedState) {
-        console.error("state mismatch: ", tokenState, " ", storedState);
+        // console.error("state mismatch: ", tokenState, " ", storedState);
         sessionStorage.clear();
         return;
     }
