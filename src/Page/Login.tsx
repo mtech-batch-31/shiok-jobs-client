@@ -343,7 +343,6 @@ const verifyToken = async (response:any) => {
       } else {
         const token = response.data.authenticationResult.accessToken;
         Cookies.set(ACCESS_TOKEN, token, { path: '/' });
-        console.log('test normal login dont store accessToken ');
         Cookies.set(
           REFRESH_TOKEN,
           response.data.authenticationResult.refreshToken,
