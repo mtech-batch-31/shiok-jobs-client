@@ -205,7 +205,7 @@ const verifyToken = async (response:any) => {
           const pem = await jose.importJWK(jwk, 'RS256')
           const { payload: verifiedBufferData } = await jose.compactVerify(response.data.id_token, pem)
           const verifiedData = JSON.parse(Buffer.from(verifiedBufferData).toString('utf8'))
-          console.log("verfied token inside " + JSON.stringify(verifiedData));
+          // console.log("verfied token inside " + JSON.stringify(verifiedData));
           let storedNonce = sessionStorage.getItem('nonce');
           if (verifiedData.nonce !== storedNonce) {
               console.log("nonce mismatch: ", storedNonce, " ", verifiedData.nonce);
@@ -220,8 +220,8 @@ const verifyToken = async (response:any) => {
               path: '/',
             });
             Cookies.set(ID_TOKEN, response.data.id_token, { path: '/' });
-            console.log('refresh token ' + response.data.refresh_token);
-            console.log('id token ' + response.data.id_token);
+            // console.log('refresh token ' + response.data.refresh_token);
+            // console.log('id token ' + response.data.id_token);
   
             // console.log("redirect to: ", redirectUrl); // uncommment to see logs!
             login();
@@ -242,10 +242,10 @@ const verifyToken = async (response:any) => {
     // 1. Generate and save state
     
     const authorizeState = generateRandomVValue();
-    console.log("state: ", authorizeState);
+    // console.log("state: ", authorizeState);
     saveState(authorizeState);
     const codeVerifier = generateRandomVValue();
-    console.log("codeVerifier: ", codeVerifier);
+    // console.log("codeVerifier: ", codeVerifier);
     sessionStorage.setItem(OAUTH_CODE_VERIFIER, codeVerifier);
     const nonce = randomString(16);
     sessionStorage.setItem('nonce', nonce);
